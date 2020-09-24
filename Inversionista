@@ -1,4 +1,3 @@
-
 package sample;
 
 public class Inversionista {
@@ -10,14 +9,14 @@ public class Inversionista {
     public Multinacional multinacional;
     public  double inversionMN;
 
-    public void Inversionista(int documento, String nombre, String apellido, String correo, String contraseña) {
+    public void Inversionista(String firma, Sede sedes, double ganancias, double inversionMN,double inversionSede,Multinacional multinacional) {
         this.firma =firma ;
         this.ganancias = ganancias;
         this.inversionMN = inversionMN;
         this.inversionSede = inversionSede;
         this.multinacional = multinacional;
         this.sedes= sedes;
-        
+
     }
 
 }
