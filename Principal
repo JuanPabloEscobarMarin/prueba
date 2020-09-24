@@ -90,12 +90,16 @@ public  class  Principal {
             Password =input.nextLine();
         }
 
+        System.out.println("USUARIO REGISTRADO EXITOSAMENTE");
+        ingresarUsuario();
+
 
 
 
     }
 
     private static void ingresarUsuario() {
+        System.out.println("ingresar usuario funcion");
     }
 }
 
