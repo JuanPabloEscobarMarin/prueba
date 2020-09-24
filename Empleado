@@ -6,7 +6,7 @@ public class Empleado {
     public Area areaPertenece;
     public Cliente comprador;
 
-    public void empleado(String nombre, int cedula, int edad, double salario) {
+    public void Empleado(String nombre, int cedula, int edad, double salario) {
         this.nombre = nombre;
         this.cedula = cedula;
         this.salario = salario;
