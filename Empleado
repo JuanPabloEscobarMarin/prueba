@@ -9,6 +9,7 @@ public class Empleado {
     public void Empleado(String nombre, int cedula, int edad, double salario,Area areaPertenece,Cliente comprador) {
         this.nombre = nombre;
         this.cedula = cedula;
+        this.edad =edad;
         this.salario = salario;
         this.areaPertenece = areaPertenece;
         this.comprador = comprador;
