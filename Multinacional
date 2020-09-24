@@ -11,11 +11,7 @@ class Multinacional {
 
 
 
-
-
-
-
-    public void Multinacional(String Nombre, String Ceo, double IngresoTotal, double GastoTotal, Inversionista Inversores, Area Areas, int NIT) {
+    public void Multinacional(String nombre, String ceo, double ingresoTotal, double gastoTotal, Inversionista inversores, Area areas, int NIT) {
         this.nombre = nombre ;
         this.NIT = NIT;
         this.ceo = ceo;
