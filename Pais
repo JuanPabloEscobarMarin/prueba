@@ -1,1 +1,12 @@
+public class pais {
+    public String nombre;
+    public String presidente;
+    public sede sedes;
 
+    public pais(String nombre,String presidente,sede sedes){
+        this.nombre=nombre;
+        this.presidente=presidente;
+        this.sedes=sedes;
+    }
+
+}
