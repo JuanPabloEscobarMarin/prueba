@@ -1,1 +1,15 @@
+public class Sede {
+    public String gerente;
+    public double ingresoSede;
+    public double gastosSede;
+    public Area areas;
+    public Inversionista inversionistas;
 
+    public void Sede (String gerente, double ingresoSede, double gastosSede) {
+        this.gerente = gerente;
+        this.ingresoSede = ingresoSede;
+        this.gastosSede = gastosSede;
+        this.areas = null;
+        this.inversionistas = null;
+    }
+}
