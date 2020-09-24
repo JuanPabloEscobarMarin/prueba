@@ -1,5 +1,15 @@
-#codigo de la clase cliente supongo
-odkmasdadadadada
-skadldada
-xzfasdfsdfsadfafda
-dsadasdasdsa
+public class Cliente {
+    public String nombre;
+    public double dinero;
+    public int cedula;
+    public Area AreaConsumo;
+    public Empleado vendedor;
+
+    public Cliente(String nombre, double dinero, int cedula) {
+        this.nombre = nombre;
+        this.dinero = dinero;
+        this.cedula = cedula;
+        this.AreaConsumo = null;
+        this.vendedor = null;
+    }
+}
