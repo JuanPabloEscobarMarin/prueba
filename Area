@@ -1,1 +1,22 @@
+package sample;
 
+public class Area {
+
+    public String tipoDeArea;
+    public Empleado empleados;
+    public  Cliente clientes;
+    public double ingresoArea;
+    public Multinacional multinacional;
+    public  double gastoArea;
+
+    public void Area (String tipoDeArea, Empleado empleados, Cliente clientes, double ingresoArea,Multinacional multinacional,double gastoArea) {
+        this.tipoDeArea = tipoDeArea ;
+        this.clientes = clientes;
+        this.empleados = empleados;
+        this.ingresoArea = ingresoArea;
+        this.multinacional = multinacional;
+        this.gastoArea= gastoArea;
+
+    }
+
+}
