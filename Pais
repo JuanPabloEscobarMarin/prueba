@@ -3,7 +3,7 @@ public class Pais {
     public String presidente;
     public Sede sedes;
 
-    public Pais(String nombre,String presidente,sede sedes){
+    public Pais(String nombre,String presidente,Sede sedes){
         this.nombre=nombre;
         this.presidente=presidente;
         this.sedes=sedes;
