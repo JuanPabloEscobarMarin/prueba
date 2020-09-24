@@ -1,1 +1,16 @@
+public class Empleado {
+    public String nombre;
+    public int cedula;
+    public int edad;
+    public double salario;
+    public Area areaPertenece;
+    public Cliente comprador;
 
+    public void empleado(String nombre, int cedula, int edad, double salario) {
+        this.nombre = nombre;
+        this.cedula = cedula;
+        this.salario = salario;
+        this.areaPertenece = areaPertenece;
+        this.comprador = comprador;
+    }
+}
