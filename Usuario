@@ -1,11 +1,11 @@
-public class Usuarios {
+public class Usuario {
     public String documento;
     public String nombre;
     public String apellido;
     public String correo;
     public String contraseña;
 
-    public void Usuarios(String documento, String nombre, String apellido, String correo, String contraseña) {
+    public void Usuario(String documento, String nombre, String apellido, String correo, String contraseña) {
         this.documento = documento;
         this.nombre = nombre;
         this.apellido = apellido;
