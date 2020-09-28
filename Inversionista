@@ -9,13 +9,13 @@ public class Inversionista {
     public Multinacional multinacional;
     public  double inversionMN;
 
-    public void Inversionista(String firma, Sede sedes, double ganancias, double inversionMN,double inversionSede,Multinacional multinacional) {
+    public Inversionista(String firma, double ganancias, double inversionMN,double inversionSede) {
         this.firma =firma ;
         this.ganancias = ganancias;
         this.inversionMN = inversionMN;
         this.inversionSede = inversionSede;
-        this.multinacional = multinacional;
-        this.sedes= sedes;
+        this.multinacional = null;
+        this.sedes= null;
 
     }
 
