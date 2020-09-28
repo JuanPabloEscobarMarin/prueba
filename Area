@@ -9,7 +9,7 @@ public class Area {
     public Multinacional multinacional;
     public  double gastoArea;
 
-    public void Area (String tipoDeArea, Empleado empleados, Cliente clientes, double ingresoArea,Multinacional multinacional,double gastoArea) {
+    public Area (String tipoDeArea, Empleado empleados, Cliente clientes, double ingresoArea,Multinacional multinacional,double gastoArea) {
         this.tipoDeArea = tipoDeArea ;
         this.clientes = clientes;
         this.empleados = empleados;
