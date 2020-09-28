@@ -11,14 +11,14 @@ class Multinacional {
 
 
 
-    public void Multinacional(String nombre, String ceo, double ingresoTotal, double gastoTotal, Inversionista inversores, Area areas, int NIT) {
+    public Multinacional(String nombre, String ceo, double ingresoTotal, double gastoTotal, int NIT) {
         this.nombre = nombre ;
         this.NIT = NIT;
         this.ceo = ceo;
         this.ingresoTotal = ingresoTotal;
         this.gastoTotal = gastoTotal;
-        this.inversores = inversores;
-        this.areas = areas;
+        this.inversores = null;
+        this.areas = null;
 
 
     }
