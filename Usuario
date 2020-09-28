@@ -5,7 +5,7 @@ public class Usuario {
     public String correo;
     public String contraseña;
 
-    public void Usuario(String documento, String nombre, String apellido, String correo, String contraseña) {
+    public Usuario(String documento, String nombre, String apellido, String correo, String contraseña) {
         this.documento = documento;
         this.nombre = nombre;
         this.apellido = apellido;
