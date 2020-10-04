@@ -1,14 +1,11 @@
-
-
 class Multinacional {
     public String nombre;
     public String ceo;
     public double ingresoTotal;
     public double gastoTotal;
     public Inversionista inversores;
-    public Area areas;
+    public Sede sedes;
     public int NIT;
-
 
 
     public Multinacional(String nombre, String ceo, double ingresoTotal, double gastoTotal, int NIT) {
@@ -18,11 +15,15 @@ class Multinacional {
         this.ingresoTotal = ingresoTotal;
         this.gastoTotal = gastoTotal;
         this.inversores = null;
-        this.areas = null;
+        this.sedes = null;
 
 
     }
 
+    @Override
+    public String toString(){
+        return "Nombre: "+nombre+", ceo: "+ceo+", NIT: "+NIT+", fondos"+ingresoTotal+", gastos"+gastoTotal;
+    }
+
 
 }
-
