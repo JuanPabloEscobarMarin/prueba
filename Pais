@@ -3,10 +3,15 @@ public class Pais {
     public String presidente;
     public Sede sedes;
 
-    public Pais(String nombre,String presidente,Sede sedes){
+    public Pais(String nombre,String presidente){
         this.nombre=nombre;
         this.presidente=presidente;
-        this.sedes=sedes;
+        this.sedes=null;
+    }
+
+    @Override
+    public String toString(){
+        return "Nombre: "+nombre+", presidente: "+presidente;
     }
 
 }
