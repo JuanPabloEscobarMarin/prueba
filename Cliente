@@ -5,11 +5,16 @@ public class Cliente {
     public Area AreaConsumo;
     public Empleado vendedor;
 
-    public Cliente(String nombre, double dinero, int cedula) {
+    public Cliente(String nombre, int cedula, double dinero,Area AreaConsumo) {
         this.nombre = nombre;
         this.dinero = dinero;
         this.cedula = cedula;
-        this.AreaConsumo = null;
+        this.AreaConsumo = AreaConsumo;
         this.vendedor = null;
+    }
+
+    @Override
+    public String toString(){
+        return "Nombre : "+nombre+", cedula: "+cedula+", area de consumo:"+AreaConsumo.nombreDelArea+", asesor: "+vendedor.nombre;
     }
 }
