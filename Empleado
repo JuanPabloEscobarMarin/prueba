@@ -14,4 +14,9 @@ public class Empleado {
         this.areaPertenece = areaPertenece;
         this.comprador = null;
     }
+
+    @Override
+    public String toString(){
+        return "Nombre : "+nombre+", cedula: "+cedula+", edad: "+edad+", salario: "+salario+", Area: "+areaPertenece.nombreDelArea;
+    }
 }
