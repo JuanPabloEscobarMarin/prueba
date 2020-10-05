@@ -1,17 +1,19 @@
+import java.util.ArrayList;
+
 public class Pais {
     public String nombre;
     public String presidente;
-    public Sede sedes;
+    public ArrayList<Sede> sedes;
 
     public Pais(String nombre,String presidente){
         this.nombre=nombre;
         this.presidente=presidente;
-        this.sedes=null;
+        this.sedes=new ArrayList<>();
     }
 
     @Override
     public String toString(){
-        return "Nombre: "+nombre+", presidente: "+presidente;
+        return "Nombre: "+nombre+", presidente: "+presidente+", numero de sedes: "+sedes.size();
     }
 
 }

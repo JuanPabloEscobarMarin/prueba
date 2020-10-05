@@ -1,4 +1,3 @@
-
 import  java.util.LinkedList;
 import java.util.Scanner;
 
@@ -61,7 +60,7 @@ public  class  Principal {
         input.nextLine();
 
         while (Documento <= 0) {
-            System.out.println("Documento invalido ,ingreselo de nuevo ");
+            System.out.print("Documento invalido ,ingreselo denuevo");
             System.out.print("Documento : ");
             Documento = input.nextInt();
         }
@@ -70,28 +69,28 @@ public  class  Principal {
 
         String Nombre = input.nextLine();
         while (Nombre.equals("")) {
-            System.out.println("Nombre invalido, ingreselo de nuevo ");
+            System.out.println("Nombre invalido, ingreselo denuevo");
             System.out.print("Nombre : ");
             Nombre = input.nextLine();
         }
         System.out.print("Apellido : ");
         String Apellido = input.nextLine();
         while (Apellido.equals("")) {
-            System.out.println("Apellido invalido, ingreselo de nuevo ");
+            System.out.println("Apellido invalido, ingreselo denuevo");
             System.out.print("Apellido: ");
             Apellido = input.nextLine();
         }
         System.out.print("Correo Electronico : ");
         String Correo = input.nextLine();
         while (Correo.equals("")) {
-            System.out.println("Correo invalido, ingreselo de nuevo ");
+            System.out.println("Correo invalido, ingreselo denuevo");
             System.out.print("Correo: ");
             Correo = input.nextLine();
         }
         System.out.print("Contraseña : ");
         String Password = input.nextLine();
         while (Password.equals("")) {
-            System.out.println("Contraseña invalido, ingreselo de nuevo ");
+            System.out.println("Contraseña invalido, ingreselo denuevo");
             System.out.print("Contraseña: ");
             Password = input.nextLine();
         }
@@ -108,15 +107,10 @@ public  class  Principal {
 
     private static void ingresarUsuario() {
 
-        if(usuarios.isEmpty()){
-            System.out.println("No se encuentra usuario, debes registrar usuario");
-            System.out.println();
-            registrarUsuario();
-        }
-
         System.out.println("-----------------------------");
         System.out.println("Ingresar Documento/Correo");
         System.out.println("-----------------------------");
+        System.out.println();
         String DocumentoIngresado = input.nextLine();
         System.out.println("-----------------------------");
         System.out.println("Ingresa la contraseña");
@@ -166,6 +160,7 @@ public  class  Principal {
             System.out.println("4. Guardar");
             System.out.println("0. Salir y cancelar");
             System.out.println("-----------------------------");
+            System.out.println();
             option = input.next();
             switch (option) {
                 case "1":
@@ -218,6 +213,7 @@ public  class  Principal {
             System.out.println("7. Clientes");
             System.out.println("0. Salir");
             System.out.println("-----------------------------");
+            System.out.println();
             option = input.next();
             switch (option) {
                 case "1":
@@ -433,12 +429,12 @@ public  class  Principal {
             System.out.println("Ingrese [Y] si desea cerrar el programa");
             String cerrado = input.next();
 
-            if (cerrado.equals("N")||cerrado.equals("n")) {
+            if (cerrado.equals("N")) {
                 System.out.println("Regresando al menu principal");
 
                 return;
             }
-            else if (cerrado.equals("Y")||cerrado.equals("y")) {
+            else if (cerrado.equals("Y")) {
                 System.out.println("CERRANDO PROGRAMA");
                 System.exit(0);
 
@@ -453,20 +449,6 @@ public  class  Principal {
     }
 
     private static void VerMultinacional() {
-        if(multinacionales.isEmpty()){
-            System.out.println("No se encuentra ninguna multinacional");
-            System.out.println("¿Desea crearla?");
-            System.out.println("1. Si");
-            System.out.println("2. No");
-            String option= input.next();
-            switch (option){
-                case "1":
-                    CrearMultinacional();
-                    break;
-                case"2":
-                    return;
-            }
-        }
         System.out.println("Lista de multinacionales");
         for (Multinacional multinacional:multinacionales) {
             System.out.println(multinacional);
@@ -476,11 +458,11 @@ public  class  Principal {
     private static void CrearMultinacional() {
         System.out.println("Ingresar datos de la Multinacional");
         System.out.print("Ingrese el nombre de la multinacional: ");
-        String nombre=input.next();
+        String nombre=input.nextLine();
         while(nombre.equals("")) {
             System.out.println("nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            nombre= input.next();
+            nombre= input.nextLine();
         }
         for (Multinacional multinacional:multinacionales) {
             if(multinacional.nombre.equals(nombre)){
@@ -502,12 +484,11 @@ public  class  Principal {
             }
         }
         System.out.print("Ingrese el nombre del CEO: ");
-        String ceo= input.next();
-
+        String ceo= input.nextLine();
         while(ceo.equals("")) {
             System.out.println("nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            ceo= input.next();
+            ceo= input.nextLine();
         }
         System.out.print("Ingrese los fondos de la multinacional: ");
         int ingresos= input.nextInt();
@@ -530,232 +511,15 @@ public  class  Principal {
     }
 
     private static void EditarMultinacional() {
-        Multinacional multinacionalAux = new Multinacional(null, null, 0, 0, 0);
-        label:
-        while (true) {
-            System.out.println("Selecione como desea buscar la multinacional");
-            System.out.println("1. por nombre");
-            System.out.println("2. por NIT");
-            System.out.println("0. Salir");
-            String option = input.next();
-            switch (option) {
-                case "1":
-                    System.out.print("ingrese el nombre de la multinacional: ");
-                    String nombre = input.next();
-                    for (Multinacional multinacional : multinacionales) {
-                        if (multinacional.nombre.equals(nombre)) {
-                            System.out.println("Nombre: " + multinacional.nombre);
-                            System.out.print("Nuevo nombre: ");
-                            input.nextLine();
-                            String nombreMulti = input.nextLine();
-                            if (!nombreMulti.equals("")) {
-                                multinacionalAux.nombre = nombreMulti;
-                            } else {
-                                multinacionalAux.nombre = multinacional.nombre;
-                            }
-                            System.out.println("Ceo: " + multinacional.ceo);
-                            System.out.print("Nuevo ceo: ");
-                            String ceo = input.nextLine();
-                            if (!ceo.equals("")) {
-                                multinacionalAux.ceo = ceo;
-                            } else {
-                                multinacionalAux.ceo = multinacional.ceo;
-                            }
-                            System.out.println("Fondos: " + multinacional.ingresoTotal);
-                            System.out.print("Nuevos fondos: ");
-                            String fondos = input.nextLine();
-                            if (!fondos.equals("")) {
-                                multinacionalAux.ingresoTotal = Integer.parseInt(fondos);
-                            } else {
-                                multinacionalAux.ingresoTotal = multinacional.ingresoTotal;
-                            }
-                            System.out.println("Gastos: " + multinacional.gastoTotal);
-                            System.out.print("Nuevos gastos: ");
-                            String gastos = input.nextLine();
-
-                            if (!gastos.equals("")) {
-                                multinacionalAux.gastoTotal = Integer.parseInt(gastos);
-                            } else {
-                                multinacionalAux.gastoTotal = multinacional.gastoTotal;
-                            }
-                            System.out.println("NIT: " + multinacional.NIT);
-                            System.out.print("Nuevo NIT: ");
-                            String NIT = input.nextLine();
-                            if (!NIT.equals("")) {
-                                multinacionalAux.NIT = Integer.parseInt(NIT);
-                            } else {
-                                multinacionalAux.NIT = multinacional.NIT;
-                            }
-                            System.out.println("¿Desea guardar los cambios?");
-                            System.out.println("Si(Y)/No(N)");
-                            String optionGuardado = input.next();
-                            switch (optionGuardado) {
-                                case "Y":
-                                    int indice = multinacionales.indexOf(multinacional);
-                                    multinacionales.remove(multinacional);
-                                    multinacionales.add(indice, multinacionalAux);
-
-                                    return;
-                                case "N":
-                                    return;
-                            }
-                        }
-                    }
-                    System.out.println("No se encontro multinacional por este nombre");
-                    EditarMultinacional();
-                    break;
-
-                case "2":
-                    System.out.print("ingrese el NIT de la multinacional: ");
-                    int NIT = input.nextInt();
-                    for (Multinacional multinacional : multinacionales) {
-                        if (multinacional.NIT == NIT) {
-                            System.out.println("Nombre: " + multinacional.nombre);
-                            System.out.print("Nuevo nombre: ");
-                            input.nextLine();
-                            String nombreMulti = input.nextLine();
-                            if (nombreMulti.equals("")) {
-                                multinacionalAux.nombre = multinacional.nombre;
-                            } else {
-                                multinacionalAux.nombre = nombreMulti;
-                            }
-                            System.out.println("Ceo: " + multinacional.ceo);
-                            System.out.print("Nuevo ceo: ");
-                            String ceo = input.nextLine();
-                            if (!ceo.equals("")) {
-                                multinacionalAux.ceo = ceo;
-                            } else {
-                                multinacionalAux.ceo = multinacional.ceo;
-                            }
-                            System.out.println("Fondos: " + multinacional.ingresoTotal);
-                            System.out.print("Nuevos fondos: ");
-                            String fondos = input.nextLine();
-                            if (!fondos.equals("")) {
-                                multinacionalAux.ingresoTotal = Integer.parseInt(fondos);
-                            } else {
-                                multinacionalAux.ingresoTotal = multinacional.ingresoTotal;
-                            }
-                            System.out.println("Gastos: " + multinacional.gastoTotal);
-                            System.out.print("Nuevos gastos: ");
-                            String gastos = input.nextLine();
-                            if (!gastos.equals("")) {
-                                multinacionalAux.gastoTotal = Integer.parseInt(gastos);
-                            } else {
-                                multinacionalAux.gastoTotal = multinacional.gastoTotal;
-                            }
-                            System.out.println("NIT: " + multinacional.NIT);
-                            System.out.print("Nuevo NIT: ");
-                            String NITMulti = input.nextLine();
-                            if (!NITMulti.equals("")) {
-                                multinacionalAux.NIT = Integer.parseInt(NITMulti);
-                            } else {
-                                multinacionalAux.NIT = multinacional.NIT;
-                            }
-                            System.out.println("¿Desea guardar los cambios?");
-                            System.out.println("Si(Y)/No(N)");
-                            String optionGuardado = input.next();
-                            switch (optionGuardado) {
-                                case "Y":
-                                    int indice = multinacionales.indexOf(multinacional);
-                                    multinacionales.remove(multinacional);
-                                    multinacionales.add(indice, multinacionalAux);
-
-                                    return;
-                                case "N":
-                                    return;
-                            }
-                        }
-                    }
-                    System.out.println("No se encontro multinacional por este nombre");
-                    EditarMultinacional();
-                    break;
-                case "0":
-                    break label;
-            }
-        }
     }
+
     private static void EliminarMultinacional() {
-        label:
-        while (true) {
-            System.out.println("-----------------------------");
-            System.out.println("¿Desea buscar la multinacional a eliminar por nombre o por NIT?");
-            System.out.println("1. Nombre ");
-            System.out.println("2. NIT ");
-            System.out.println("0. Salir");
-            System.out.println("-----------------------------");
-
-            String optionMultinacionalBorrador = input.next();
-
-            switch (optionMultinacionalBorrador) {
-                case "1":
-                    System.out.println("Ingrese el nombre de la multinacional a borrar ");
-                    String multinacionalBorrador = input.nextLine();
-                    for (Multinacional multinacional : multinacionales) {
-                        if (multinacionalBorrador.equalsIgnoreCase(multinacional.nombre)) {
-                            System.out.println("¿Esta seguro que desea borrarla?");
-                            System.out.println("Si(Y)/No(N)");
-                            String optionGuardado = input.next();
-                            switch (optionGuardado) {
-                                case "Y":
-                                    multinacionales.remove(multinacional);
-                                    System.out.println("Multinacional borrada con exito");
-                                    return;
-                                case "N":
-                                    return;
-                            }
-                        }
-                    }
-                    System.out.println("No se encontro multinacional con este nombre");
-                    break;
-                case "2":
-                    System.out.println("Ingrese el NIT de la multinacional");
-                    int multinacionalNIT = input.nextInt();
-                    String multinacionalStringNIT = Integer.toString(multinacionalNIT);
-                    String multinacionalStringNITDepurada = multinacionalStringNIT.replace(".", "");
-                    int multinacionalNITDepurada = Integer.parseInt(multinacionalStringNITDepurada);
-                    for (Multinacional multinacional : multinacionales) {
-                        if (multinacional.NIT == multinacionalNITDepurada) {
-                            System.out.println("¿Esta seguro que desea borrarla?");
-                            System.out.println("Si(Y)/No(N)");
-                            String optionGuardado = input.next();
-                            switch (optionGuardado) {
-                                case "Y":
-                                    multinacionales.remove(multinacional);
-                                    System.out.println("Multinacional borrada con exito");
-                                    return;
-                                case "N":
-                                    return;
-                            }
-                        }
-
-                    }
-                    System.out.println("No se encuentro la multinacional");
-
-                    break;
-
-                case "0":
-                    break label;
-            }
-        }
     }
+
+
 
 
     private static void VerSede() {
-        if(sedes.isEmpty()){
-            System.out.println("No se encuentra ninguna sede");
-            System.out.println("¿Desea crearla?");
-            System.out.println("1. Si");
-            System.out.println("2. No");
-            String option= input.next();
-            switch (option){
-                case "1":
-                    CrearSede();
-                    break;
-                case"2":
-                    return;
-            }
-        }
-
         System.out.println("Lista de sedes");
         for (Sede sede:sedes) {
             System.out.println(sede);
@@ -765,12 +529,11 @@ public  class  Principal {
     private static void CrearSede() {
         System.out.println("Ingrese los datos de la sede");
         System.out.print("Ingrese el nombre de la sede: ");
-        String nombre=input.next();
-        input.nextLine();
+        String nombre=input.nextLine();
         while(nombre.equals("")) {
             System.out.println("nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            nombre= input.next();
+            nombre= input.nextLine();
         }
         for(Sede sede:sedes){
             if(sede.nombre.equals(nombre)){
@@ -778,12 +541,12 @@ public  class  Principal {
                 CrearMultinacional();
             }
         }
-        System.out.print("Ingrese el nombre del gerente: ");
-        String gerente= input.next();
+        System.out.print("Ingrese el nombre del gerente");
+        String gerente= input.nextLine();
         while(gerente.equals("")) {
             System.out.println("nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            gerente= input.next();
+            gerente= input.nextLine();
         }
         System.out.print("Ingrese los fondos de la sede: ");
         int ingresos= input.nextInt();
@@ -799,46 +562,6 @@ public  class  Principal {
             System.out.print("Gastos: ");
             gastos=input.nextInt();
         }
-        System.out.print("Ingrese el nombre del pais de ubicacion de la sede: ");
-        String nombrePais= input.next();
-        while(nombrePais.equals("")) {
-            System.out.println("nombre invalido, ingreselo de nuevo");
-            System.out.print("nombre: ");
-            nombrePais= input.next();
-        }
-        Pais paisAux=new Pais(null,null);
-
-        for (Pais pais : paises) {
-            if (pais.nombre.equals(nombrePais)) {
-                paisAux = pais;
-            }
-        }
-        if(paisAux.nombre==null){
-            System.out.println("No se encontro un pais con este nombre");
-            System.out.println("¿Desea crearlo?");
-            System.out.println("1. Si");
-            System.out.println("2. No");
-            String optionPais=input.next();
-            switch (optionPais){
-                case "1":
-                    CrearPais();
-                    break;
-                case "2":
-                    System.out.println("¿Desea continuar creando una Sede? ");
-                    System.out.println("1. Si");
-                    System.out.println("2. No");
-                    String optionAuxPais=input.next();
-                    switch (optionAuxPais){
-                        case "1":
-                            CrearSede();
-                            return;
-                        case "2":
-                            return;
-                    }
-                    break;
-            }
-        }
-
         System.out.print("Ingrese el NIT de la multinacional a la que pertenece la sede: ");
         int multinacionalNIT= input.nextInt();
         while(multinacionalNIT<=0) {
@@ -848,10 +571,9 @@ public  class  Principal {
         }
         for (Multinacional multinacional:multinacionales) {
             if(multinacional.NIT==multinacionalNIT){
-                Sede NuevaSede=new Sede(nombre,gerente,ingresos,gastos,multinacional,paisAux);
+                Sede NuevaSede=new Sede(nombre,gerente,ingresos,gastos,multinacional);
                 sedes.add(NuevaSede);
                 System.out.println("Sede creada con exito");
-                multinacional.sedes.add(NuevaSede);
                 return;
             }
         }
@@ -890,20 +612,6 @@ public  class  Principal {
 
 
     private static void VerPais() {
-        if(paises.isEmpty()){
-            System.out.println("No se encuentra ningun pais");
-            System.out.println("¿Desea crearlo?");
-            System.out.println("1. Si");
-            System.out.println("2. No");
-            String option= input.next();
-            switch (option){
-                case "1":
-                    CrearPais();
-                    break;
-                case"2":
-                    return;
-            }
-        }
         System.out.println("Lista de paises");
         for (Pais pais:paises) {
             System.out.println(pais);
@@ -913,11 +621,11 @@ public  class  Principal {
     private static void CrearPais() {
         System.out.println("Ingrese los datos del pais");
         System.out.print("Ingrese el nombre del pais: ");
-        String nombre=input.next();
+        String nombre=input.nextLine();
         while(nombre.equals("")) {
             System.out.println("nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            nombre= input.next();
+            nombre= input.nextLine();
         }
         for(Pais pais:paises){
             if(pais.nombre.equals(nombre)){
@@ -925,12 +633,12 @@ public  class  Principal {
                 CrearPais();
             }
         }
-        System.out.print("Ingrese el nombre del presidente: ");
-        String presidente= input.next();
+        System.out.print("Ingrese el nombre del presidente");
+        String presidente= input.nextLine();
         while(presidente.equals("")) {
             System.out.println("nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            presidente= input.next();
+            presidente= input.nextLine();
         }
 
         Pais paisNuevo=new Pais(nombre,presidente);
@@ -947,20 +655,6 @@ public  class  Principal {
 
 
     private static void VerInversionista() {
-        if(inversionistas.isEmpty()){
-            System.out.println("No se encuentra ningun invervesionista");
-            System.out.println("¿Desea crearlo?");
-            System.out.println("1. Si");
-            System.out.println("2. No");
-            String option= input.next();
-            switch (option){
-                case "1":
-                    CrearInversionista();
-                    break;
-                case"2":
-                    return;
-            }
-        }
         System.out.println("Lista de inversionistas");
         for (Inversionista inversionista:inversionistas) {
             System.out.println(inversionista);
@@ -970,11 +664,11 @@ public  class  Principal {
     private static void CrearInversionista() {
         System.out.println("Ingrese los datos del inversionista");
         System.out.print("Ingrese el nombre de la firma: ");
-        String nombre=input.next();
+        String nombre=input.nextLine();
         while(nombre.equals("")) {
             System.out.println("nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            nombre= input.next();
+            nombre= input.nextLine();
         }
         for(Inversionista inversionista:inversionistas){
             if(inversionista.firma.equals(nombre)){
@@ -1016,20 +710,6 @@ public  class  Principal {
 
 
     private static void VerArea() {
-        if(areas.isEmpty()){
-            System.out.println("No se encuentra ninguna area");
-            System.out.println("¿Desea crearla?");
-            System.out.println("1. Si");
-            System.out.println("2. No");
-            String option= input.next();
-            switch (option){
-                case "1":
-                    CrearArea();
-                    break;
-                case"2":
-                    return;
-            }
-        }
         System.out.println("Lista de areas");
         for (Area area:areas) {
             System.out.println(area);
@@ -1039,11 +719,11 @@ public  class  Principal {
     private static void CrearArea() {
         System.out.println("Ingrese los datos de la area");
         System.out.print("Ingrese el nombre de la area: ");
-        String nombre=input.next();
+        String nombre=input.nextLine();
         while(nombre.equals("")) {
             System.out.println("nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            nombre= input.next();
+            nombre= input.nextLine();
         }
         for(Area area:areas){
             if(area.nombreDelArea.equals(nombre)){
@@ -1066,18 +746,16 @@ public  class  Principal {
             gastos=input.nextInt();
         }
         System.out.print("Ingrese el nombre de la sede a la que pertenece el area: ");
-        String nombreSede=input.next();
-        input.nextLine();
+        String nombreSede=input.nextLine();
         while(nombreSede.equals("")) {
             System.out.println("Nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            nombreSede= input.next();
+            nombreSede= input.nextLine();
         }
         for (Sede sede:sedes) {
             if(sede.nombre.equals(nombreSede)){
                 Area NuevaArea=new Area(nombre,ingresos,gastos,sede);
                 areas.add(NuevaArea);
-                sede.areas.add(NuevaArea);
                 System.out.println("Area creada con exito");
                 return;
             }
@@ -1115,20 +793,6 @@ public  class  Principal {
 
 
     private static void VerEmpleado() {
-        if(empleados.isEmpty()){
-            System.out.println("No se encuentra ningun empleado");
-            System.out.println("¿Desea crearla?");
-            System.out.println("1. Si");
-            System.out.println("2. No");
-            String option= input.next();
-            switch (option){
-                case "1":
-                    CrearEmpleado();
-                    break;
-                case"2":
-                    return;
-            }
-        }
         System.out.println("Lista de empleados");
         for (Empleado empleado:empleados) {
             System.out.println(empleado);
@@ -1138,11 +802,11 @@ public  class  Principal {
     private static void CrearEmpleado() {
         System.out.println("Ingrese los datos del empleado");
         System.out.print("Ingrese el nombre del empleado: ");
-        String nombre=input.next();
+        String nombre=input.nextLine();
         while(nombre.equals("")) {
             System.out.println("nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            nombre= input.next();
+            nombre= input.nextLine();
         }
         System.out.print("Ingrese la cedula: ");
         int cedula=input.nextInt();
@@ -1172,17 +836,16 @@ public  class  Principal {
             salario=input.nextInt();
         }
         System.out.print("Ingrese el nombre del area a la que pertenece el empleado: ");
-        String nombreArea=input.next();
+        String nombreArea=input.nextLine();
         while(nombreArea.equals("")) {
             System.out.println("Nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            nombreArea= input.next();
+            nombreArea= input.nextLine();
         }
         for (Area area:areas) {
             if(area.nombreDelArea.equals(nombreArea)){
                 Empleado NuevoEmpleado=new Empleado(nombre,cedula,edad,salario,area);
                 empleados.add(NuevoEmpleado);
-                area.empleados.add(NuevoEmpleado);
                 System.out.println("Empleado creado con exito");
                 return;
             }
@@ -1222,20 +885,6 @@ public  class  Principal {
 
 
     private static void VerCliente() {
-        if(clientes.isEmpty()){
-            System.out.println("No se encuentra ningun cliente");
-            System.out.println("¿Desea crearla?");
-            System.out.println("1. Si");
-            System.out.println("2. No");
-            String option= input.next();
-            switch (option){
-                case "1":
-                    CrearCliente();
-                    break;
-                case"2":
-                    return;
-            }
-        }
         System.out.println("Lista de multinacionales");
         for (Cliente cliente:clientes) {
             System.out.println(cliente);
@@ -1245,12 +894,11 @@ public  class  Principal {
     private static void CrearCliente() {
         System.out.println("Ingrese los datos del cliente");
         System.out.print("Ingrese el nombre del cliente: ");
-        String nombre=input.next();
-
+        String nombre=input.nextLine();
         while(nombre.equals("")) {
             System.out.println("nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            nombre= input.next();
+            nombre= input.nextLine();
         }
         System.out.print("Ingrese la cedula: ");
         int cedula=input.nextInt();
@@ -1273,17 +921,16 @@ public  class  Principal {
             efectivo=input.nextInt();
         }
         System.out.print("Ingrese el nombre del area de consumo: ");
-        String nombreArea=input.next();
+        String nombreArea=input.nextLine();
         while(nombreArea.equals("")) {
             System.out.println("Nombre invalido, ingreselo de nuevo");
             System.out.print("Nombre: ");
-            nombreArea= input.next();
+            nombreArea= input.nextLine();
         }
         for (Area area:areas) {
             if(area.nombreDelArea.equals(nombreArea)){
                 Cliente NuevoCliente=new Cliente(nombre,cedula,efectivo,area);
                 clientes.add(NuevoCliente);
-                area.clientes.add(NuevoCliente);
                 System.out.println("Cliente creado con exito");
                 return;
             }
