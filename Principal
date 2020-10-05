@@ -675,32 +675,69 @@ public  class  Principal {
         }
     }
     private static void EliminarMultinacional() {
-        System.out.println("-----------------------------");
-        System.out.println("¿Desea buscar la multinacional a eliminar por nombre o por NIT?");
-        System.out.println("1. Nombre ");
-        System.out.println("2. NIT ");
-        System.out.println("-----------------------------");
-        System.out.println();
+        label:
+        while (true) {
+            System.out.println("-----------------------------");
+            System.out.println("¿Desea buscar la multinacional a eliminar por nombre o por NIT?");
+            System.out.println("1. Nombre ");
+            System.out.println("2. NIT ");
+            System.out.println("0. Salir");
+            System.out.println("-----------------------------");
 
-        String optionMultinacionalBorrador = input.next();
+            String optionMultinacionalBorrador = input.next();
 
-        switch (optionMultinacionalBorrador){
-            case "1":
-                System.out.println("Ingrese el nombre de la multinacional a borrar ");
-                String multinacionalBorrador=input.next();
-                multinacionales.removeIf(multinacional -> multinacionalBorrador.equalsIgnoreCase(multinacional.nombre));
-                System.out.println("Borrado con exito");
+            switch (optionMultinacionalBorrador) {
+                case "1":
+                    System.out.println("Ingrese el nombre de la multinacional a borrar ");
+                    String multinacionalBorrador = input.nextLine();
+                    for (Multinacional multinacional : multinacionales) {
+                        if (multinacionalBorrador.equalsIgnoreCase(multinacional.nombre)) {
+                            System.out.println("¿Esta seguro que desea borrarla?");
+                            System.out.println("Si(Y)/No(N)");
+                            String optionGuardado = input.next();
+                            switch (optionGuardado) {
+                                case "Y":
+                                    multinacionales.remove(multinacional);
+                                    System.out.println("Multinacional borrada con exito");
+                                    return;
+                                case "N":
+                                    return;
+                            }
+                        }
+                    }
+                    System.out.println("No se encontro multinacional con este nombre");
+                    break;
+                case "2":
+                    System.out.println("Ingrese el NIT de la multinacional");
+                    int multinacionalNIT = input.nextInt();
+                    String multinacionalStringNIT = Integer.toString(multinacionalNIT);
+                    String multinacionalStringNITDepurada = multinacionalStringNIT.replace(".", "");
+                    int multinacionalNITDepurada = Integer.parseInt(multinacionalStringNITDepurada);
+                    for (Multinacional multinacional : multinacionales) {
+                        if (multinacional.NIT == multinacionalNITDepurada) {
+                            System.out.println("¿Esta seguro que desea borrarla?");
+                            System.out.println("Si(Y)/No(N)");
+                            String optionGuardado = input.next();
+                            switch (optionGuardado) {
+                                case "Y":
+                                    multinacionales.remove(multinacional);
+                                    System.out.println("Multinacional borrada con exito");
+                                    return;
+                                case "N":
+                                    return;
+                            }
+                        }
 
+                    }
+                    System.out.println("No se encuentro la multinacional");
 
-                break;
-            case "2":
+                    break;
 
-                break;
-
+                case "0":
+                    break label;
+            }
         }
     }
-
-
 
 
     private static void VerSede() {
