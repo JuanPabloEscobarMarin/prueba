@@ -1,24 +1,26 @@
-public class Inversionista {
+import java.util.ArrayList;
 
-    public String firma;
-    public int ganancias;
-    public  int inversionSede;
-    public ArrayList<Sede> sedes;
-    public ArrayList<Multinacional> multinacional;
-    public  int inversionMN;
+public class Area {
 
-    public Inversionista(String firma, int inversionMN,int inversionSede,int ganancias) {
-        this.firma =firma ;
-        this.ganancias = ganancias;
-        this.inversionMN = inversionMN;
-        this.inversionSede = inversionSede;
-        this.multinacional = new ArrayList<>();
-        this.sedes= new ArrayList<>();
+    public String nombreDelArea;
+    public ArrayList<Empleado> empleados;
+    public  ArrayList<Cliente> clientes;
+    public int ingresoArea;
+    public Sede sede;
+    public  int gastoArea;
 
+    public Area (String nombreDelArea, int ingresoArea,int gastoArea,Sede sede) {
+        this.nombreDelArea = nombreDelArea ;
+        this.ingresoArea = ingresoArea;
+        this.gastoArea= gastoArea;
+        this.sede = sede;
+        this.clientes = new ArrayList<>();
+        this.empleados = new ArrayList<>();
     }
+
     @Override
     public String toString(){
-        return "Firma: "+firma+", inversion: "+(inversionMN+inversionSede)+", ganancias: "+ganancias;
+        return "Nombre del area: "+nombreDelArea+", numero de empleados: "+empleados.size()+", fondos: "+ingresoArea+", gastos: "+gastoArea+", sede: "+sede.nombre;
     }
 
 }
