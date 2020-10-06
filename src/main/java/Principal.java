@@ -1,11 +1,12 @@
 import Clases.*;
+import Packaje_JSON.EscribirJSON;
+
 import  java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Collections;
 
 public  class  Principal {
 
-    public static LinkedList<JSON>  nuevoUsuarioJSON =new LinkedList<>();
     public static LinkedList<Multinacional>  multinacionales =new LinkedList<>();
     public static LinkedList<Sede>  sedes =new LinkedList<>();
     public static LinkedList<Pais>  paises =new LinkedList<>();
@@ -85,7 +86,8 @@ public  class  Principal {
 
         Usuario nuevoUsuario = new Usuario(documentoString, Nombre, Apellido, Correo, Password);
         usuarios.add(nuevoUsuario);
-
+        Usuario prueba = new Usuario(documentoString,Nombre, Apellido, Correo, Password);
+        EscribirJSON.guardarUsuario(prueba);
         System.out.println("USUARIO REGISTRADO EXITOSAMENTE");
 
 
