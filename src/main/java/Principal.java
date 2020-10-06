@@ -1,5 +1,6 @@
 
 import Clases.*;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.json.simple.JSONStreamAware;
 
 import  java.util.LinkedList;
@@ -395,6 +396,9 @@ public  class  Principal {
             }
             else if (cerrado.equals("Y")||cerrado.equals("y")) {
                 System.out.println("CERRANDO PROGRAMA");
+                System.out.println("-----------------------------");
+                System.out.println("Programa cerrado con exito");
+                System.out.println("-----------------------------");
                 System.exit(0);
 
             } else {
@@ -626,6 +630,11 @@ public  class  Principal {
     }
 
     private static void EliminarMultinacional() {
+
+        if(multinacionales.isEmpty()){
+            System.out.println("No existe ninguna multinacional");
+            return;
+        }
         System.out.println("-----------------------------");
         System.out.println("¿Desea buscar la multinacional a eliminar por nombre o por NIT?");
         System.out.println("1. Nombre ");
@@ -655,23 +664,24 @@ public  class  Principal {
                     }
                 }
                 System.out.println("No se encontro multinacional con este nombre");
+                EliminarMultinacional();
                 break;
             case "2":
                 System.out.println("Ingrese el NIT de la multinacional");
-                String multinacionalStringNIT = input.next();
-                String multinacionalStringNITDepurada = multinacionalStringNIT.replace(".", "");
-                int multinacionalNITDepurada = Integer.parseInt(multinacionalStringNITDepurada);
-                for (Multinacional multinacional : multinacionales) {
-                    if (multinacional.NIT == multinacionalNITDepurada) {
-                        System.out.println("Nombre: "+multinacional.nombre);
-                        System.out.println("¿Esta seguro que desea borrarla?");
-                        System.out.println("Si(Y)/No(N)");
-                        String optionGuardado = input.next();
-                        switch (optionGuardado) {
-                            case "Y":
-                                multinacionales.remove(multinacional);
-                                System.out.println("Multinacional borrada con exito");
-                                return;
+                                String multinacionalStringNIT = input.next();
+                                String multinacionalStringNITDepurada = multinacionalStringNIT.replace(".", "");
+                                int multinacionalNITDepurada = Integer.parseInt(multinacionalStringNITDepurada);
+                                for (Multinacional multinacional : multinacionales) {
+                                    if (multinacional.NIT == multinacionalNITDepurada) {
+                                        System.out.println("Nombre: "+multinacional.nombre);
+                                        System.out.println("¿Esta seguro que desea borrarla?");
+                                        System.out.println("Si(Y)/No(N)");
+                                        String optionGuardado = input.next();
+                                        switch (optionGuardado) {
+                                            case "Y":
+                                                multinacionales.remove(multinacional);
+                                                System.out.println("Multinacional borrada con exito");
+                                                return;
                             case "N":
                                 return;
                         }
@@ -679,6 +689,7 @@ public  class  Principal {
 
                 }
                 System.out.println("No se encuentro la multinacional");
+                                EditarMultinacional();
 
                 break;
 
@@ -891,6 +902,33 @@ public  class  Principal {
     }
 
     private static void EliminarSede() {
+
+        if(sedes.isEmpty()){
+            System.out.println("No existe ninguna sede");
+            return;
+        }
+        System.out.println("Ingrese el nombre de la sede a borrar ");
+        input.nextLine();
+        String sedeBorrador = input.nextLine();
+        for (Sede sede : sedes) {
+            if (sedeBorrador.equalsIgnoreCase(sede.nombre)) {
+                System.out.println("Nombre: "+sede.nombre);
+                System.out.println("¿Esta seguro que desea borrarla?");
+                System.out.println("Si(Y)/No(N)");
+                String optionGuardado = input.next();
+                switch (optionGuardado) {
+                    case "Y":
+                        sedes.remove(sede);
+                        System.out.println("Sede borrada con exito");
+                        return;
+                    case "N":
+                        return;
+                }
+            }
+        }
+        System.out.println("No se encontro sede con este nombre");
+        EliminarSede();
+
     }
 
 
@@ -988,6 +1026,32 @@ public  class  Principal {
 
     private static void EliminarPais() {
 
+
+        if(paises.isEmpty()){
+            System.out.println("No existe ningun pais");
+            return;
+        }
+        System.out.println("Ingrese el nombre de la pais a borrar ");
+        input.nextLine();
+        String paisBorrador = input.nextLine();
+        for (Pais pais : paises) {
+            if (paisBorrador.equalsIgnoreCase(pais.nombre)) {
+                System.out.println("Nombre: "+pais.nombre);
+                System.out.println("¿Esta seguro que desea borrarla?");
+                System.out.println("Si(Y)/No(N)");
+                String optionGuardado = input.next();
+                switch (optionGuardado) {
+                    case "Y":
+                        paises.remove(pais);
+                        System.out.println("pais borrada con exito");
+                        return;
+                    case "N":
+                        return;
+                }
+            }
+        }
+        System.out.println("No se encontro pais con este nombre");
+        EliminarPais();
     }
 
 
@@ -1114,9 +1178,34 @@ public  class  Principal {
     }
 
     private static void EliminarInversionista() {
+
+
+        if(inversionistas.isEmpty()){
+            System.out.println("No existe ningun inversionista");
+            return;
+        }
+        System.out.println("Ingrese la firma del inversionista a borrar ");
+        input.nextLine();
+        String inversionistaBorrador = input.nextLine();
+        for (Inversionista inversionista : inversionistas) {
+            if (inversionistaBorrador.equalsIgnoreCase(inversionista.firma)) {
+                System.out.println("Nombre: "+inversionista.firma);
+                System.out.println("¿Esta seguro que desea borrarla?");
+                System.out.println("Si(Y)/No(N)");
+                String optionGuardado = input.next();
+                switch (optionGuardado) {
+                    case "Y":
+                        inversionistas.remove(inversionista);
+                        System.out.println("inversionista borrado con exito");
+                        return;
+                    case "N":
+                        return;
+                }
+            }
+        }
+        System.out.println("No se encontro un inversionista con esta firma");
+        EliminarInversionista();
     }
-
-
     private static void VerArea() {
         if(areas.isEmpty()){
             System.out.println("No se encuentra ninguna area");
@@ -1260,6 +1349,34 @@ public  class  Principal {
         EditarArea();
     }
     private static void EliminarArea() {
+        if(areas.isEmpty()){
+            System.out.println("No existe ningun area");
+            return;
+        }
+        System.out.println("Ingrese el nombre del area a borrar ");
+        input.nextLine();
+        String areaBorrador = input.nextLine();
+        for (Area area : areas) {
+            if (areaBorrador.equalsIgnoreCase(area.nombreDelArea)) {
+                System.out.println("nombreDeArea: "+area.nombreDelArea);
+                System.out.println("¿Esta seguro que desea borrarla?");
+                System.out.println("Si(Y)/No(N)");
+                String optionGuardado = input.next();
+                switch (optionGuardado) {
+                    case "Y":
+                        areas.remove(area);
+                        System.out.println("area borrada con exito");
+                        return;
+                    case "N":
+                        return;
+                }
+            }
+        }
+        System.out.println("No se encontro un area con este nombre");
+        EliminarArea();
+
+
+
     }
 
 
@@ -1422,6 +1539,33 @@ public  class  Principal {
     }
 
     private static void EliminarEmpleado() {
+        if(empleados.isEmpty()){
+            System.out.println("No existe ningun empleado");
+            return;
+        }
+        System.out.println("Ingrese la cedula de el empleado");
+        String empleadoStringCedula = input.next();
+        String empleadoStringCedulaDepurada = empleadoStringCedula.replace(".", "");
+        int empleadoCedulaDepurada = Integer.parseInt(empleadoStringCedulaDepurada);
+        for (Empleado empleado : empleados) {
+            if (empleado.cedula == empleadoCedulaDepurada) {
+                System.out.println("Cedula: "+empleado.cedula);
+                System.out.println("¿Esta seguro que desea borrarlo?");
+                System.out.println("Si(Y)/No(N)");
+                String optionGuardado = input.next();
+                switch (optionGuardado) {
+                    case "Y":
+                        empleados.remove(empleado);
+                        System.out.println("Empleado borrado con exito");
+                        return;
+                    case "N":
+                        return;
+                }
+            }
+
+        }
+        System.out.println("No se encuentro el empleado");
+        EliminarEmpleado();
     }
 
 
@@ -1572,6 +1716,36 @@ public  class  Principal {
     }
 
     private static void EliminarCliente() {
+        if(clientes.isEmpty()){
+            System.out.println("No existe ningun cliente");
+            return;
+        }
+        System.out.println("Ingrese la cedula de el cliente");
+        String clienteStringCedula = input.next();
+        String clienteStringCedulaDepurada = clienteStringCedula.replace(".", "");
+        int clienteCedulaDepurada = Integer.parseInt(clienteStringCedulaDepurada);
+        for (Cliente cliente : clientes) {
+            if (cliente.cedula == clienteCedulaDepurada) {
+                System.out.println("Cedula: "+cliente.cedula);
+                System.out.println("¿Esta seguro que desea borrarlo?");
+                System.out.println("Si(Y)/No(N)");
+                String optionGuardado = input.next();
+                switch (optionGuardado) {
+                    case "Y":
+                        clientes.remove(cliente);
+                        System.out.println("cliente borrado con exito");
+                        return;
+                    case "N":
+                        return;
+                }
+            }
+
+        }
+        System.out.println("No se encuentro el cliente");
+        EliminarCliente();
+
+
+
     }
 
 }
