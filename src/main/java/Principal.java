@@ -285,8 +285,6 @@ public  class  Principal {
                             EliminarPais();
                             break;
                     }
-
-
                     break;
                 case "4":
                     String optionInversionista;
@@ -394,8 +392,6 @@ public  class  Principal {
                             EliminarCliente();
                             break;
                     }
-
-
                     break;
                 case "0":
                     break label;
