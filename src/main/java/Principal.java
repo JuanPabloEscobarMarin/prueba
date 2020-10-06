@@ -1,10 +1,7 @@
-
 import Clases.*;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-import org.json.simple.JSONStreamAware;
-
 import  java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Collections;
 
 public  class  Principal {
 
@@ -372,8 +369,2318 @@ public  class  Principal {
         }
     }
 
-
     private static void busqueda() {
+        String option;
+        while (true) {
+            System.out.println();
+            System.out.println("-----------------------------");
+            System.out.println("Escoja una opcion para realizar la busqueda:");
+            System.out.println("1. Multinacionales");
+            System.out.println("2. Paises");
+            System.out.println("3. Sedes");
+            System.out.println("4. Inversionistas");
+            System.out.println("5. Areas");
+            System.out.println("6. Empleados");
+            System.out.println("7. Clientes");
+            System.out.println("0. Salir");
+            System.out.println();
+            option = input.next();
+            switch (option) {
+                case "1":
+                    buscarMultinacionales();
+                case "2":
+                    buscarPaises();
+                case "3":
+                    buscarSedes();
+                case "4":
+                    buscarInversionistas();
+                case "5":
+                    buscarAreas();
+                case "6":
+                    buscarEmpleados();
+                case "7":
+                    buscarClientes();
+                case "0":
+                    menuPrincipal();
+            }
+        }
+    }
+    private static void buscarMultinacionales(){
+        if (multinacionales.size() == 0) {
+            System.out.println("No Hay multinacionales");
+        } else {
+            LinkedList<Multinacional> repuesto = new LinkedList<>();
+            for (Multinacional multinacional : multinacionales) {
+                repuesto.add(multinacional);
+            }
+            String option2;
+            System.out.println("Escoja un atributo de busqueda:");
+            System.out.println("1. Nombre");
+            System.out.println("2. NIT");
+            System.out.println("3. Ceo");
+            System.out.println("4. Ingreso total");
+            System.out.println("5. Gasto total");
+            System.out.println("6. Mostrar todas las multinacionales");
+            option2 = input.next();
+            switch (option2) {
+                case "1": {
+                    String option3;
+                    while (true) {
+                        System.out.println("Escoja una opcion:");
+                        System.out.println("1. Valor exacto");
+                        System.out.println("2. Valor sin considerar las mayusculas");
+                        option3 = input.next();
+                        if (option3.equals("1")) {
+                            input.nextLine();
+                            System.out.print("Ingrese el Nombre a buscar: ");
+                            String buscarM = input.nextLine();
+                            int count = 0;
+                            int index = 1;
+                            for (Multinacional multinacional : multinacionales) {
+                                if (multinacional.nombre.equals(buscarM)) {
+                                    System.out.println(index + " " + multinacional);
+                                    index++;
+                                } else {
+                                    count++;
+                                    if (count == multinacionales.size()) {
+                                        System.out.println("No se encuentra la multinacional");
+                                    }
+                                }
+                            }
+                            busqueda();
+                        } else if (option3.equals("2")) {
+                            input.nextLine();
+                            System.out.print("Ingrese el nombre a buscar: ");
+                            String buscarNombre = input.nextLine();
+                            String nombreMinuscula = buscarNombre.toLowerCase();
+                            int count = 0;
+                            int index = 1;
+                            for (Multinacional multinacional : multinacionales) {
+                                String minusculas = multinacional.nombre.toLowerCase();
+                                if (minusculas.equals(nombreMinuscula)) {
+                                    System.out.println(index + " " + multinacional);
+                                    index++;
+                                } else {
+                                    count++;
+                                    if (count == multinacionales.size()) {
+                                        System.out.println("No se encuentra la multinacional");
+                                    }
+                                }
+                            }
+                            busqueda();
+                        }
+                    }
+                }
+                case "2": {
+                    String orden;
+                    while (true) {
+                        System.out.println("¿De que manera desea organizar el resultado?");
+                        System.out.println("1. Ascendente");
+                        System.out.println("2. Descendente");
+                        orden = input.next();
+                        if (orden.equals("1")) {
+                            Collections.sort(repuesto, new ComparadorM());
+                        } else if (orden.equals("2")) {
+                            Collections.sort(repuesto, new ComparadorM().reversed());
+                        }
+                        String option3;
+                        System.out.println("Escoja una opcion:");
+                        System.out.println("1. Valor exacto");
+                        System.out.println("2. Valor maximo");
+                        System.out.println("3. Valor minimo");
+                        System.out.println("4. Rango");
+                        option3 = input.next();
+                        switch (option3) {
+                            case "1" -> {
+                                System.out.print("Ingrese el NIT a buscar: ");
+                                int buscarNIT = input.nextInt();
+                                int count = 0;
+                                int index = 1;
+                                for (Multinacional multinacional : multinacionales) {
+                                    if (multinacional.NIT == buscarNIT) {
+                                        System.out.println(index + " " + multinacional);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == multinacionales.size()) {
+                                            System.out.println("No se encuentra la multinacional");
+                                        }
+                                    }
+                                }
+                                repuesto.removeAll(repuesto);
+                                busqueda();
+                            }
+                            case "2" -> {
+                                System.out.print("Ingrese el NIT de valor maximo a buscar: ");
+                                int ValorMaximo = input.nextInt();
+                                int count = 0;
+                                int index = 1;
+                                for (Multinacional multinacional : repuesto) {
+                                    if (multinacional.NIT <= ValorMaximo) {
+                                        System.out.println(index + " " + multinacional);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == multinacionales.size()) {
+                                            System.out.println("No se encuentra la multinacional");
+                                        }
+                                    }
+                                }
+                                repuesto.removeAll(repuesto);
+                                busqueda();
+                            }
+                            case "3" -> {
+                                System.out.print("Ingrese el NIT de valor minimo a buscar: ");
+                                int ValorMinimo = input.nextInt();
+                                int count = 0;
+                                int index = 1;
+                                for (Multinacional multinacional : repuesto) {
+                                    if (multinacional.NIT >= ValorMinimo) {
+                                        System.out.println(index + " " + multinacional);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == multinacionales.size()) {
+                                            System.out.println("No se encuentra la multinacional");
+                                        }
+                                    }
+                                }
+                                repuesto.removeAll(repuesto);
+                                busqueda();
+                            }
+                            case "4" -> {
+                                System.out.print("Ingrese un valor minimo de NIT: ");
+                                int rangoMinimo = input.nextInt();
+                                System.out.print("Ingrese un valor maximo de NIT: ");
+                                int rangoMaximo = input.nextInt();
+                                int count = 0;
+                                int index = 1;
+                                for (Multinacional multinacional : repuesto) {
+                                    if (multinacional.NIT >= rangoMinimo && multinacional.NIT <= rangoMaximo) {
+                                        System.out.println(index + " " + multinacional);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == multinacionales.size()) {
+                                            System.out.println("No se encuentra la multinacional");
+                                        }
+                                    }
+                                }
+                                repuesto.removeAll(repuesto);
+                                busqueda();
+                            }
+                        }
+                    }
+                }
+                case "3": {
+                    String option3;
+                    while (true) {
+                        System.out.println("Escoja una opcion:");
+                        System.out.println("1. Valor exacto");
+                        System.out.println("2. valor sin considerar mayusculas");
+                        option3 = input.next();
+                        if (option3.equals("1")) {
+                            input.nextLine();
+                            System.out.print("Ingrese el ceo a buscar: ");
+                            String buscarceo = input.nextLine();
+                            int count = 0;
+                            int index = 1;
+                            for (Multinacional multinacional : multinacionales) {
+                                if (multinacional.ceo.equals(buscarceo)) {
+                                    System.out.println(index + " " + multinacional);
+                                    index++;
+                                } else {
+                                    count++;
+                                    if (count == multinacionales.size()) {
+                                        System.out.println("No se encuentra la multinacional");
+                                    }
+                                }
+                            }
+                            busqueda();
+                        } else if (option3.equals("2")) {
+                            input.nextLine();
+                            System.out.print("Ingrese el ceo a buscar: ");
+                            String buscarceo = input.nextLine();
+                            String ceoMinuscula = buscarceo.toLowerCase();
+                            int count = 0;
+                            int index = 1;
+                            for (Multinacional multinacional : multinacionales) {
+                                String minusculas = multinacional.ceo.toLowerCase();
+                                if (minusculas.equals(ceoMinuscula)) {
+                                    System.out.println(index + " " + multinacional);
+                                    index++;
+                                } else {
+                                    count++;
+                                    if (count == multinacionales.size()) {
+                                        System.out.println("No se encuentra la multinacional");
+                                    }
+                                }
+                            }
+                            busqueda();
+                        }
+                    }
+                }
+                case "4": {
+                    String orden;
+                    while (true) {
+                        System.out.println("¿De que manera desea organizar el resultado?");
+                        System.out.println("1. Ascendente");
+                        System.out.println("2. Descendente");
+                        orden = input.next();
+                        if (orden.equals("1")) {
+                            Collections.sort(repuesto, new ComparadorMIT());
+                        } else if (orden.equals("2")) {
+                            Collections.sort(repuesto, new ComparadorMIT().reversed());
+                        }
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja una opcion:");
+                            System.out.println("1. Valor exacto");
+                            System.out.println("2. Valor maximo");
+                            System.out.println("3. Valor minimo");
+                            System.out.println("4. Rango");
+                            option3 = input.next();
+                            switch (option3) {
+                                case "1" -> {
+                                    System.out.print("Ingrese el valor de ingreso total a buscar: ");
+                                    double buscarTotal = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Multinacional multinacional : multinacionales) {
+                                        if (multinacional.ingresoTotal == buscarTotal) {
+                                            System.out.println(index + " " + multinacional);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == multinacionales.size()) {
+                                                System.out.println("No se encuentra la multinacional");
+                                            }
+                                        }
+                                    }
+                                    busqueda();
+                                }
+                                case "2" -> {
+                                    System.out.print("Ingrese el valor de ingreso total maximo a buscar: ");
+                                    double ValorMaximo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 0;
+                                    for (Multinacional multinacional : repuesto) {
+                                        if (multinacional.ingresoTotal <= ValorMaximo) {
+                                            System.out.println(index + " " + multinacional);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == multinacionales.size()) {
+                                                System.out.println("No se encuentra la multinacional");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                case "3" -> {
+                                    System.out.print("Ingrese el valor de ingreso total minimo a buscar: ");
+                                    double ValorMinimo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Multinacional multinacional : repuesto) {
+                                        if (multinacional.ingresoTotal >= ValorMinimo) {
+                                            System.out.println(index + " " + multinacional);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == multinacionales.size()) {
+                                                System.out.println("No se encuentra la multinacional");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                case "4" -> {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Multinacional multinacional : repuesto) {
+                                        if (multinacional.ingresoTotal <= Max && multinacional.ingresoTotal >= Min) {
+                                            System.out.println(index + " " + multinacional);
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == multinacionales.size()) {
+                                            System.out.println("No se encuentran multinacionales");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                }
+                case "5": {
+                    String orden;
+                    while (true) {
+                        System.out.println("¿De que manera desea organizar el resultado?");
+                        System.out.println("1. Ascendente");
+                        System.out.println("2. Descendente");
+                        orden = input.next();
+                        if (orden.equals("1")) {
+                            Collections.sort(repuesto, new ComparadorMGT());
+                        } else if (orden.equals("2")) {
+                            Collections.sort(repuesto, new ComparadorMGT().reversed());
+                        }
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja una opcion:");
+                            System.out.println("1. Valor exacto");
+                            System.out.println("2. Valor maximo");
+                            System.out.println("3. Valor minimo");
+                            System.out.println("4. Rango");
+                            option3 = input.next();
+                            switch (option3) {
+                                case "1": {
+                                    System.out.print("Ingrese el valor de gasto total a buscar: ");
+                                    double buscarTotal = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Multinacional multinacional : multinacionales) {
+                                        if (multinacional.gastoTotal == buscarTotal) {
+                                            System.out.println(index + " " + multinacional);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == multinacionales.size()) {
+                                                System.out.println("No se encuentra la multinacional");
+                                            }
+                                        }
+                                    }
+                                    busqueda();
+                                }
+                                case "2": {
+                                    System.out.print("Ingrese el valor de gasto total maximo a buscar: ");
+                                    double ValorMaximo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Multinacional multinacional : repuesto) {
+                                        if (multinacional.gastoTotal <= ValorMaximo) {
+                                            System.out.println(index + " " + multinacional);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == multinacionales.size()) {
+                                                System.out.println("No se encuentra la multinacional");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                case "3": {
+                                    System.out.print("Ingrese el valor de gasto total minimo a buscar: ");
+                                    double ValorMinimo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Multinacional multinacional : repuesto) {
+                                        if (multinacional.gastoTotal >= ValorMinimo) {
+                                            System.out.println(index + " " + multinacional);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == multinacionales.size()) {
+                                                System.out.println("No se encuentra la multinacional");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                case "4": {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Multinacional multinacional : repuesto) {
+                                        if (multinacional.gastoTotal <= Max && multinacional.gastoTotal >= Min) {
+                                            System.out.println(index + " " + multinacional);
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == multinacionales.size()) {
+                                            System.out.println("No se encuentran multinacionales");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                }
+                case "6": {
+                    String option3;
+                    while (true) {
+                        System.out.println("Seleccione el atributo por el cual ordenar: ");
+                        System.out.println("1. NIT");
+                        System.out.println("2. Ingreso total");
+                        System.out.println("3. Gasto total");
+                        option3 = input.next();
+                        if (option3.equals("1")) {
+                            int index = 1;
+                            Collections.sort(repuesto, new ComparadorM());
+                            for (Multinacional multinacional : repuesto) {
+                                System.out.println(index + " " + multinacional);
+                                index++;
+                            }
+                        } else if (option3.equals("2")) {
+                            int index = 1;
+                            Collections.sort(repuesto, new ComparadorMIT());
+                            for (Multinacional multinacional : repuesto) {
+                                System.out.println(index + " " + multinacional);
+                                index++;
+                            }
+                        } else if (option3.equals("3")) {
+                            int index = 1;
+                            Collections.sort(repuesto, new ComparadorMGT());
+                            for (Multinacional multinacional : repuesto) {
+                                System.out.println(index + " " + multinacional);
+                                index++;
+                            }
+                        }
+                        repuesto.removeAll(repuesto);
+                        busqueda();
+                    }
+                }
+            }
+        }
+    }
+    private static void buscarPaises(){
+        if (paises.size() == 0) {
+            System.out.println("No hay paises registrados");
+        } else {
+            String option2;
+            while (true) {
+                System.out.println("Escoja un atributo de busqueda:");
+                System.out.println("1. Nombre");
+                System.out.println("2. Presidente");
+                System.out.println("3. Mostrar todos los paises");
+                option2 = input.next();
+                switch (option2) {
+                    case "1": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja una opcion:");
+                            System.out.println("1. Valor exacto");
+                            System.out.println("2. Valor sin considerar las mayusculas");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el nombre del pais a buscar: ");
+                                String buscarM = input.nextLine();
+                                int count = 0;
+                                int index = 1;
+                                for (Pais pais : paises) {
+                                    if (pais.nombre.equals(buscarM)) {
+                                        System.out.println(index + " " + pais);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == paises.size()) {
+                                            System.out.println("No se encuentra el pais");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            } else if (option3.equals("2")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el nombre del pais a buscar: ");
+                                String buscarNombre = input.nextLine();
+                                String nombreMinuscula = buscarNombre.toLowerCase();
+                                int count = 0;
+                                int index = 1;
+                                for (Pais pais : paises) {
+                                    String minusculas = pais.nombre.toLowerCase();
+                                    if (minusculas.equals(nombreMinuscula)) {
+                                        System.out.println(index + " " + pais);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == paises.size()) {
+                                            System.out.println("No se encuentra el pais");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            }
+                        }
+                    }
+                    case "2": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja una opcion:");
+                            System.out.println("1. Valor exacto");
+                            System.out.println("2. Valor sin considerar las mayusculas");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el nombre del presidente a buscar: ");
+                                String buscarM = input.nextLine();
+                                int count = 0;
+                                int index = 1;
+                                for (Pais pais : paises) {
+                                    if (pais.presidente.equals(buscarM)) {
+                                        System.out.println(index + " " + pais);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == paises.size()) {
+                                            System.out.println("No se encuentra el pais");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            } else if (option3.equals("2")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el nombre del presidente a buscar: ");
+                                String buscarNombre = input.nextLine();
+                                String nombreMinuscula = buscarNombre.toLowerCase();
+                                int count = 0;
+                                int index = 1;
+                                for (Pais pais : paises) {
+                                    String minusculas = pais.presidente.toLowerCase();
+                                    if (minusculas.equals(nombreMinuscula)) {
+                                        System.out.println(index + " " + pais);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == paises.size()) {
+                                            System.out.println("No se encuentra el pais");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            }
+                        }
+                    }
+                    case "3": {
+                        System.out.println("Paises registrados totales: ");
+                        System.out.println();
+                        int index = 1;
+                        for (Pais pais : paises) {
+                            System.out.println(index + " " + pais);
+                            index++;
+                        }
+                        busqueda();
+                    }
+                }
+            }
+        }
+    }
+    private static void buscarSedes(){
+        if (sedes.size() == 0) {
+            System.out.println("No hay sedes registradas");
+        } else {
+            LinkedList<Sede> repuesto = new LinkedList<>();
+            for (Sede sede : sedes) {
+                repuesto.add(sede);
+            }
+            String option2;
+            while (true) {
+                System.out.println("Escoja un atributo de busqueda:");
+                System.out.println("1. Gerente");
+                System.out.println("2. Ingresos totales");
+                System.out.println("3. Gastos totales");
+                System.out.println("4. Sedes totales");
+                option2 = input.next();
+                switch (option2) {
+                    case "1": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja una opcion:");
+                            System.out.println("1. Valor exacto");
+                            System.out.println("2. Valor sin considerar las mayusculas");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el nombre del gerente a buscar: ");
+                                String buscarM = input.nextLine();
+                                int count = 0;
+                                int index = 1;
+                                for (Sede sede : sedes) {
+                                    if (sede.gerente.equals(buscarM)) {
+                                        System.out.println(index + " " + sede);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == sedes.size()) {
+                                            System.out.println("No se encuentra la sede");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            } else if (option3.equals("2")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el nombre del gerente a buscar: ");
+                                String buscarNombre = input.nextLine();
+                                String nombreMinuscula = buscarNombre.toLowerCase();
+                                int count = 0;
+                                int index = 1;
+                                for (Sede sede : sedes) {
+                                    String minusculas = sede.gerente.toLowerCase();
+                                    if (minusculas.equals(nombreMinuscula)) {
+                                        System.out.println(index + " " + sede);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == sedes.size()) {
+                                            System.out.println("No se encuentra la sede");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            }
+                        }
+                    }
+                    case "2": {
+                        String orden;
+                        while (true) {
+                            System.out.println("¿De que manera desea organizar el resultado?");
+                            System.out.println("1. Ascendente");
+                            System.out.println("2. Descendente");
+                            orden = input.next();
+                            if (orden.equals("1")) {
+                                Collections.sort(repuesto, new ComparadorSIT());
+                            } else if (orden.equals("2")) {
+                                Collections.sort(repuesto, new ComparadorSIT().reversed());
+                            }
+                            String option3;
+                            while (true) {
+                                System.out.println("Escoja una opcion:");
+                                System.out.println("1. Valor exacto");
+                                System.out.println("2. Valor maximo");
+                                System.out.println("3. Valor minimo");
+                                System.out.println("4. Rango");
+                                option3 = input.next();
+                                if (option3.equals("1")) {
+                                    input.nextLine();
+                                    System.out.print("Ingrese el valor de ingresos totales de la sede a buscar: ");
+                                    double buscarTotal = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Sede sede : sedes) {
+                                        if (sede.ingresoSede == buscarTotal) {
+                                            System.out.println(index + " " + sede);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == sedes.size()) {
+                                                System.out.println("No se encuentra la sede");
+                                            }
+                                        }
+                                    }
+                                    busqueda();
+                                }
+                                if (option3.equals("2")) {
+                                    System.out.print("Ingrese el valor de ingreso total maximo a buscar: ");
+                                    double ValorMaximo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Sede sede : repuesto) {
+                                        if (sede.ingresoSede <= ValorMaximo) {
+                                            System.out.println(index + " " + sede);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == sedes.size()) {
+                                                System.out.println("No se encuentra la sede");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("3")) {
+                                    System.out.print("Ingrese el valor de ingreso total minimo a buscar: ");
+                                    double ValorMinimo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Sede sede : repuesto) {
+                                        if (sede.ingresoSede >= ValorMinimo) {
+                                            System.out.println(index + " " + sede);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == sedes.size()) {
+                                                System.out.println("No se encuentra la sede");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("4")) {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Sede sede : repuesto) {
+                                        if (sede.ingresoSede <= Max && sede.ingresoSede >= Min) {
+                                            System.out.println(index + " " + sede);
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == sedes.size()) {
+                                            System.out.println("No se encuentra la sede");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                    case "3": {
+                        String orden;
+                        while (true) {
+                            System.out.println("¿De que manera desea organizar el resultado?");
+                            System.out.println("1. Ascendente");
+                            System.out.println("2. Descendente");
+                            orden = input.next();
+                            if (orden.equals("1")) {
+                                Collections.sort(repuesto, new ComparadorSGT());
+                            } else if (orden.equals("2")) {
+                                Collections.sort(repuesto, new ComparadorSGT().reversed());
+                            }
+                            String option3;
+                            while (true) {
+                                System.out.println("Escoja una opcion: ");
+                                System.out.println("1. Valor exacto");
+                                System.out.println("2. Valor maximo");
+                                System.out.println("3. Valor minimo");
+                                System.out.println("4. Rango");
+                                option3 = input.next();
+                                if (option3.equals("1")) {
+                                    input.nextLine();
+                                    System.out.print("Ingrese el valor de gastos totales de la sede a buscar: ");
+                                    double buscarTotal = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Sede sede : sedes) {
+                                        if (sede.gastosSede == buscarTotal) {
+                                            System.out.println(index + " " + sede);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == sedes.size()) {
+                                                System.out.println("No se encuentra la sede");
+                                            }
+                                        }
+                                    }
+                                    busqueda();
+                                }
+                                if (option3.equals("2")) {
+                                    System.out.print("Ingrese el valor de gasto total maximo a buscar: ");
+                                    double ValorMaximo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Sede sede : repuesto) {
+                                        if (sede.gastosSede <= ValorMaximo) {
+                                            System.out.println(index + " " + sede);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == sedes.size()) {
+                                                System.out.println("No se encuentra la sede");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("3")) {
+                                    System.out.print("Ingrese el valor de gasto total minimo a buscar: ");
+                                    double ValorMinimo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Sede sede : repuesto) {
+                                        if (sede.gastosSede >= ValorMinimo) {
+                                            System.out.println(index + " " + sede);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == sedes.size()) {
+                                                System.out.println("No se encuentra la sede");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("4")) {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Sede sede : repuesto) {
+                                        if (sede.gastosSede <= Max && sede.gastosSede >= Min) {
+                                            System.out.println(index + " " + sede);
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == sedes.size()) {
+                                            System.out.println("No se encuentra la sede");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                    case "4": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja un atributo de busqueda:");
+                            System.out.println("1. Ingresos totales");
+                            System.out.println("2. Gastos totales");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                int index = 1;
+                                Collections.sort(repuesto, new ComparadorSIT());
+                                for (Sede sede : repuesto) {
+                                    System.out.println(index + " " + sede);
+                                    index++;
+                                }
+                            } else if (option3.equals("2")) {
+                                int index = 1;
+                                Collections.sort(repuesto, new ComparadorSIT());
+                                for (Sede sede : repuesto) {
+                                    System.out.println(index + " " + sede);
+                                    index++;
+                                }
+                            }
+                            repuesto.removeAll(repuesto);
+                            busqueda();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private static void buscarInversionistas(){
+        if (inversionistas.size() == 0) {
+            System.out.println("No hay inversionistas registrados");
+        } else {
+            LinkedList<Inversionista> repuesto = new LinkedList<>();
+            for (Inversionista inversionista : inversionistas) {
+                repuesto.add(inversionista);
+            }
+            String option2;
+            while (true) {
+                System.out.println("Escoja un atributo de busqueda:");
+                System.out.println("1. Firma");
+                System.out.println("2. Ganancias");
+                System.out.println("3. Inversion en sede");
+                System.out.println("4. Inversion en multinacional");
+                System.out.println("5. Inversionistas totales");
+                option2 = input.next();
+                switch (option2) {
+                    case "1": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja una opcion:");
+                            System.out.println("1. Valor exacto");
+                            System.out.println("2. Valor sin considerar las mayusculas");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                input.nextLine();
+                                System.out.print("Ingrese la firma del inversionista a buscar: ");
+                                String buscarM = input.nextLine();
+                                int count = 0;
+                                int index = 1;
+                                for (Inversionista inversionista : inversionistas) {
+                                    if (inversionista.firma.equals(buscarM)) {
+                                        System.out.println(index + " " + inversionista);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == inversionistas.size()) {
+                                            System.out.println("No se encuentra el inversionista");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            } else if (option3.equals("2")) {
+                                input.nextLine();
+                                System.out.print("Ingrese la firma del inversionista a buscar: ");
+                                String buscarNombre = input.nextLine();
+                                String nombreMinuscula = buscarNombre.toLowerCase();
+                                int count = 0;
+                                int index = 1;
+                                for (Inversionista inversionista : inversionistas) {
+                                    String minusculas = inversionista.firma.toLowerCase();
+                                    if (minusculas.equals(nombreMinuscula)) {
+                                        System.out.println(index + " " + inversionista);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == inversionistas.size()) {
+                                            System.out.println("No se encuentra el inversionista");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            }
+                        }
+                    }
+                    case "2": {
+                        String orden;
+                        while (true) {
+                            System.out.println("¿De que manera desea organizar el resultado?");
+                            System.out.println("1. Ascendente");
+                            System.out.println("2. Descendente");
+                            orden = input.next();
+                            if (orden.equals("1")) {
+                                Collections.sort(repuesto, new ComparadorGIN());
+                            } else if (orden.equals("2")) {
+                                Collections.sort(repuesto, new ComparadorGIN().reversed());
+                            }
+                            String option3;
+                            while (true) {
+                                System.out.println("Escoja una opcion:");
+                                System.out.println("1. Valor exacto");
+                                System.out.println("2. Valor maximo");
+                                System.out.println("3. Valor minimo");
+                                System.out.println("4. Rango");
+                                option3 = input.next();
+                                if (option3.equals("1")) {
+                                    input.nextLine();
+                                    System.out.print("Ingrese el valor de ganancia de inversionista : ");
+                                    double buscarTotal = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Inversionista inversionista : repuesto) {
+                                        if (inversionista.ganancias == buscarTotal) {
+                                            System.out.println(index + " " + inversionista);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == inversionistas.size()) {
+                                                System.out.println("No se encuentra el inversionista");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("2")) {
+                                    System.out.print("Ingrese el valor de ganancia maximo a buscar: ");
+                                    double ValorMaximo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Inversionista inversionista : repuesto) {
+                                        if (inversionista.ganancias <= ValorMaximo) {
+                                            System.out.println(index + " " + inversionista);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == inversionistas.size()) {
+                                                System.out.println("No se encuentran inversionistas");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("3")) {
+                                    System.out.print("Ingrese el valor de ganancia minimo a buscar: ");
+                                    double ValorMinimo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Inversionista inversionista : repuesto) {
+                                        if (inversionista.ganancias >= ValorMinimo) {
+                                            System.out.println(index + " " + inversionista);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == inversionistas.size()) {
+                                                System.out.println("No se encuentran inversionistas");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("4")) {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Inversionista inversionista : repuesto) {
+                                        if (inversionista.ganancias <= Max && inversionista.ganancias >= Min) {
+                                            System.out.println(index + " " + inversionista);
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == inversionistas.size()) {
+                                            System.out.println("No se encuentran inversionistas");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                    case "3": {
+                        String orden;
+                        while (true) {
+                            System.out.println("¿De que manera desea organizar el resultado?");
+                            System.out.println("1. Ascendente");
+                            System.out.println("2. Descendente");
+                            orden = input.next();
+                            if (orden.equals("1")) {
+                                Collections.sort(repuesto, new ComparadorINsede());
+                            } else if (orden.equals("2")) {
+                                Collections.sort(repuesto, new ComparadorINsede().reversed());
+                            }
+                            String option3;
+                            while (true) {
+                                System.out.println("Escoja una opcion:");
+                                System.out.println("1. Valor exacto");
+                                System.out.println("2. Valor maximo");
+                                System.out.println("3. Valor minimo");
+                                System.out.println("4. Rango");
+                                option3 = input.next();
+                                if (option3.equals("1")) {
+                                    input.nextLine();
+                                    System.out.print("Ingrese el valor de inversion : ");
+                                    double buscarTotal = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Inversionista inversionista : repuesto) {
+                                        if (inversionista.inversionSede == buscarTotal) {
+                                            System.out.println(index + " " + inversionista);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == inversionistas.size()) {
+                                                System.out.println("No se encuentra el inversionista");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("2")) {
+                                    System.out.print("Ingrese el valor de inversion maximo a buscar: ");
+                                    double ValorMaximo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Inversionista inversionista : repuesto) {
+                                        if (inversionista.inversionSede <= ValorMaximo) {
+                                            System.out.println(index + " " + inversionista);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == inversionistas.size()) {
+                                                System.out.println("No se encuentran inversionistas");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("3")) {
+                                    System.out.print("Ingrese el valor de inversion minimo a buscar: ");
+                                    double ValorMinimo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Inversionista inversionista : repuesto) {
+                                        if (inversionista.inversionSede >= ValorMinimo) {
+                                            System.out.println(index + " " + inversionista);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == inversionistas.size()) {
+                                                System.out.println("No se encuentran inversionistas");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("4")) {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Inversionista inversionista : repuesto) {
+                                        if (inversionista.inversionSede <= Max && inversionista.inversionSede >= Min) {
+                                            System.out.println(index + " " + inversionista);
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == inversionistas.size()) {
+                                            System.out.println("No se encuentran inversionistas");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+
+                            }
+                        }
+                    }
+                    case "4": {
+                        String orden;
+                        while (true) {
+                            System.out.println("¿De que manera desea organizar el resultado?");
+                            System.out.println("1. Ascendente");
+                            System.out.println("2. Descendente");
+                            orden = input.next();
+                            if (orden.equals("1")) {
+                                Collections.sort(repuesto, new ComparadorINmulti());
+                            } else if (orden.equals("2")) {
+                                Collections.sort(repuesto, new ComparadorINmulti().reversed());
+                            }
+                            String option3;
+                            while (true) {
+                                System.out.println("Escoja una opcion:");
+                                System.out.println("1. Valor exacto");
+                                System.out.println("2. Valor maximo");
+                                System.out.println("3. Valor minimo");
+                                System.out.println("4. Rango");
+                                option3 = input.next();
+                                if (option3.equals("1")) {
+                                    input.nextLine();
+                                    System.out.print("Ingrese el valor de inversion : ");
+                                    double buscarTotal = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Inversionista inversionista : repuesto) {
+                                        if (inversionista.inversionMN == buscarTotal) {
+                                            System.out.println(index + " " + inversionista);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == inversionistas.size()) {
+                                                System.out.println("No se encuentra el inversionista");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("2")) {
+                                    System.out.print("Ingrese el valor de inversion maximo a buscar: ");
+                                    double ValorMaximo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Inversionista inversionista : repuesto) {
+                                        if (inversionista.inversionMN <= ValorMaximo) {
+                                            System.out.println(index + " " + inversionista);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == inversionistas.size()) {
+                                                System.out.println("No se encuentran inversionistas");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("3")) {
+                                    System.out.print("Ingrese el valor de inversion minimo a buscar: ");
+                                    double ValorMinimo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Inversionista inversionista : repuesto) {
+                                        if (inversionista.inversionMN >= ValorMinimo) {
+                                            System.out.println(index + " " + inversionista);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == inversionistas.size()) {
+                                                System.out.println("No se encuentran inversionistas");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("4")) {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Inversionista inversionista : repuesto) {
+                                        if (inversionista.inversionMN <= Max && inversionista.inversionMN >= Min) {
+                                            System.out.println(index + " " + inversionista);
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == inversionistas.size()) {
+                                            System.out.println("No se encuentran inversionistas");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                    case "5": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja un atributo para ordenar:");
+                            System.out.println("1. Ganancias");
+                            System.out.println("2. Inversion en sede");
+                            System.out.println("3. Inversion en multinacional");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                int index = 1;
+                                Collections.sort(repuesto, new ComparadorGIN());
+                                for (Inversionista inversionista : repuesto) {
+                                    System.out.println(index + " " + inversionista);
+                                    index++;
+                                }
+                            } else if (option3.equals("2")) {
+                                int index = 1;
+                                Collections.sort(repuesto, new ComparadorINsede());
+                                for (Inversionista inversionista : repuesto) {
+                                    System.out.println(index + " " + inversionista);
+                                    index++;
+                                }
+                            } else if (option3.equals("3")) {
+                                int index = 1;
+                                Collections.sort(repuesto, new ComparadorINmulti());
+                                for (Inversionista inversionista : repuesto) {
+                                    System.out.println(index + " " + repuesto);
+                                    index++;
+                                }
+                            }
+                            repuesto.removeAll(repuesto);
+                            busqueda();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private static void buscarAreas(){
+        if (areas.size() == 0) {
+            System.out.println("No hay areas registradas");
+        } else {
+            LinkedList<Area> repuesto = new LinkedList<>();
+            for (Area area : repuesto) {
+                repuesto.add(area);
+            }
+            String option2;
+            while (true) {
+                System.out.println("Escoja un atributo de busqueda:");
+                System.out.println("1. Tipo de area");
+                System.out.println("2. Ingreso de area");
+                System.out.println("3. Gasto de area");
+                System.out.println("4. Areas totales");
+                option2 = input.next();
+                switch (option2) {
+                    case "1": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja una opcion:");
+                            System.out.println("1. Valor exacto");
+                            System.out.println("2. Valor sin considerar las mayusculas");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el tipo de area a buscar: ");
+                                String buscarM = input.nextLine();
+                                int count = 0;
+                                int index = 1;
+                                for (Area area : areas) {
+                                    if (area.tipoDeArea.equals(buscarM)) {
+                                        System.out.println(index + " " + area);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == areas.size()) {
+                                            System.out.println("No se encuentra el area");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            } else if (option3.equals("2")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el tipo de area a buscar: ");
+                                String buscarNombre = input.nextLine();
+                                String nombreMinuscula = buscarNombre.toLowerCase();
+                                int count = 0;
+                                int index = 1;
+                                for (Area area : areas) {
+                                    String minusculas = area.tipoDeArea.toLowerCase();
+                                    if (minusculas.equals(nombreMinuscula)) {
+                                        System.out.println(index + " " + area);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == areas.size()) {
+                                            System.out.println("No se encuentra el area");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            }
+                        }
+                    }
+                    case "2": {
+                        String orden;
+                        while (true) {
+                            System.out.println("¿De que manera desea organizar el resultado?");
+                            System.out.println("1. Ascendente");
+                            System.out.println("2. Descendente");
+                            orden = input.next();
+                            if (orden.equals("1")) {
+                                Collections.sort(repuesto, new ComparadorIarea());
+                            } else if (orden.equals("2")) {
+                                Collections.sort(repuesto, new ComparadorIarea().reversed());
+                            }
+                            String option3;
+                            while (true) {
+                                System.out.println("Escoja una opcion:");
+                                System.out.println("1. Valor exacto");
+                                System.out.println("2. Valor maximo");
+                                System.out.println("3. Valor minimo");
+                                System.out.println("4. Rango");
+                                option3 = input.next();
+                                if (option3.equals("1")) {
+                                    input.nextLine();
+                                    System.out.print("Ingrese el valor de de ingresos de area : ");
+                                    double buscarTotal = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Area area : areas) {
+                                        if (area.ingresoArea == buscarTotal) {
+                                            System.out.println(index + " " + area);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == areas.size()) {
+                                                System.out.println("No se encuentra el area");
+                                            }
+                                        }
+                                    }
+                                    busqueda();
+                                }
+                                if (option3.equals("2")) {
+                                    System.out.print("Ingrese el valor de ingresos maximo a buscar: ");
+                                    double ValorMaximo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Area area : repuesto) {
+                                        if (area.ingresoArea <= ValorMaximo) {
+                                            System.out.println(index + " " + area);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == areas.size()) {
+                                                System.out.println("No se encuentra el area");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("3")) {
+                                    System.out.print("Ingrese el valor de ingresos minimo a buscar: ");
+                                    double ValorMinimo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Area area : repuesto) {
+                                        if (area.ingresoArea >= ValorMinimo) {
+                                            System.out.println(index + " " + area);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == areas.size()) {
+                                                System.out.println("No se encuentra el area");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("4")) {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Area area : repuesto) {
+                                        if (area.ingresoArea <= Max && area.ingresoArea >= Min) {
+                                            System.out.println(index + " " + area);
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == areas.size()) {
+                                            System.out.println("No se encuentran areas");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                    case "3": {
+                        String orden;
+                        while (true) {
+                            System.out.println("¿De que manera desea organizar el resultado?");
+                            System.out.println("1. Ascendente");
+                            System.out.println("2. Descendente");
+                            orden = input.next();
+                            if (orden.equals("1")) {
+                                Collections.sort(repuesto, new ComparadorGarea());
+                            } else if (orden.equals("2")) {
+                                Collections.sort(repuesto, new ComparadorGarea().reversed());
+                            }
+                            String option3;
+                            while (true) {
+                                System.out.println("Escoja una opcion:");
+                                System.out.println("1. Valor exacto");
+                                System.out.println("2. Valor maximo");
+                                System.out.println("3. Valor minimo");
+                                System.out.println("4. Rango");
+                                option3 = input.next();
+                                if (option3.equals("1")) {
+                                    input.nextLine();
+                                    System.out.print("Ingrese el valor de gasto : ");
+                                    double buscarTotal = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Area area : areas) {
+                                        if (area.gastoArea == buscarTotal) {
+                                            System.out.println(index + " " + area);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == areas.size()) {
+                                                System.out.println("No se encuentra el area");
+                                            }
+                                        }
+                                    }
+                                    busqueda();
+                                }
+                                if (option3.equals("2")) {
+                                    System.out.print("Ingrese el valor de gastos maximo a buscar: ");
+                                    double ValorMaximo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Area area : repuesto) {
+                                        if (area.gastoArea <= ValorMaximo) {
+                                            System.out.println(index + " " + area);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == areas.size()) {
+                                                System.out.println("No se encuentra el area");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("3")) {
+                                    System.out.print("Ingrese el valor de gastos minimo a buscar: ");
+                                    double ValorMinimo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Area area : repuesto) {
+                                        if (area.gastoArea >= ValorMinimo) {
+                                            System.out.println(index + " " + area);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == areas.size()) {
+                                                System.out.println("No se encuentra el area");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("4")) {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Area area : repuesto) {
+                                        if (area.gastoArea <= Max && area.gastoArea >= Min) {
+                                            System.out.println(index + " " + area);
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == areas.size()) {
+                                            System.out.println("No se encuentran areas");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                    case "4": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja un atributo a ordenar: ");
+                            System.out.println("1. Ingreso de area");
+                            System.out.println("2. Gasto de area");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                int index = 1;
+                                Collections.sort(repuesto, new ComparadorIarea());
+                                for (Area area : repuesto) {
+                                    System.out.println(index + " " + area);
+                                    index++;
+                                }
+                            } else if (option3.equals("2")) {
+                                int index = 1;
+                                Collections.sort(repuesto, new ComparadorGarea());
+                                for (Area area : repuesto) {
+                                    System.out.println(index + " " + area);
+                                    index++;
+                                }
+                            }
+                            repuesto.removeAll(repuesto);
+                            busqueda();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private static void buscarEmpleados(){
+        if (empleados.size() == 0) {
+            System.out.println("No hay empleados registradas");
+        } else {
+            LinkedList<Empleado> repuesto = new LinkedList<>();
+            for (Empleado empleado : repuesto) {
+                repuesto.add(empleado);
+            }
+            String option2;
+            while (true) {
+                System.out.println("Escoja un atributo de busqueda:");
+                System.out.println("1. Nombre");
+                System.out.println("2. Cedula");
+                System.out.println("3. Edad");
+                System.out.println("4. Salario");
+                System.out.println("5. Empleados totales");
+                option2 = input.next();
+                switch (option2) {
+                    case "1": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja una opcion:");
+                            System.out.println("1. Valor exacto");
+                            System.out.println("2. Valor sin considerar las mayusculas");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el nombre a buscar: ");
+                                String buscarM = input.nextLine();
+                                int count = 0;
+                                int index = 1;
+                                for (Empleado empleado : empleados) {
+                                    if (empleado.nombre.equals(buscarM)) {
+                                        System.out.println(index + " " + empleado);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == empleados.size()) {
+                                            System.out.println("No se encuentra el empleado");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            } else if (option3.equals("2")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el nombre a buscar: ");
+                                String buscarNombre = input.nextLine();
+                                String nombreMinuscula = buscarNombre.toLowerCase();
+                                int count = 0;
+                                int index = 1;
+                                for (Empleado empleado : empleados) {
+                                    String minusculas = empleado.nombre.toLowerCase();
+                                    if (minusculas.equals(nombreMinuscula)) {
+                                        System.out.println(index + " " + empleado);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == empleados.size()) {
+                                            System.out.println("No se encuentra el empleado");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            }
+                        }
+                    }
+                    case "2": {
+                        String orden;
+                        while (true) {
+                            System.out.println("¿De que manera desea organizar el resultado?");
+                            System.out.println("1. Ascendente");
+                            System.out.println("2. Descendente");
+                            orden = input.next();
+                            if (orden.equals("1")) {
+                                Collections.sort(repuesto, new ComparadorEcedula());
+                            } else if (orden.equals("2")) {
+                                Collections.sort(repuesto, new ComparadorEcedula().reversed());
+                            }
+                            String option3;
+                            while (true) {
+                                System.out.println("Escoja una opcion:");
+                                System.out.println("1. Valor exacto");
+                                System.out.println("2. Valor maximo");
+                                System.out.println("3. Valor minimo");
+                                System.out.println("4. Rango");
+                                option3 = input.next();
+                                if (option3.equals("1")) {
+                                    input.nextLine();
+                                    System.out.print("Ingrese la cedula del empleado a buscar : ");
+                                    int buscarTotal = input.nextInt();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Empleado empleado : empleados) {
+                                        if (empleado.cedula == buscarTotal) {
+                                            System.out.println(index + " " + empleado);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == empleados.size()) {
+                                                System.out.println("No se encuentra el empleado");
+                                            }
+                                        }
+                                    }
+                                    busqueda();
+                                }
+                                if (option3.equals("2")) {
+                                    System.out.print("Ingrese la cedula maxima a buscar: ");
+                                    int ValorMaximo = input.nextInt();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Empleado empleado : repuesto) {
+                                        if (empleado.cedula <= ValorMaximo) {
+                                            System.out.println(index + " " + empleado);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == empleados.size()) {
+                                                System.out.println("No se encuentra el empleado");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("3")) {
+                                    System.out.print("Ingrese la cedula minima a buscar: ");
+                                    int ValorMinimo = input.nextInt();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Empleado empleado : repuesto) {
+                                        if (empleado.cedula >= ValorMinimo) {
+                                            System.out.println(index + " " + empleado);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == empleados.size()) {
+                                                System.out.println("No se encuentra el empleado");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("4")) {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Empleado empleado : repuesto) {
+                                        if (empleado.cedula <= Max && empleado.cedula >= Min) {
+                                            System.out.println(index + " " + empleado);
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == empleados.size()) {
+                                            System.out.println("No se encuentran empleados");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                    case "3": {
+                        String orden;
+                        while (true) {
+                            System.out.println("¿De que manera desea organizar el resultado?");
+                            System.out.println("1. Ascendente");
+                            System.out.println("2. Descendente");
+                            orden = input.next();
+                            if (orden.equals("1")) {
+                                Collections.sort(repuesto, new ComparadorEedad());
+                            } else if (orden.equals("2")) {
+                                Collections.sort(repuesto, new ComparadorEedad().reversed());
+                            }
+                            String option3;
+                            while (true) {
+                                System.out.println("Escoja una opcion:");
+                                System.out.println("1. Valor exacto");
+                                System.out.println("2. Valor maximo");
+                                System.out.println("3. Valor minimo");
+                                System.out.println("4. Rango");
+                                option3 = input.next();
+                                if (option3.equals("1")) {
+                                    input.nextLine();
+                                    System.out.print("Ingrese la edad del empleado a buscar : ");
+                                    int buscarTotal = input.nextInt();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Empleado empleado : empleados) {
+                                        if (empleado.edad == buscarTotal) {
+                                            System.out.println(index + " " + empleado);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == empleados.size()) {
+                                                System.out.println("No se encuentra el empleado");
+                                            }
+                                        }
+                                    }
+                                    busqueda();
+                                }
+                                if (option3.equals("2")) {
+                                    System.out.print("Ingrese la edad maxima a buscar: ");
+                                    int ValorMaximo = input.nextInt();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Empleado empleado : repuesto) {
+                                        if (empleado.edad <= ValorMaximo) {
+                                            System.out.println(index + " " + empleado);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == empleados.size()) {
+                                                System.out.println("No se encuentra el empleado");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("3")) {
+                                    System.out.print("Ingrese la edad minima a buscar: ");
+                                    int ValorMinimo = input.nextInt();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Empleado empleado : repuesto) {
+                                        if (empleado.edad >= ValorMinimo) {
+                                            System.out.println(index + " " + empleado);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == empleados.size()) {
+                                                System.out.println("No se encuentra el empleado");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("4")) {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Empleado empleado : repuesto) {
+                                        if (empleado.edad <= Max && empleado.edad >= Min) {
+                                            System.out.println(index + " " + empleado);
+                                            index++;
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == empleados.size()) {
+                                            System.out.println("No se encuentran empleados");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                    case "4": {
+                        String orden;
+                        while (true) {
+                            System.out.println("¿De que manera desea organizar el resultado?");
+                            System.out.println("1. Ascendente");
+                            System.out.println("2. Descendente");
+                            orden = input.next();
+                            if (orden.equals("1")) {
+                                Collections.sort(repuesto, new ComparadorEsalario());
+                            } else if (orden.equals("2")) {
+                                Collections.sort(repuesto, new ComparadorEsalario().reversed());
+                            }
+                            String option3;
+                            while (true) {
+                                System.out.println("Escoja una opcion:");
+                                System.out.println("1. Valor exacto");
+                                System.out.println("2. Valor maximo");
+                                System.out.println("3. Valor minimo");
+                                System.out.println("4. Rango");
+                                option3 = input.next();
+                                if (option3.equals("1")) {
+                                    input.nextLine();
+                                    System.out.print("Ingrese el salario : ");
+                                    double buscarTotal = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Empleado empleado : empleados) {
+                                        if (empleado.salario == buscarTotal) {
+                                            System.out.println(index + " " + empleado);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == empleados.size()) {
+                                                System.out.println("No se encuentra el empleado");
+                                            }
+                                        }
+                                    }
+                                    busqueda();
+                                }
+                                if (option3.equals("2")) {
+                                    System.out.print("Ingrese el salario maximo a buscar: ");
+                                    double ValorMaximo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Empleado empleado : repuesto) {
+                                        if (empleado.salario <= ValorMaximo) {
+                                            System.out.println(index + " " + empleado);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == empleados.size()) {
+                                                System.out.println("No se encuentra el empleado");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("3")) {
+                                    System.out.print("Ingrese el salario minimo a buscar: ");
+                                    double ValorMinimo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Empleado empleado : repuesto) {
+                                        if (empleado.salario >= ValorMinimo) {
+                                            System.out.println(index + " " + empleado);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == empleados.size()) {
+                                                System.out.println("No se encuentra el empleado");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("4")) {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Empleado empleado : repuesto) {
+                                        if (empleado.salario <= Max && empleado.salario >= Min) {
+                                            System.out.println(index + " " + empleado);
+                                            index++;
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == empleados.size()) {
+                                            System.out.println("No se encuentran empleados");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                    case "5": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja un atributo a ordenar: ");
+                            System.out.println("1. Cedula");
+                            System.out.println("2. Edad");
+                            System.out.println("3. Salario");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                int index = 1;
+                                Collections.sort(repuesto, new ComparadorEcedula());
+                                for (Empleado empleado : repuesto) {
+                                    System.out.println(index + " " + empleado);
+                                    index++;
+                                }
+                            } else if (option3.equals("2")) {
+                                int index = 1;
+                                Collections.sort(repuesto, new ComparadorEedad());
+                                for (Empleado empleado : repuesto) {
+                                    System.out.println(index + " " + empleado);
+                                    index++;
+                                }
+                            } else if (option3.equals("3")) {
+                                int index = 1;
+                                Collections.sort(repuesto, new ComparadorEsalario());
+                                for (Empleado empleado : repuesto) {
+                                    System.out.println(index + " " + empleado);
+                                    index++;
+                                }
+                            }
+                            repuesto.removeAll(repuesto);
+                            busqueda();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private static void buscarClientes(){
+        if (clientes.size() == 0) {
+            System.out.println("No hay clientes registrados");
+        } else {
+            LinkedList<Cliente> repuesto = new LinkedList<>();
+            for (Cliente cliente : repuesto) {
+                repuesto.add(cliente);
+            }
+            String option2;
+            while (true) {
+                System.out.println("Escoja un atributo de busqueda:");
+                System.out.println("1. Nombre");
+                System.out.println("2. Dinero");
+                System.out.println("3. Cedula");
+                System.out.println("4. Clientes totales");
+                option2 = input.next();
+                switch (option2) {
+                    case "1": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja una opcion:");
+                            System.out.println("1. Valor exacto");
+                            System.out.println("2. Valor sin considerar las mayusculas");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el nombre a buscar: ");
+                                String buscarM = input.nextLine();
+                                int count = 0;
+                                int index = 1;
+                                for (Cliente cliente : clientes) {
+                                    if (cliente.nombre.equals(buscarM)) {
+                                        System.out.println(index + " " + cliente);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == clientes.size()) {
+                                            System.out.println("No se encuentra el cliente");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            } else if (option3.equals("2")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el nombre a buscar: ");
+                                String buscarNombre = input.nextLine();
+                                String nombreMinuscula = buscarNombre.toLowerCase();
+                                int count = 0;
+                                int index = 1;
+                                for (Cliente cliente : clientes) {
+                                    String minusculas = cliente.nombre.toLowerCase();
+                                    if (minusculas.equals(nombreMinuscula)) {
+                                        System.out.println(index + " " + cliente);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == clientes.size()) {
+                                            System.out.println("No se encuentra el cliente");
+                                        }
+                                    }
+                                }
+                                busqueda();
+                            }
+                        }
+                    }
+                    case "2": {
+                        String orden;
+                        while (true) {
+                            System.out.println("¿De que manera desea organizar el resultado?");
+                            System.out.println("1. Ascendente");
+                            System.out.println("2. Descendente");
+                            orden = input.next();
+                            if (orden.equals("1")) {
+                                Collections.sort(repuesto, new ComparadorCdinero());
+                            } else if (orden.equals("2")) {
+                                Collections.sort(repuesto, new ComparadorCdinero().reversed());
+                            }
+                            String option3;
+                            while (true) {
+                                System.out.println("Escoja una opcion:");
+                                System.out.println("1. Valor exacto");
+                                System.out.println("2. Valor maximo");
+                                System.out.println("3. Valor minimo");
+                                System.out.println("4. Rango");
+                                option3 = input.next();
+                                if (option3.equals("1")) {
+                                    input.nextLine();
+                                    System.out.print("Ingrese el valor de dinero a buscar : ");
+                                    double buscarTotal = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Cliente cliente : clientes) {
+                                        if (cliente.dinero == buscarTotal) {
+                                            System.out.println(index + " " + cliente);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == clientes.size()) {
+                                                System.out.println("No se encuentra el cliente");
+                                            }
+                                        }
+                                    }
+                                    busqueda();
+                                }
+                                if (option3.equals("2")) {
+                                    System.out.print("Ingrese el valor de dinero maximo a buscar: ");
+                                    double ValorMaximo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Cliente cliente : repuesto) {
+                                        if (cliente.dinero <= ValorMaximo) {
+                                            System.out.println(index + " " + cliente);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == clientes.size()) {
+                                                System.out.println("No se encuentra el cliente");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("3")) {
+                                    System.out.print("Ingrese el valor de dinero minimo a buscar: ");
+                                    double ValorMinimo = input.nextDouble();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Cliente cliente : repuesto) {
+                                        if (cliente.dinero >= ValorMinimo) {
+                                            System.out.println(index + " " + cliente);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == clientes.size()) {
+                                                System.out.println("No se encuentra el cliente");
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                                if (option3.equals("4")) {
+                                    System.out.print("Ingrese valor minimo del rango: ");
+                                    int Min = input.nextInt();
+                                    System.out.println("Ingrese valor maximo del rango: ");
+                                    int Max = input.nextInt();
+                                    int index = 1;
+                                    int count = 0;
+                                    for (Cliente cliente : repuesto) {
+                                        if (cliente.dinero <= Max && cliente.dinero >= Min) {
+                                            System.out.println(index + " " + cliente);
+                                            index++;
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == empleados.size()) {
+                                            System.out.println("No se encuentran empleados");
+                                        }
+                                    }
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                    case "3": {
+                        String orden;
+                        while (true) {
+                            System.out.println("¿De que manera desea organizar el resultado?");
+                            System.out.println("1. Ascendente");
+                            System.out.println("2. Descendente");
+                            orden = input.next();
+                            if (orden.equals("1")) {
+                                Collections.sort(repuesto, new ComparadorCcedula());
+                            } else if (orden.equals("2")) {
+                                Collections.sort(repuesto, new ComparadorCcedula().reversed());
+                                String option3;
+                                while (true) {
+                                    System.out.println("Escoja una opcion:");
+                                    System.out.println("1. Valor exacto");
+                                    System.out.println("2. Valor maximo");
+                                    System.out.println("3. Valor minimo");
+                                    System.out.println("4. Rango");
+                                    option3 = input.next();
+                                    if (option3.equals("1")) {
+                                        input.nextLine();
+                                        System.out.print("Ingrese la cedula a buscar : ");
+                                        double buscarTotal = input.nextDouble();
+                                        int count = 0;
+                                        int index = 1;
+                                        for (Cliente cliente : clientes) {
+                                            if (cliente.cedula == buscarTotal) {
+                                                System.out.println(index + " " + cliente);
+                                                index++;
+                                            } else {
+                                                count++;
+                                                if (count == clientes.size()) {
+                                                    System.out.println("No se encuentra el cliente");
+                                                }
+                                            }
+                                        }
+                                        busqueda();
+                                    }
+                                    if (option3.equals("2")) {
+                                        System.out.print("Ingrese la cedula maxima a buscar: ");
+                                        double ValorMaximo = input.nextDouble();
+                                        int count = 0;
+                                        int index = 1;
+                                        for (Cliente cliente : repuesto) {
+                                            if (cliente.cedula <= ValorMaximo) {
+                                                System.out.println(index + " " + cliente);
+                                                index++;
+                                            } else {
+                                                count++;
+                                                if (count == clientes.size()) {
+                                                    System.out.println("No se encuentra el cliente");
+                                                }
+                                            }
+                                        }
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
+                                    if (option3.equals("3")) {
+                                        System.out.print("Ingrese la cedula minima a buscar: ");
+                                        double ValorMinimo = input.nextDouble();
+                                        int count = 0;
+                                        int index = 1;
+                                        for (Cliente cliente : repuesto) {
+                                            if (cliente.cedula >= ValorMinimo) {
+                                                System.out.println(index + " " + cliente);
+                                                index++;
+                                            } else {
+                                                count++;
+                                                if (count == clientes.size()) {
+                                                    System.out.println("No se encuentra el cliente");
+                                                }
+                                            }
+                                        }
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
+                                    if (option3.equals("4")) {
+                                        System.out.print("Ingrese valor minimo del rango: ");
+                                        int Min = input.nextInt();
+                                        System.out.println("Ingrese valor maximo del rango: ");
+                                        int Max = input.nextInt();
+                                        int index = 1;
+                                        int count = 0;
+                                        for (Cliente cliente : repuesto) {
+                                            if (cliente.cedula <= Max && cliente.cedula >= Min) {
+                                                System.out.println(index + " " + cliente);
+                                                index++;
+                                            } else {
+                                                count++;
+                                            }
+                                            if (count == empleados.size()) {
+                                                System.out.println("No se encuentran empleados");
+                                            }
+                                        }
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    case "4": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja un atributo a ordenar: ");
+                            System.out.println("1. Dinero");
+                            System.out.println("2. Cedula");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                int index = 1;
+                                Collections.sort(repuesto, new ComparadorCdinero());
+                                for (Cliente cliente : repuesto) {
+                                    System.out.println(index + " " + cliente);
+                                    index++;
+                                }
+                            } else if (option3.equals("2")) {
+                                int index = 1;
+                                Collections.sort(repuesto, new ComparadorCcedula());
+                                for (Cliente cliente : repuesto) {
+                                    System.out.println(index + " " + cliente);
+                                    index++;
+                                }
+                            }
+                            repuesto.removeAll(repuesto);
+                            busqueda();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private static void diagnostico() {
