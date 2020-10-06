@@ -1,10 +1,13 @@
 
 import Clases.*;
+import org.json.simple.JSONStreamAware;
+
 import  java.util.LinkedList;
 import java.util.Scanner;
 
 public  class  Principal {
 
+    public static LinkedList<JSON>  nuevoUsuarioJSON =new LinkedList<>();
     public static LinkedList<Multinacional>  multinacionales =new LinkedList<>();
     public static LinkedList<Sede>  sedes =new LinkedList<>();
     public static LinkedList<Pais>  paises =new LinkedList<>();
@@ -85,7 +88,6 @@ public  class  Principal {
         Usuario nuevoUsuario = new Usuario(documentoString, Nombre, Apellido, Correo, Password);
         usuarios.add(nuevoUsuario);
 
-
         System.out.println("USUARIO REGISTRADO EXITOSAMENTE");
         ingresarUsuario();
 
@@ -147,7 +149,6 @@ public  class  Principal {
             switch (option) {
                 case "1":
                     administracion();
-<<<<<<< HEAD
 
                     break;
                 case "2":
@@ -160,18 +161,6 @@ public  class  Principal {
                     break;
                 case "4":
                     guardar();
-
-=======
-                    break;
-                case "2":
-                    busqueda();
-                    break;
-                case "3":
-                    diagnostico();
-                    break;
-                case "4":
-                    guardar();
->>>>>>> master
                     break;
                 case "0":
                     salirCancelar();
