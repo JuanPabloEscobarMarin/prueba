@@ -172,23 +172,15 @@ public  class  Principal {
             switch (option) {
                 case "1":
                     administracion();
-
-
                     break;
                 case "2":
                     busqueda();
-
-
                     break;
                 case "3":
                     diagnostico();
-
-
                     break;
                 case "4":
                     guardar();
-
-
                     break;
                 case "0":
                     salirCancelar();
@@ -196,11 +188,6 @@ public  class  Principal {
 
             }
         }
-
-
-
-
-
     }
 
 
@@ -246,7 +233,6 @@ public  class  Principal {
                             EliminarMultinacional();
                             break;
                     }
-
                     break;
                 case "2":
                     String optionSede;
@@ -323,6 +309,7 @@ public  class  Principal {
                             EditarInversionista();
                             break;
                         case "4":
+                            //gg
                             EliminarInversionista();
                             break;
                     }
@@ -415,7 +402,6 @@ public  class  Principal {
 
             }
         }
-
     }
 
 
