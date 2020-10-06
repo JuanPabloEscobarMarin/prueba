@@ -2690,7 +2690,99 @@ public  class  Principal {
     }
 
     private static void diagnostico() {
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("Inconsistencias de las multinacionales");
+        for (Multinacional multinacional: multinacionales
+             ) {
+            if(multinacional.inversores.isEmpty()){
+                System.out.println(multinacional.nombre + " no tiene inversionistas asignados");
+
+            }
+            if(multinacional.sedes.isEmpty()){
+                System.out.println(multinacional.nombre + " no tiene sedes asignadas");
+            }
+
+        }
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("Inconsistencias de las sedes");
+        for (Sede sede: sedes
+        ) {
+            if(sede.inversionistas.isEmpty()){
+                System.out.println(sede.nombre + " no tiene inversionistas asignados");
+
+            }
+            if(sede.areas.isEmpty()){
+                System.out.println(sede.nombre + " no tiene areas asignadas");
+            }
+
+        }
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("Inconsistencias de los paises");
+        for (Pais pais: paises
+        ) {
+            if(pais.sedes.isEmpty()){
+                System.out.println(pais.nombre + " no tiene sedes asignadas");
+            }
+
+
+        }
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("Inconsistencias de los inversionistas");
+        for (Inversionista inversionista: inversionistas
+        ) {
+            if(inversionista.multinacional.isEmpty()){
+                System.out.println(inversionista.firma + " no tiene multinacionales asignadas");
+
+            }
+            if(inversionista.sedes.isEmpty()){
+                System.out.println(inversionista.firma + " no tiene sedes asignadas");
+            }
+
+        }
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("Inconsistencias de las areas");
+        for (Area area: areas
+        ) {
+            if(area.empleados.isEmpty()){
+                System.out.println(area.nombreDelArea + " no tiene empleados asignados");
+
+            }
+            if(area.clientes.isEmpty()){
+                System.out.println(area.nombreDelArea + " no tiene compradores asignados");
+
+            }
+
+
+        }
+
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("Inconsistencias de los empleados");
+        for (Empleado empleado: empleados
+        ) {
+            if(empleado.compradores.isEmpty()){
+                System.out.println(empleado.cedula+ " no tiene compradores asignados");
+
+            }
+
+
+        }
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("Inconsistencias de los clientes");
+        for (Cliente cliente: clientes
+        ) {
+            if(cliente.vendedor==null){
+                System.out.println(cliente.cedula + " no tiene vendedor asignados");
+
+            }
+
+
+        }
+
+
+
     }
+
+
 
     private static void guardar() {
 
