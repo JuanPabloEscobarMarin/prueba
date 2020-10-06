@@ -1,6 +1,8 @@
+package Clases;
+
 import java.util.ArrayList;
 
-class Multinacional {
+public class Multinacional {
     public String nombre;
     public String ceo;
     public int ingresoTotal;

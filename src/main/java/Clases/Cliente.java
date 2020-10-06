@@ -1,3 +1,4 @@
+package Clases;
 public class Cliente {
     public String nombre;
     public int dinero;

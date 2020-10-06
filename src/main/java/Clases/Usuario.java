@@ -1,3 +1,5 @@
+package Clases;
+
 public class Usuario {
     public String documento;
     public String nombre;
