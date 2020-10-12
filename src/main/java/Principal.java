@@ -2827,7 +2827,7 @@ public  class  Principal {
             switch (option){
                 case "1":
                     CrearMultinacional();
-                    break;
+                    return;
                 case"2":
                     return;
             }
@@ -2850,6 +2850,7 @@ public  class  Principal {
         for (Multinacional multinacional:multinacionales) {
             if(multinacional.nombre.equals(nombre)){
                 System.out.println("Multinaciona ya existe");
+                CrearMultinacional();
                 return;
             }
         }
@@ -2949,18 +2950,56 @@ public  class  Principal {
                             } else {
                                 multinacionalAux.NIT = multinacional.NIT;
                             }
+                            System.out.println("Numero de inversionistas: "+multinacional.inversores.size());
+                            System.out.print("Nombre de la firma del nuevo inversionista: ");
+                            String inversionista=input.nextLine();
+                            if(!inversionista.equals("")){
+                                Inversionista inversionistaAux;
+                                for (Inversionista inversionista1:inversionistas) {
+                                    if(inversionista1.firma.equals(inversionista)){
+                                        multinacionalAux.inversores= multinacional.inversores;
+                                        multinacionalAux.inversores.add(inversionista1);
+                                        inversionistaAux=inversionista1;
+                                        inversionistaAux.multinacional= inversionista1.multinacional;
+                                        inversionistaAux.multinacional.add(multinacional);
+                                        System.out.println("¿Desea guardar los cambios?");
+                                        System.out.println("Si(Y)/No(N)");
+                                        String optionGuardado = input.next();
+                                        switch (optionGuardado) {
+                                            case "Y":
+                                                int indiceinversionista= inversionistas.indexOf(inversionista1);
+                                                int indicemultinacional = multinacionales.indexOf(multinacional);
+                                                multinacionales.remove(multinacional);
+                                                multinacionales.add(indicemultinacional, multinacionalAux);
+                                                inversionistas.remove(inversionista1);
+                                                inversionistas.add(indiceinversionista,inversionistaAux);
+                                                return;
+                                            case "N":
+                                                return;
+                                        }
+                                    }
+
+                                }
+                                    System.out.println("No se encontro un inversionista con este nombre");
+                                    EditarMultinacional();
+                                    return;
+                                }
+                             else{
+                                multinacionalAux.inversores= multinacional.inversores;
+                            }
                             System.out.println("¿Desea guardar los cambios?");
                             System.out.println("Si(Y)/No(N)");
                             String optionGuardado = input.next();
                             switch (optionGuardado) {
                                 case "Y":
-                                    int indice = multinacionales.indexOf(multinacional);
+                                    int indicemultinacional = multinacionales.indexOf(multinacional);
                                     multinacionales.remove(multinacional);
-                                    multinacionales.add(indice, multinacionalAux);
+                                    multinacionales.add(indicemultinacional, multinacionalAux);
                                     return;
                                 case "N":
                                     return;
                             }
+
                         }
                     }
                     System.out.println("No se encontro multinacional por este nombre");
@@ -3014,16 +3053,51 @@ public  class  Principal {
                             } else {
                                 multinacionalAux.NIT = multinacional.NIT;
                             }
-                            System.out.println("¿Desea guardar los cambios?");
+                            System.out.println("Numero de inversionistas: "+multinacional.inversores.size());
+                            System.out.print("Nombre de la firma del nuevo inversionista: ");
+                            String inversionista=input.nextLine();
+                            if(!inversionista.equals("")){
+                                Inversionista inversionistaAux;
+                                for (Inversionista inversionista1:inversionistas) {
+                                    if(inversionista1.firma.equals(inversionista)){
+                                        multinacionalAux.inversores= multinacional.inversores;
+                                        multinacionalAux.inversores.add(inversionista1);
+                                        inversionistaAux=inversionista1;
+                                        inversionistaAux.multinacional= inversionista1.multinacional;
+                                        inversionistaAux.multinacional.add(multinacional);
+                                        System.out.println("¿Desea guardar los cambios?");
+                                        System.out.println("Si(Y)/No(N)");
+                                        String optionGuardado = input.next();
+                                        switch (optionGuardado) {
+                                            case "Y":
+                                                int indiceinversionista= inversionistas.indexOf(inversionista1);
+                                                int indicemultinacional = multinacionales.indexOf(multinacional);
+                                                multinacionales.remove(multinacional);
+                                                multinacionales.add(indicemultinacional, multinacionalAux);
+                                                inversionistas.remove(inversionista1);
+                                                inversionistas.add(indiceinversionista,inversionistaAux);
+                                                return;
+                                            case "N":
+                                                return;
+                                        }
+                                    }
+
+                                }
+                                System.out.println("No se encontro un inversionista con este nombre");
+                                EditarMultinacional();
+                                return;
+                            }
+                            else{
+                                multinacionalAux.inversores= multinacional.inversores;
+                            }
                             System.out.println("¿Desea guardar los cambios?");
                             System.out.println("Si(Y)/No(N)");
                             String optionGuardado = input.next();
                             switch (optionGuardado) {
                                 case "Y":
-                                    int indice = multinacionales.indexOf(multinacional);
+                                    int indicemultinacional = multinacionales.indexOf(multinacional);
                                     multinacionales.remove(multinacional);
-                                    multinacionales.add(indice, multinacionalAux);
-                                    System.out.println("Guardado con exito");
+                                    multinacionales.add(indicemultinacional, multinacionalAux);
                                     return;
                                 case "N":
                                     return;
@@ -3071,7 +3145,7 @@ public  class  Principal {
                             }
                         }
                     }
-                    System.out.println("No se encontro multinacional con este nombre");
+                    System.out.println("No se encontra multinacional con este nombre");
                     break;
                 case "2":
                     System.out.println("Ingrese el NIT de la multinacional");
@@ -3095,7 +3169,7 @@ public  class  Principal {
                         }
 
                     }
-                    System.out.println("No se encuentro la multinacional");
+                    System.out.println("No se encontra multinacional con este nombre");
                     break;
 
             }
@@ -3113,7 +3187,7 @@ public  class  Principal {
             switch (option){
                 case "1":
                     CrearSede();
-                    break;
+                    return;
                 case"2":
                     return;
             }
@@ -3138,6 +3212,7 @@ public  class  Principal {
         for(Sede sede:sedes){
             if(sede.nombre.equals(nombre)){
                 System.out.println("Sede ya existe");
+                CrearSede();
                 return;
             }
         }
@@ -3185,7 +3260,7 @@ public  class  Principal {
             switch (optionPais){
                 case "1":
                     CrearPais();
-                    break;
+                    return;
                 case "2":
                     System.out.println("¿Desea continuar creando una Sede? ");
                     System.out.println("1. Si");
@@ -3227,7 +3302,7 @@ public  class  Principal {
         switch (option){
             case "1":
                 CrearMultinacional();
-                break;
+                return;
             case "2":
                 System.out.println("¿Desea continuar creando una sede?");
                 System.out.println("1. si");
@@ -3236,7 +3311,7 @@ public  class  Principal {
                 switch (option2){
                     case "1":
                         CrearSede();
-                        break;
+                        return;
                     case "2":
                         return;
                 }
@@ -3288,40 +3363,51 @@ public  class  Principal {
                     } else {
                         sedeAux.gastosSede = sede.gastosSede;
                     }
-                    System.out.println("Numero de inversionistas: " + sede.inversionistas.size());
-                    System.out.print("Firma del nuevo inversionista: ");
-                    String firma = input.nextLine();
-                    if (!firma.equals("")) {
-                        for (Inversionista inversionista : inversionistas) {
-                            if (inversionista.firma.equals(firma)) {
-                                sedeAux.inversionistas.add(inversionista);
-                                break;
+                    System.out.println("Numero de inversionistas: "+sede.inversionistas.size());
+                    System.out.print("Nombre de la firma del nuevo inversionista: ");
+                    String inversionista=input.nextLine();
+                    if(!inversionista.equals("")){
+                        Inversionista inversionistaAux;
+                        for (Inversionista inversionista1:inversionistas) {
+                            if(inversionista1.firma.equals(inversionista)){
+                                sedeAux.inversionistas= sede.inversionistas;
+                                sedeAux.inversionistas.add(inversionista1);
+                                inversionistaAux=inversionista1;
+                                inversionistaAux.sedes= inversionista1.sedes;
+                                inversionistaAux.sedes.add(sede);
+                                System.out.println("¿Desea guardar los cambios?");
+                                System.out.println("Si(Y)/No(N)");
+                                String optionGuardado = input.next();
+                                switch (optionGuardado) {
+                                    case "Y":
+                                        int indiceinversionista= inversionistas.indexOf(inversionista1);
+                                        int indicesede =sedes.indexOf(sede);
+                                        sedes.remove(sede);
+                                        sedes.add(indicesede, sedeAux);
+                                        inversionistas.remove(inversionista1);
+                                        inversionistas.add(indiceinversionista,inversionistaAux);
+                                        return;
+                                    case "N":
+                                        return;
+                                }
                             }
+
                         }
-                        System.out.println("No se encuenta inversionista con este nombre");
-                        System.out.println("¿Desea crearlo?");
-                        System.out.println("1. Si");
-                        System.out.println("2. No");
-                        String optionInv = input.next();
-                        switch (optionInv) {
-                            case "1":
-                                CrearInversionista();
-                                return;
-                            case "2":
-                                break;
-                        }
-                    } else {
-                        sedeAux.inversionistas = sede.inversionistas;
+                        System.out.println("No se encontro un inversionista con este nombre");
+                        EditarSede();
+                        return;
+                    }
+                    else{
+                        sedeAux.inversionistas= sede.inversionistas;
                     }
                     System.out.println("¿Desea guardar los cambios?");
                     System.out.println("Si(Y)/No(N)");
                     String optionGuardado = input.next();
                     switch (optionGuardado) {
                         case "Y":
-                            int indice = sedes.indexOf(sede);
+                            int indicesede =sedes.indexOf(sede);
                             sedes.remove(sede);
-                            sedes.add(indice, sedeAux);
-                            System.out.println("Guardado con exito");
+                            sedes.add(indicesede, sedeAux);
                             return;
                         case "N":
                             return;
@@ -3371,7 +3457,7 @@ public  class  Principal {
             switch (option){
                 case "1":
                     CrearPais();
-                    break;
+                    return;
                 case"2":
                     return;
             }
@@ -3395,6 +3481,7 @@ public  class  Principal {
             if(pais.nombre.equals(nombre)){
                 System.out.println("Pais ya existe");
                 CrearPais();
+                return;
             }
         }
         System.out.print("Ingrese el nombre del presidente: ");
@@ -3496,7 +3583,7 @@ public  class  Principal {
             switch (option){
                 case "1":
                     CrearInversionista();
-                    break;
+                    return;
                 case"2":
                     return;
             }
@@ -3520,6 +3607,7 @@ public  class  Principal {
             if(inversionista.firma.equals(nombre)){
                 System.out.println("Inversionista ya existe");
                 CrearInversionista();
+                return;
             }
         }
         System.out.print("Ingrese la inversion para la multinacional: ");
@@ -3550,6 +3638,7 @@ public  class  Principal {
 
     private static void EditarInversionista() {
         Inversionista inversionistaAux = new Inversionista(null,0, 0, 0);
+        while(true){
         System.out.println("Ingrese el nombre de la firma de inversores");
         String nombre=input.next();
         for (Inversionista inversionista:inversionistas) {
@@ -3603,8 +3692,7 @@ public  class  Principal {
             }
         }
         System.out.println("No se encontro inversionista por este nombre");
-        EditarInversionista();
-    }
+    }}
 
     private static void EliminarInversionista() {
 
@@ -3613,6 +3701,7 @@ public  class  Principal {
             System.out.println("No existe ningun inversionista");
             return;
         }
+        while (true){
         System.out.println("Ingrese la firma del inversionista a borrar ");
         input.nextLine();
         String inversionistaBorrador = input.nextLine();
@@ -3633,8 +3722,7 @@ public  class  Principal {
             }
         }
         System.out.println("No se encontro un inversionista con esta firma");
-        EliminarInversionista();
-    }
+    }}
     private static void VerArea() {
         if(areas.isEmpty()){
             System.out.println("No se encuentra ninguna area");
@@ -3645,7 +3733,7 @@ public  class  Principal {
             switch (option){
                 case "1":
                     CrearArea();
-                    break;
+                    return;
                 case"2":
                     return;
             }
@@ -3669,6 +3757,7 @@ public  class  Principal {
             if(area.nombreDelArea.equals(nombre)){
                 System.out.println("Area ya existe");
                 CrearArea();
+                return;
             }
         }
         System.out.print("Ingrese los fondos de la area: ");
@@ -3719,7 +3808,7 @@ public  class  Principal {
                 switch (option2){
                     case "1":
                         CrearArea();
-                        break;
+                        return;
                     case "2":
                         return;
                 }
@@ -3729,6 +3818,7 @@ public  class  Principal {
 
     private static void EditarArea() {
         Area areaAux = new Area(null, 0, 0, null);
+        while (true){
         System.out.println("Ingrese el nombre del area");
         String nombre = input.next();
         for (Area area : areas) {
@@ -3775,39 +3865,36 @@ public  class  Principal {
             }
         }
         System.out.println("No se encontro area por este nombre");
-        EditarArea();
-    }
+    }}
+
     private static void EliminarArea() {
         if(areas.isEmpty()){
             System.out.println("No existe ningun area");
             return;
         }
-        System.out.println("Ingrese el nombre del area a borrar ");
-        input.nextLine();
-        String areaBorrador = input.nextLine();
-        for (Area area : areas) {
-            if (areaBorrador.equalsIgnoreCase(area.nombreDelArea)) {
-                System.out.println("nombreDeArea: "+area.nombreDelArea);
-                System.out.println("¿Esta seguro que desea borrarla?");
-                System.out.println("Si(Y)/No(N)");
-                String optionGuardado = input.next();
-                switch (optionGuardado) {
-                    case "Y":
-                        areas.remove(area);
-                        System.out.println("area borrada con exito");
-                        return;
-                    case "N":
-                        return;
+        while (true) {
+            System.out.println("Ingrese el nombre del area a borrar ");
+            input.nextLine();
+            String areaBorrador = input.nextLine();
+            for (Area area : areas) {
+                if (areaBorrador.equalsIgnoreCase(area.nombreDelArea)) {
+                    System.out.println("nombreDeArea: " + area.nombreDelArea);
+                    System.out.println("¿Esta seguro que desea borrarla?");
+                    System.out.println("Si(Y)/No(N)");
+                    String optionGuardado = input.next();
+                    switch (optionGuardado) {
+                        case "Y":
+                            areas.remove(area);
+                            System.out.println("area borrada con exito");
+                            return;
+                        case "N":
+                            return;
+                    }
                 }
             }
+            System.out.println("No se encontro un area con este nombre");
         }
-        System.out.println("No se encontro un area con este nombre");
-        EliminarArea();
-
-
-
     }
-
 
     private static void VerEmpleado() {
         if(empleados.isEmpty()){
@@ -3819,7 +3906,7 @@ public  class  Principal {
             switch (option){
                 case "1":
                     CrearEmpleado();
-                    break;
+                    return;
                 case"2":
                     return;
             }
@@ -3850,6 +3937,7 @@ public  class  Principal {
             if(empleado.cedula==cedula){
                 System.out.println("Empleado ya existe");
                 CrearEmpleado();
+                return;
             }
         }
         System.out.print("Ingrese la edad: ");
@@ -3890,7 +3978,7 @@ public  class  Principal {
         switch (option){
             case "1":
                 CrearArea();
-                break;
+                return;
             case "2":
                 System.out.println("¿Desea continuar creando un empleado?");
                 System.out.println("1. si");
@@ -3899,7 +3987,7 @@ public  class  Principal {
                 switch (option2){
                     case "1":
                         CrearEmpleado();
-                        break;
+                        return;
                     case "2":
                         return;
                 }
@@ -3909,92 +3997,128 @@ public  class  Principal {
     }
 
     private static void EditarEmpleado() {
-        Empleado empleadoAux=new Empleado(null,0,0,0,null);
-        System.out.println("Ingrese la cedula del empelado");
-        int cedula=input.nextInt();
-        for (Empleado empleado:empleados) {
-            if(empleado.cedula==cedula){
-                empleadoAux.areaPertenece= empleado.areaPertenece;
-                System.out.println("Nombre: " + empleado.nombre);
-                System.out.print("Nuevo nombre: ");
-                input.nextLine();
-                String nombreEmpleado = input.nextLine();
-                if (!nombreEmpleado.equals("")) {
-                    empleado.nombre = nombreEmpleado;
-                } else {
-                    empleadoAux.nombre = empleado.nombre;
-                }
-                System.out.println("Cedula: " + empleado.cedula);
-                System.out.print("Nueva cedula: ");
-                String cedulaEmpleado = input.nextLine();
-                if (!cedulaEmpleado.equals("")) {
-                    empleadoAux.cedula = Integer.parseInt(cedulaEmpleado);
-                } else {
-                    empleadoAux.cedula = empleado.cedula;
-                }
-                System.out.println("Edad: " + empleado.edad);
-                System.out.print("Nueva edad: ");
-                String edad = input.nextLine();
-                if (!edad.equals("")) {
-                    empleadoAux.edad = Integer.parseInt(edad);
-                } else {
-                    empleadoAux.edad = empleado.edad;
-                }
-                System.out.println("Salario: " + empleado.salario);
-                System.out.print("Nueva salario: ");
-                String salario = input.nextLine();
-                if (!cedulaEmpleado.equals("")) {
-                    empleadoAux.salario = Integer.parseInt(salario);
-                } else {
-                    empleadoAux.salario = empleado.salario;
-                }
-                System.out.println("¿Desea guardar los cambios?");
-                System.out.println("Si(Y)/No(N)");
-                String optionGuardado = input.next();
-                switch (optionGuardado) {
-                    case "Y":
-                        int indice = empleados.indexOf(empleado);
-                        empleados.remove(empleado);
-                        empleados.add(indice, empleadoAux);
-                        System.out.println("Guardado con exito");
+        Empleado empleadoAux = new Empleado(null, 0, 0, 0, null);
+        while (true) {
+            System.out.println("Ingrese la cedula del empelado");
+            int cedula = input.nextInt();
+            for (Empleado empleado : empleados) {
+                if (empleado.cedula == cedula) {
+                    empleadoAux.areaPertenece = empleado.areaPertenece;
+                    System.out.println("Nombre: " + empleado.nombre);
+                    System.out.print("Nuevo nombre: ");
+                    input.nextLine();
+                    String nombreEmpleado = input.nextLine();
+                    if (!nombreEmpleado.equals("")) {
+                        empleado.nombre = nombreEmpleado;
+                    } else {
+                        empleadoAux.nombre = empleado.nombre;
+                    }
+                    System.out.println("Cedula: " + empleado.cedula);
+                    System.out.print("Nueva cedula: ");
+                    String cedulaEmpleado = input.nextLine();
+                    if (!cedulaEmpleado.equals("")) {
+                        empleadoAux.cedula = Integer.parseInt(cedulaEmpleado);
+                    } else {
+                        empleadoAux.cedula = empleado.cedula;
+                    }
+                    System.out.println("Edad: " + empleado.edad);
+                    System.out.print("Nueva edad: ");
+                    String edad = input.nextLine();
+                    if (!edad.equals("")) {
+                        empleadoAux.edad = Integer.parseInt(edad);
+                    } else {
+                        empleadoAux.edad = empleado.edad;
+                    }
+                    System.out.println("Salario: " + empleado.salario);
+                    System.out.print("Nueva salario: ");
+                    String salario = input.nextLine();
+                    if (!cedulaEmpleado.equals("")) {
+                        empleadoAux.salario = Integer.parseInt(salario);
+                    } else {
+                        empleadoAux.salario = empleado.salario;
+                    }
+                    System.out.println("Numero de clientes asigandos: " + empleado.compradores.size());
+                    System.out.print("Cedula del nuevo cliente: ");
+                    String cliente = input.nextLine();
+                    if (!cliente.equals("")) {
+                        Cliente clienteAux;
+                        for (Cliente cliente1 : clientes) {
+                            if (cliente1.cedula == Integer.parseInt(cliente)) {
+                                clienteAux = cliente1;
+                                clienteAux.vendedor = empleado;
+                                empleadoAux.compradores = empleado.compradores;
+                                empleadoAux.compradores.add(cliente1);
+                                System.out.println("¿Desea guardar los cambios?");
+                                System.out.println("Si(Y)/No(N)");
+                                String optionGuardado = input.next();
+                                switch (optionGuardado) {
+                                    case "Y":
+                                        int indicecliente = clientes.indexOf(cliente1);
+                                        int indiceEmpleado = empleados.indexOf(empleado);
+                                        clientes.remove(cliente1);
+                                        clientes.add(indicecliente, clienteAux);
+                                        empleados.remove(empleado);
+                                        empleados.add(indiceEmpleado, empleadoAux);
+                                        return;
+                                    case "N":
+                                        return;
+                                }
+                            }
+                        }
+                        System.out.println("No se encuentra cliente con esta cedeula");
+                        EditarEmpleado();
                         return;
-                    case "N":
-                        return;
+                    } else {
+                        empleadoAux.compradores = empleado.compradores;
+                    }
+                    System.out.println("¿Desea guardar los cambios?");
+                    System.out.println("Si(Y)/No(N)");
+                    String optionGuardado = input.next();
+                    switch (optionGuardado) {
+                        case "Y":
+                            int indice = empleados.indexOf(empleado);
+                            empleados.remove(empleado);
+                            empleados.add(indice, empleadoAux);
+                            System.out.println("Guardado con exito");
+                            return;
+                        case "N":
+                            return;
+                    }
                 }
             }
-        }
-        System.out.println("No se encontro empelado con esta cedula");
-        EditarEmpleado();
-    }
+            System.out.println("No se encontro empelado con esta cedula");
 
+        }
+    }
     private static void EliminarEmpleado() {
         if(empleados.isEmpty()){
             System.out.println("No existe ningun empleado");
             return;
         }
-        System.out.println("Ingrese la cedula de el empleado");
-        String empleadoStringCedula = input.next();
-        String empleadoStringCedulaDepurada = empleadoStringCedula.replace(".", "");
-        int empleadoCedulaDepurada = Integer.parseInt(empleadoStringCedulaDepurada);
-        for (Empleado empleado : empleados) {
-            if (empleado.cedula == empleadoCedulaDepurada) {
-                System.out.println("Cedula: "+empleado.cedula);
-                System.out.println("¿Esta seguro que desea borrarlo?");
-                System.out.println("Si(Y)/No(N)");
-                String optionGuardado = input.next();
-                switch (optionGuardado) {
-                    case "Y":
-                        empleados.remove(empleado);
-                        System.out.println("Empleado borrado con exito");
-                        return;
-                    case "N":
-                        return;
+        while(true) {
+            System.out.println("Ingrese la cedula de el empleado");
+            String empleadoStringCedula = input.next();
+            String empleadoStringCedulaDepurada = empleadoStringCedula.replace(".", "");
+            int empleadoCedulaDepurada = Integer.parseInt(empleadoStringCedulaDepurada);
+            for (Empleado empleado : empleados) {
+                if (empleado.cedula == empleadoCedulaDepurada) {
+                    System.out.println("Cedula: " + empleado.cedula);
+                    System.out.println("¿Esta seguro que desea borrarlo?");
+                    System.out.println("Si(Y)/No(N)");
+                    String optionGuardado = input.next();
+                    switch (optionGuardado) {
+                        case "Y":
+                            empleados.remove(empleado);
+                            System.out.println("Empleado borrado con exito");
+                            return;
+                        case "N":
+                            return;
+                    }
                 }
-            }
 
+            }
+            System.out.println("No se encuentro el empleado");
         }
-        System.out.println("No se encuentro el empleado");
-        EliminarEmpleado();
     }
 
 
@@ -4009,7 +4133,7 @@ public  class  Principal {
             switch (option){
                 case "1":
                     CrearCliente();
-                    break;
+                    return;
                 case"2":
                     return;
             }
@@ -4041,6 +4165,7 @@ public  class  Principal {
             if(cliente.cedula==cedula){
                 System.out.println("Cliente ya existe");
                 CrearCliente();
+                return;
             }
         }
         System.out.print("Ingrese el efectivo: ");
@@ -4083,7 +4208,7 @@ public  class  Principal {
                 switch (option2){
                     case "1":
                         CrearCliente();
-                        break;
+                        return;
                     case "2":
                         return;
                 }
@@ -4092,61 +4217,62 @@ public  class  Principal {
     }
 
     private static void EditarCliente() {
-        Cliente clienteAux=new Cliente(null,0,0,null);
-        System.out.println("Ingrese la cedula del cliente");
-        int cedula=input.nextInt();
-        for (Cliente cliente:clientes) {
-            if(cliente.cedula==cedula){
-                clienteAux.AreaConsumo= cliente.AreaConsumo;
-                System.out.println("Nombre: " + cliente.nombre);
-                System.out.print("Nuevo nombre: ");
-                input.nextLine();
-                String nombreCliente = input.nextLine();
-                if (!nombreCliente.equals("")) {
-                    cliente.nombre = nombreCliente;
-                } else {
-                    clienteAux.nombre = cliente.nombre;
-                }
-                System.out.println("Cedula: " + cliente.cedula);
-                System.out.print("Nueva cedula: ");
-                String cedulaCliente = input.nextLine();
-                if (!cedulaCliente.equals("")) {
-                    clienteAux.cedula = Integer.parseInt(cedulaCliente);
-                } else {
-                    clienteAux.cedula = cliente.cedula;
-                }
-                System.out.println("Dinero: " + cliente.dinero);
-                System.out.print("Nuevo dinero: ");
-                String dinero = input.nextLine();
-                if (!dinero.equals("")) {
-                    clienteAux.dinero = Integer.parseInt(dinero);
-                } else {
-                    clienteAux.dinero = cliente.dinero;
-                }
-                System.out.println("¿Desea guardar los cambios?");
-                System.out.println("Si(Y)/No(N)");
-                String optionGuardado = input.next();
-                switch (optionGuardado) {
-                    case "Y":
-                        int indice = clientes.indexOf(cliente);
-                        clientes.remove(cliente);
-                        clientes.add(indice, clienteAux);
-                        System.out.println("Guardado con exito");
-                        return;
-                    case "N":
-                        return;
+        Cliente clienteAux = new Cliente(null, 0, 0, null);
+        while (true) {
+            System.out.println("Ingrese la cedula del cliente");
+            int cedula = input.nextInt();
+            for (Cliente cliente : clientes) {
+                if (cliente.cedula == cedula) {
+                    clienteAux.AreaConsumo = cliente.AreaConsumo;
+                    System.out.println("Nombre: " + cliente.nombre);
+                    System.out.print("Nuevo nombre: ");
+                    input.nextLine();
+                    String nombreCliente = input.nextLine();
+                    if (!nombreCliente.equals("")) {
+                        cliente.nombre = nombreCliente;
+                    } else {
+                        clienteAux.nombre = cliente.nombre;
+                    }
+                    System.out.println("Cedula: " + cliente.cedula);
+                    System.out.print("Nueva cedula: ");
+                    String cedulaCliente = input.nextLine();
+                    if (!cedulaCliente.equals("")) {
+                        clienteAux.cedula = Integer.parseInt(cedulaCliente);
+                    } else {
+                        clienteAux.cedula = cliente.cedula;
+                    }
+                    System.out.println("Dinero: " + cliente.dinero);
+                    System.out.print("Nuevo dinero: ");
+                    String dinero = input.nextLine();
+                    if (!dinero.equals("")) {
+                        clienteAux.dinero = Integer.parseInt(dinero);
+                    } else {
+                        clienteAux.dinero = cliente.dinero;
+                    }
+                    System.out.println("¿Desea guardar los cambios?");
+                    System.out.println("Si(Y)/No(N)");
+                    String optionGuardado = input.next();
+                    switch (optionGuardado) {
+                        case "Y":
+                            int indice = clientes.indexOf(cliente);
+                            clientes.remove(cliente);
+                            clientes.add(indice, clienteAux);
+                            System.out.println("Guardado con exito");
+                            return;
+                        case "N":
+                            return;
+                    }
                 }
             }
+            System.out.println("No se encontro cliente con esta cedula");
         }
-        System.out.println("No se encontro cliente con esta cedula");
-        EditarCliente();
     }
-
     private static void EliminarCliente() {
         if(clientes.isEmpty()){
             System.out.println("No existe ningun cliente");
             return;
         }
+        while (true){
         System.out.println("Ingrese la cedula de el cliente");
         String clienteStringCedula = input.next();
         String clienteStringCedulaDepurada = clienteStringCedula.replace(".", "");
@@ -4169,7 +4295,6 @@ public  class  Principal {
 
         }
         System.out.println("No se encuentro el cliente");
-        EliminarCliente();
-    }
+    }}
 
 }
