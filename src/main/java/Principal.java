@@ -1,4 +1,5 @@
 import Clases.*;
+import Comparadores.*;
 import Packaje_JSON.EscribirJSON;
 
 import  java.util.LinkedList;
@@ -411,10 +412,7 @@ public  class  Principal {
             System.out.println("No Hay multinacionales");
         } else {
             while(true){
-            LinkedList<Multinacional> repuesto = new LinkedList<>();
-                for (Multinacional multinacional:multinacionales) {
-                    repuesto.add(multinacional);
-                }
+                LinkedList<Multinacional> repuesto = new LinkedList<>(multinacionales);
             System.out.println("Escoja un atributo de busqueda:");
             System.out.println("1. Nombre");
             System.out.println("2. NIT");
@@ -424,62 +422,234 @@ public  class  Principal {
             System.out.println("6. Mostrar todas las multinacionales");
             String option2 = input.next();
             switch (option2) {
-                case "1":
-                        while (true){
+                case "1": {
+                    while (true) {
                         String option3;
                         System.out.println("Escoja una opcion:");
                         System.out.println("1. Valor exacto");
                         System.out.println("2. Valor sin considerar las mayusculas");
                         option3 = input.next();
-                            if ("1".equals(option3)) {
-                                input.nextLine();
-                                System.out.print("Ingrese el Nombre a buscar: ");
-                                String buscarM = input.nextLine();
-                                int index = 1;
-                                for (Multinacional multinacional : multinacionales) {
-                                    if (multinacional.nombre.equals(buscarM)) {
-                                        System.out.println(index + " " + multinacional);
+                        if ("1".equals(option3)) {
+                            input.nextLine();
+                            System.out.print("Ingrese el Nombre a buscar: ");
+                            String buscarM = input.nextLine();
+                            int index = 1;
+                            int count = 0;
+                            for (Multinacional multinacional : multinacionales) {
+                                if (multinacional.nombre.equals(buscarM)) {
+                                    System.out.println(index + " " + multinacional);
+                                } else {
+                                    count++;
+                                    if (count == multinacionales.size()) {
+                                        System.out.println("No se encuentra la multinacional");
                                         busqueda();
                                     }
-                                    System.out.println("No se encuentra la multinacional");
+                                }
+                            }
+                            System.out.println("Desea editar o eliminar algun elemento? :");
+                            System.out.println("1. Si");
+                            System.out.println("2. No");
+                            String option4 = input.next();
+                            if (option4.equals("1")) {
+                                System.out.print("Ingrese el numero indice del objeto: ");
+                                int iBuscar = input.nextInt();
+                                System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                System.out.println("1. Editar");
+                                System.out.println("2. Eliminar");
+                                System.out.println("0. Salir");
+                                String option5 = input.next();
+                                if (option5.equals("1")) {
+                                    int index2 = 1;
+                                    for (Multinacional multinacional : multinacionales) {
+                                        if (multinacional.nombre.equals(buscarM)) {
+                                            if (index2 == iBuscar) {
+                                                System.out.println("Nombre: " + multinacional.nombre);
+                                                System.out.print("Ingrese nuevo nombre: ");
+                                                input.nextLine();
+                                                String nombre = input.nextLine();
+                                                if (nombre.equals("")) {
+                                                    nombre = multinacional.nombre;
+                                                }
+                                                System.out.println("Ceo: " + multinacional.ceo);
+                                                System.out.print("Ingrese nuevo ceo: ");
+                                                String ceo = input.nextLine();
+                                                if (ceo.equals("")) {
+                                                    ceo = multinacional.ceo;
+                                                }
+                                                System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                System.out.print("Ingrese ingreso total: ");
+                                                String Fondos = input.nextLine();
+                                                int ingreso;
+                                                if (Fondos.equals("")) {
+                                                    ingreso = multinacional.ingresoTotal;
+                                                } else {
+                                                    ingreso = Integer.parseInt(Fondos);
+                                                }
+                                                System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                System.out.print("Ingrese gasto total: ");
+                                                String Gasto = input.nextLine();
+                                                int gasto;
+                                                if (Gasto.equals("")) {
+                                                    gasto = multinacional.gastoTotal;
+                                                } else {
+                                                    gasto = Integer.parseInt(Gasto);
+                                                }
+                                                System.out.println("NIT: " + multinacional.NIT);
+                                                System.out.print("Ingrese NIT nuevo: ");
+                                                String nit = input.nextLine();
+                                                int NIT;
+                                                if (nit.equals("")) {
+                                                    NIT = multinacional.NIT;
+                                                } else {
+                                                    NIT = Integer.parseInt(nit);
+                                                }
+                                                Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                System.out.println("Multinacional editada con exito");
+                                                busqueda();
+                                            } else {
+                                                index2++;
+                                            }
+                                        }
+                                    }
+                                } else if (option5.equals("2")) {
+                                    int index2 = 1;
+                                    for (Multinacional multinacional : multinacionales) {
+                                        if (multinacional.nombre.equals(buscarM)) {
+                                            if (index2 == iBuscar) {
+                                                multinacionales.remove(multinacional);
+                                                System.out.println("Multinacional eliminada con exito");
+                                                busqueda();
+                                            } else {
+                                                index2++;
+                                            }
+                                        }
+                                    }
+                                } else if (option5.equals("0")) {
                                     busqueda();
-                                    break;
                                 }
-
-                                input.nextLine();
-                                System.out.print("Ingrese el nombre a buscar: ");
-                                String buscarNombre = input.nextLine();
-                                String nombreMinuscula = buscarNombre.toLowerCase();
-                                int index2 = 1;
-                                for (Multinacional multinacional : multinacionales) {
-                                    String minusculas = multinacional.nombre.toLowerCase();
-                                    if (minusculas.equals(nombreMinuscula)) {
-                                        System.out.println(index2 + " " + multinacional);
-                                        busqueda();
-                                    }
-                                }
-                                System.out.println("No se encuentra la multinacional");
+                            } else if (option4.equals("2")) {
                                 busqueda();
-                            } else if ("2".equals(option3)) {
-                                input.nextLine();
-                                System.out.print("Ingrese el nombre a buscar: ");
-                                String buscarNombre = input.nextLine();
-                                String nombreMinuscula = buscarNombre.toLowerCase();
-                                int index2 = 1;
-                                for (Multinacional multinacional : multinacionales) {
-                                    String minusculas = multinacional.nombre.toLowerCase();
-                                    if (minusculas.equals(nombreMinuscula)) {
-                                        System.out.println(index2 + " " + multinacional);
+                            }
+                        } else if ("2".equals(option3)) {
+                            input.nextLine();
+                            int count = 0;
+                            System.out.print("Ingrese el nombre a buscar: ");
+                            String buscarNombre = input.nextLine();
+                            String nombreMinuscula = buscarNombre.toLowerCase();
+                            int index2 = 1;
+                            for (Multinacional multinacional : multinacionales) {
+                                String minusculas = multinacional.nombre.toLowerCase();
+                                if (minusculas.equals(nombreMinuscula)) {
+                                    System.out.println(index2 + " " + multinacional);
+                                    busqueda();
+                                } else {
+                                    count++;
+                                    if (count == multinacionales.size()) {
+                                        System.out.println("No se encuentra la multinacional");
                                         busqueda();
                                     }
                                 }
-                                System.out.println("No se encuentra la multinacional");
+                            }
+                            System.out.println("Desea editar o eliminar algun elemento? :");
+                            System.out.println("1. Si");
+                            System.out.println("2. No");
+                            String option4 = input.next();
+                            if (option4.equals("1")) {
+                                System.out.println("Ingrese el numero indice del objeto: ");
+                                int iBuscar = input.nextInt();
+                                System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                System.out.println("1. Editar");
+                                System.out.println("2. Eliminar");
+                                System.out.println("0. Salir");
+                                String option5 = input.next();
+                                switch (option5) {
+                                    case "1": {
+                                        int index3 = 1;
+                                        for (Multinacional multinacional : multinacionales) {
+                                            String minusculas = multinacional.nombre.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index3 == iBuscar) {
+                                                    System.out.println("Nombre: " + multinacional.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = multinacional.nombre;
+                                                    }
+                                                    System.out.println("Ceo: " + multinacional.ceo);
+                                                    System.out.print("Ingrese nuevo ceo: ");
+                                                    String ceo = input.nextLine();
+                                                    if (ceo.equals("")) {
+                                                        ceo = multinacional.ceo;
+                                                    }
+                                                    System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                    System.out.print("Ingrese ingreso total: ");
+                                                    String Fondos = input.nextLine();
+                                                    int ingreso;
+                                                    if (Fondos.equals("")) {
+                                                        ingreso = multinacional.ingresoTotal;
+                                                    } else {
+                                                        ingreso = Integer.parseInt(Fondos);
+                                                    }
+                                                    System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                    System.out.print("Ingrese gasto total: ");
+                                                    String Gasto = input.nextLine();
+                                                    int gasto;
+                                                    if (Gasto.equals("")) {
+                                                        gasto = multinacional.gastoTotal;
+                                                    } else {
+                                                        gasto = Integer.parseInt(Gasto);
+                                                    }
+                                                    System.out.println("NIT: " + multinacional.NIT);
+                                                    System.out.print("Ingrese NIT nuevo: ");
+                                                    String nit = input.nextLine();
+                                                    int NIT;
+                                                    if (nit.equals("")) {
+                                                        NIT = multinacional.NIT;
+                                                    } else {
+                                                        NIT = Integer.parseInt(nit);
+                                                    }
+                                                    Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                    multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                    System.out.println("Multinacional editada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index3++;
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    }
+                                    case "2": {
+                                        int index3 = 1;
+                                        for (Multinacional multinacional : multinacionales) {
+                                            String minusculas = multinacional.nombre.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index3 == iBuscar) {
+                                                    multinacionales.remove(multinacional);
+                                                    System.out.println("Multinacional eliminada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index3++;
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    }
+                                    case "0":
+                                        busqueda();
+                                        break;
+                                }
+                            } else if (option4.equals("2")) {
                                 busqueda();
                             }
                         }
-                case "2":
-                    while (true){
-                    String orden;
+                    }
+                }
+                case "2": {
+                    while (true) {
+                        String orden;
                         System.out.println("¿De que manera desea organizar el resultado?");
                         System.out.println("1. Ascendente");
                         System.out.println("2. Descendente");
@@ -496,91 +666,426 @@ public  class  Principal {
                         System.out.println("4. Rango");
                         String option4 = input.next();
                         switch (option4) {
-                            case "1" :
+                            case "1": {
                                 System.out.print("Ingrese el NIT a buscar: ");
                                 int buscarNIT = input.nextInt();
                                 int index = 1;
+                                int count = 0;
                                 for (Multinacional multinacional : multinacionales) {
                                     if (multinacional.NIT == buscarNIT) {
                                         System.out.println(index + " " + multinacional);
                                         index++;
-                                        busqueda();
-                                    }
-                                }
-                                System.out.println("No se encuentra la multinacional");
-                                busqueda();
-
-                                break;
-
-                                case "2":
-                                System.out.print("Ingrese el NIT de valor maximo a buscar: ");
-                                int ValorMaximo = input.nextInt();
-                                int count = 0;
-                                int index1 = 1;
-                                for (Multinacional multinacional : repuesto) {
-                                    if (multinacional.NIT <= ValorMaximo) {
-                                        System.out.println(index1 + " " + multinacional);
-                                        index1++;
                                     } else {
                                         count++;
                                         if (count == multinacionales.size()) {
                                             System.out.println("No se encuentra la multinacional");
+                                            busqueda();
                                         }
                                     }
                                 }
-                                repuesto.removeAll(repuesto);
-                                busqueda();
-                                break;
-                                case "3":
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option5 = input.next();
+                                if (option5.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option6 = input.next();
+                                    if (option6.equals("1")) {
+                                        int index2 = 1;
+                                        for (Multinacional multinacional : multinacionales) {
+                                            if (multinacional.NIT == buscarNIT) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + multinacional.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = multinacional.nombre;
+                                                    }
+                                                    System.out.println("Ceo: " + multinacional.ceo);
+                                                    System.out.print("Ingrese nuevo ceo: ");
+                                                    String ceo = input.nextLine();
+                                                    if (ceo.equals("")) {
+                                                        ceo = multinacional.ceo;
+                                                    }
+                                                    System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                    System.out.print("Ingrese ingreso total: ");
+                                                    String Fondos = input.nextLine();
+                                                    int ingreso;
+                                                    if (Fondos.equals("")) {
+                                                        ingreso = multinacional.ingresoTotal;
+                                                    } else {
+                                                        ingreso = Integer.parseInt(Fondos);
+                                                    }
+                                                    System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                    System.out.print("Ingrese gasto total: ");
+                                                    String Gasto = input.nextLine();
+                                                    int gasto;
+                                                    if (Gasto.equals("")) {
+                                                        gasto = multinacional.gastoTotal;
+                                                    } else {
+                                                        gasto = Integer.parseInt(Gasto);
+                                                    }
+                                                    System.out.println("NIT: " + multinacional.NIT);
+                                                    System.out.print("Ingrese NIT nuevo: ");
+                                                    String nit = input.nextLine();
+                                                    int NIT;
+                                                    if (nit.equals("")) {
+                                                        NIT = multinacional.NIT;
+                                                    } else {
+                                                        NIT = Integer.parseInt(nit);
+                                                    }
+                                                    Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                    multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                    System.out.println("Multinacional editada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option6.equals("2")) {
+                                        int index2 = 1;
+                                        for (Multinacional multinacional : multinacionales) {
+                                            if (multinacional.NIT == buscarNIT) {
+                                                if (index2 == iBuscar) {
+                                                    multinacionales.remove(multinacional);
+                                                    System.out.println("Multinacional eliminada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option6.equals("0")) {
+                                        busqueda();
+                                    }
+                                } else if (option5.equals("2")) {
+                                    busqueda();
+                                }
+                            }
+                            case "2": {
+                                System.out.print("Ingrese el NIT de valor maximo a buscar: ");
+                                int ValorMaximo = input.nextInt();
+                                int count = 0;
+                                int index = 1;
+                                for (Multinacional multinacional : repuesto) {
+                                    if (multinacional.NIT <= ValorMaximo) {
+                                        System.out.println(index + " " + multinacional);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == multinacionales.size()) {
+                                            System.out.println("No se encuentra la multinacional");
+                                            busqueda();
+                                        }
+                                    }
+                                }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option5 = input.next();
+                                if (option5.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option6 = input.next();
+                                    if (option6.equals("1")) {
+                                        int index2 = 1;
+                                        for (Multinacional multinacional : repuesto) {
+                                            if (multinacional.NIT <= ValorMaximo) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + multinacional.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = multinacional.nombre;
+                                                    }
+                                                    System.out.println("Ceo: " + multinacional.ceo);
+                                                    System.out.print("Ingrese nuevo ceo: ");
+                                                    String ceo = input.nextLine();
+                                                    if (ceo.equals("")) {
+                                                        ceo = multinacional.ceo;
+                                                    }
+                                                    System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                    System.out.print("Ingrese ingreso total: ");
+                                                    String Fondos = input.nextLine();
+                                                    int ingreso;
+                                                    if (Fondos.equals("")) {
+                                                        ingreso = multinacional.ingresoTotal;
+                                                    } else {
+                                                        ingreso = Integer.parseInt(Fondos);
+                                                    }
+                                                    System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                    System.out.print("Ingrese gasto total: ");
+                                                    String Gasto = input.nextLine();
+                                                    int gasto;
+                                                    if (Gasto.equals("")) {
+                                                        gasto = multinacional.gastoTotal;
+                                                    } else {
+                                                        gasto = Integer.parseInt(Gasto);
+                                                    }
+                                                    System.out.println("NIT: " + multinacional.NIT);
+                                                    System.out.print("Ingrese NIT nuevo: ");
+                                                    String nit = input.nextLine();
+                                                    int NIT;
+                                                    if (nit.equals("")) {
+                                                        NIT = multinacional.NIT;
+                                                    } else {
+                                                        NIT = Integer.parseInt(nit);
+                                                    }
+                                                    Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                    multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                    System.out.println("Multinacional editada con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option6.equals("2")) {
+                                        int index2 = 1;
+                                        for (Multinacional multinacional : repuesto) {
+                                            if (multinacional.NIT <= ValorMaximo) {
+                                                if (index2 == iBuscar) {
+                                                    multinacionales.remove(multinacional);
+                                                    System.out.println("Multinacional eliminada con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option6.equals("0")) {
+                                        repuesto.removeAll(multinacionales);
+                                        busqueda();
+                                    }
+                                    repuesto.removeAll(multinacionales);
+                                    busqueda();
+                                }
+                            }
+                            case "3": {
                                 System.out.print("Ingrese el NIT de valor minimo a buscar: ");
                                 int ValorMinimo = input.nextInt();
-                                int count2 = 0;
-                                int index3 = 1;
+                                int count = 0;
+                                int index = 1;
                                 for (Multinacional multinacional : repuesto) {
                                     if (multinacional.NIT >= ValorMinimo) {
-                                        System.out.println(index3 + " " + multinacional);
-                                        index3++;
+                                        System.out.println(index + " " + multinacional);
+                                        index++;
                                     } else {
-                                        count2++;
-                                        if (count2 == multinacionales.size()) {
+                                        count++;
+                                        if (count == multinacionales.size()) {
                                             System.out.println("No se encuentra la multinacional");
+                                            busqueda();
                                         }
                                     }
                                 }
-                                repuesto.removeAll(repuesto);
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option5 = input.next();
+                                if (option5.equals("1")) {
+                                    System.out.println("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option6 = input.next();
+                                    if (option6.equals("1")) {
+                                        int index2 = 1;
+                                        for (Multinacional multinacional : repuesto) {
+                                            if (multinacional.NIT >= ValorMinimo) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + multinacional.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = multinacional.nombre;
+                                                    }
+                                                    System.out.println("Ceo: " + multinacional.ceo);
+                                                    System.out.print("Ingrese nuevo ceo: ");
+                                                    String ceo = input.nextLine();
+                                                    if (ceo.equals("")) {
+                                                        ceo = multinacional.ceo;
+                                                    }
+                                                    System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                    System.out.print("Ingrese ingreso total: ");
+                                                    String Fondos = input.nextLine();
+                                                    int ingreso = 0;
+                                                    if (Fondos.equals("")) {
+                                                        ingreso = multinacional.ingresoTotal;
+                                                    } else {
+                                                        ingreso = Integer.parseInt(Fondos);
+                                                    }
+                                                    System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                    System.out.print("Ingrese gasto total: ");
+                                                    String Gasto = input.nextLine();
+                                                    int gasto = 0;
+                                                    if (Gasto.equals("")) {
+                                                        gasto = multinacional.gastoTotal;
+                                                    } else {
+                                                        gasto = Integer.parseInt(Gasto);
+                                                    }
+                                                    System.out.print("Ingrese NIT nuevo: ");
+                                                    String nit = input.nextLine();
+                                                    int NIT = 0;
+                                                    if (nit.equals("")) {
+                                                        NIT = multinacional.NIT;
+                                                    } else {
+                                                        NIT = Integer.parseInt(nit);
+                                                    }
+                                                    Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                    multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                    System.out.println("Multinacional editada con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option6.equals("2")) {
+                                        int index2 = 1;
+                                        for (Multinacional multinacional : repuesto) {
+                                            if (multinacional.NIT >= ValorMinimo) {
+                                                if (index2 == iBuscar) {
+                                                    multinacionales.remove(multinacional);
+                                                    System.out.println("Multinacional eliminada con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option6.equals("0")) {
+                                        repuesto.removeAll(multinacionales);
+                                        busqueda();
+                                    }
+                                }
+                                repuesto.removeAll(multinacionales);
                                 busqueda();
-                                break;
-                                case "4":
+                            }
+                            case "4": {
                                 System.out.print("Ingrese un valor minimo de NIT: ");
                                 int rangoMinimo = input.nextInt();
                                 System.out.print("Ingrese un valor maximo de NIT: ");
                                 int rangoMaximo = input.nextInt();
-                                int count3 = 0;
-                                int index4 = 1;
+                                int count = 0;
+                                int index = 1;
                                 for (Multinacional multinacional : repuesto) {
                                     if (multinacional.NIT >= rangoMinimo && multinacional.NIT <= rangoMaximo) {
-                                        System.out.println(index4 + " " + multinacional);
-                                        index4++;
+                                        System.out.println(index + " " + multinacional);
+                                        index++;
                                     } else {
-                                        count3++;
-                                        if (count3 == multinacionales.size()) {
+                                        count++;
+                                        if (count == multinacionales.size()) {
                                             System.out.println("No se encuentra la multinacional");
+                                            busqueda();
                                         }
                                     }
                                 }
-                                repuesto.removeAll(repuesto);
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option5 = input.next();
+                                if (option5.equals("1")) {
+                                    System.out.println("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option6 = input.next();
+                                    if (option6.equals("1")) {
+                                        int index2 = 1;
+                                        for (Multinacional multinacional : repuesto) {
+                                            if (multinacional.NIT >= rangoMinimo && multinacional.NIT <= rangoMaximo) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + multinacional.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = multinacional.nombre;
+                                                    }
+                                                    System.out.println("Ceo: " + multinacional.ceo);
+                                                    System.out.print("Ingrese nuevo ceo: ");
+                                                    String ceo = input.nextLine();
+                                                    if (ceo.equals("")) {
+                                                        ceo = multinacional.ceo;
+                                                    }
+                                                    System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                    System.out.print("Ingrese ingreso total: ");
+                                                    String Fondos = input.nextLine();
+                                                    int ingreso = 0;
+                                                    if (Fondos.equals("")) {
+                                                        ingreso = multinacional.ingresoTotal;
+                                                    } else {
+                                                        ingreso = Integer.parseInt(Fondos);
+                                                    }
+                                                    System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                    System.out.print("Ingrese gasto total: ");
+                                                    String Gasto = input.nextLine();
+                                                    int gasto = 0;
+                                                    if (Gasto.equals("")) {
+                                                        gasto = multinacional.gastoTotal;
+                                                    } else {
+                                                        gasto = Integer.parseInt(Gasto);
+                                                    }
+                                                    System.out.print("Ingrese NIT nuevo: ");
+                                                    String nit = input.nextLine();
+                                                    int NIT = 0;
+                                                    if (nit.equals("")) {
+                                                        NIT = multinacional.NIT;
+                                                    } else {
+                                                        NIT = Integer.parseInt(nit);
+                                                    }
+                                                    Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                    multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                    System.out.println("Multinacional editada con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option6.equals("2")) {
+                                        int index2 = 1;
+                                        for (Multinacional multinacional : repuesto) {
+                                            if (multinacional.NIT >= rangoMinimo && multinacional.NIT <= rangoMaximo) {
+                                                if (index2 == iBuscar) {
+                                                    multinacionales.remove(multinacional);
+                                                    System.out.println("Multinacional eliminada con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option6.equals("0")) {
+                                        repuesto.removeAll(multinacionales);
+                                        busqueda();
+                                    }
+                                }
+                                repuesto.removeAll(multinacionales);
                                 busqueda();
                             }
+                        }
                     }
-
-                case "3":
+                }
+                case "3": {
                     while (true) {
-                        String option5;
+                        String option3;
                         System.out.println("Escoja una opcion:");
                         System.out.println("1. Valor exacto");
                         System.out.println("2. valor sin considerar mayusculas");
-                        option5 = input.next();
-                        if (option5.equals("1")) {
+                        option3 = input.next();
+                        if (option3.equals("1")) {
                             input.nextLine();
                             System.out.print("Ingrese el ceo a buscar: ");
                             String buscarceo = input.nextLine();
@@ -594,11 +1099,96 @@ public  class  Principal {
                                     count++;
                                     if (count == multinacionales.size()) {
                                         System.out.println("No se encuentra la multinacional");
+                                        busqueda();
                                     }
                                 }
                             }
-                            busqueda();
-                        } else if (option5.equals("2")) {
+                            System.out.println("Desea editar o eliminar algun elemento? :");
+                            System.out.println("1. Si");
+                            System.out.println("2. No");
+                            String option4 = input.next();
+                            if (option4.equals("1")) {
+                                System.out.print("Ingrese el numero indice del objeto: ");
+                                int iBuscar = input.nextInt();
+                                System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                System.out.println("1. Editar");
+                                System.out.println("2. Eliminar");
+                                System.out.println("0. Salir");
+                                String option5 = input.next();
+                                if (option5.equals("1")) {
+                                    int index2 = 1;
+                                    for (Multinacional multinacional : multinacionales) {
+                                        if (multinacional.ceo.equals(buscarceo)) {
+                                            if (index2 == iBuscar) {
+                                                System.out.println("Nombre: " + multinacional.nombre);
+                                                System.out.print("Ingrese nuevo nombre: ");
+                                                input.nextLine();
+                                                String nombre = input.nextLine();
+                                                if (nombre.equals("")) {
+                                                    nombre = multinacional.nombre;
+                                                }
+                                                System.out.println("Ceo: " + multinacional.ceo);
+                                                System.out.print("Ingrese nuevo ceo: ");
+                                                String ceo = input.nextLine();
+                                                if (ceo.equals("")) {
+                                                    ceo = multinacional.ceo;
+                                                }
+                                                System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                System.out.print("Ingrese ingreso total: ");
+                                                String Fondos = input.nextLine();
+                                                int ingreso = 0;
+                                                if (Fondos.equals("")) {
+                                                    ingreso = multinacional.ingresoTotal;
+                                                } else {
+                                                    ingreso = Integer.parseInt(Fondos);
+                                                }
+                                                System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                System.out.print("Ingrese gasto total: ");
+                                                String Gasto = input.nextLine();
+                                                int gasto = 0;
+                                                if (Gasto.equals("")) {
+                                                    gasto = multinacional.gastoTotal;
+                                                } else {
+                                                    gasto = Integer.parseInt(Gasto);
+                                                }
+                                                System.out.println("NIT: " + multinacional.NIT);
+                                                System.out.print("Ingrese NIT nuevo: ");
+                                                String nit = input.nextLine();
+                                                int NIT = 0;
+                                                if (nit.equals("")) {
+                                                    NIT = multinacional.NIT;
+                                                } else {
+                                                    NIT = Integer.parseInt(nit);
+                                                }
+                                                Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                System.out.println("Multinacional editada con exito");
+                                                busqueda();
+                                            } else {
+                                                index2++;
+                                            }
+                                        }
+                                    }
+                                } else if (option5.equals("2")) {
+                                    int index2 = 1;
+                                    for (Multinacional multinacional : multinacionales) {
+                                        if (multinacional.ceo.equals(buscarceo)) {
+                                            if (index2 == iBuscar) {
+                                                multinacionales.remove(multinacional);
+                                                System.out.println("Multinacional eliminada con exito");
+                                                busqueda();
+                                            } else {
+                                                index2++;
+                                            }
+                                        }
+                                    }
+                                } else if (option5.equals("0")) {
+                                    busqueda();
+                                }
+                            } else if (option4.equals("2")) {
+                                busqueda();
+                            }
+                        } else if (option3.equals("2")) {
                             input.nextLine();
                             System.out.print("Ingrese el ceo a buscar: ");
                             String buscarceo = input.nextLine();
@@ -614,13 +1204,101 @@ public  class  Principal {
                                     count++;
                                     if (count == multinacionales.size()) {
                                         System.out.println("No se encuentra la multinacional");
+                                        busqueda();
                                     }
                                 }
                             }
-                            busqueda();
+                            System.out.println("Desea editar o eliminar algun elemento? :");
+                            System.out.println("1. Si");
+                            System.out.println("2. No");
+                            String option4 = input.next();
+                            if (option4.equals("1")) {
+                                System.out.print("Ingrese el numero indice del objeto: ");
+                                int iBuscar = input.nextInt();
+                                System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                System.out.println("1. Editar");
+                                System.out.println("2. Eliminar");
+                                System.out.println("0. Salir");
+                                String option5 = input.next();
+                                if (option5.equals("1")) {
+                                    int index2 = 1;
+                                    for (Multinacional multinacional : multinacionales) {
+                                        String minusculas = multinacional.ceo.toLowerCase();
+                                        if (minusculas.equals(ceoMinuscula)) {
+                                            if (index2 == iBuscar) {
+                                                System.out.println("Nombre: " + multinacional.nombre);
+                                                System.out.print("Ingrese nuevo nombre: ");
+                                                input.nextLine();
+                                                String nombre = input.nextLine();
+                                                if (nombre.equals("")) {
+                                                    nombre = multinacional.nombre;
+                                                }
+                                                System.out.println("Ceo: " + multinacional.ceo);
+                                                System.out.print("Ingrese nuevo ceo: ");
+                                                String ceo = input.nextLine();
+                                                if (ceo.equals("")) {
+                                                    ceo = multinacional.ceo;
+                                                }
+                                                System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                System.out.print("Ingrese ingreso total: ");
+                                                String Fondos = input.nextLine();
+                                                int ingreso = 0;
+                                                if (Fondos.equals("")) {
+                                                    ingreso = multinacional.ingresoTotal;
+                                                } else {
+                                                    ingreso = Integer.parseInt(Fondos);
+                                                }
+                                                System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                System.out.print("Ingrese gasto total: ");
+                                                String Gasto = input.nextLine();
+                                                int gasto = 0;
+                                                if (Gasto.equals("")) {
+                                                    gasto = multinacional.gastoTotal;
+                                                } else {
+                                                    gasto = Integer.parseInt(Gasto);
+                                                }
+                                                System.out.println("NIT: " + multinacional.NIT);
+                                                System.out.print("Ingrese NIT nuevo: ");
+                                                String nit = input.nextLine();
+                                                int NIT = 0;
+                                                if (nit.equals("")) {
+                                                    NIT = multinacional.NIT;
+                                                } else {
+                                                    NIT = Integer.parseInt(nit);
+                                                }
+                                                Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                System.out.println("Multinacional editada con exito");
+                                                busqueda();
+                                            } else {
+                                                index2++;
+                                            }
+                                        }
+                                    }
+                                } else if (option5.equals("2")) {
+                                    int index2 = 1;
+                                    for (Multinacional multinacional : multinacionales) {
+                                        String minusculas = multinacional.ceo.toLowerCase();
+                                        if (minusculas.equals(ceoMinuscula)) {
+                                            if (index2 == iBuscar) {
+                                                multinacionales.remove(multinacional);
+                                                System.out.println("Multinacional eliminada con exito");
+                                                busqueda();
+                                            } else {
+                                                index2++;
+                                            }
+                                        }
+                                    }
+                                } else if (option5.equals("0")) {
+                                    busqueda();
+                                }
+                            } else if (option4.equals("2")) {
+                                busqueda();
+                            }
                         }
                     }
-                case "4":
+                }
+                case "4": {
                     while (true) {
                         System.out.println("¿De que manera desea organizar el resultado?");
                         System.out.println("1. Ascendente");
@@ -640,7 +1318,7 @@ public  class  Principal {
                             System.out.println("4. Rango");
                             option3 = input.next();
                             switch (option3) {
-                                case "1":
+                                case "1": {
                                     System.out.print("Ingrese el valor de ingreso total a buscar: ");
                                     double buscarTotal = input.nextDouble();
                                     int count = 0;
@@ -656,71 +1334,420 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    busqueda();
-                                    break;
-                                case "2":
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : multinacionales) {
+                                                if (multinacional.ingresoTotal == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + multinacional.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = multinacional.nombre;
+                                                        }
+                                                        System.out.println("Ceo: " + multinacional.ceo);
+                                                        System.out.print("Ingrese nuevo ceo: ");
+                                                        String ceo = input.nextLine();
+                                                        if (ceo.equals("")) {
+                                                            ceo = multinacional.ceo;
+                                                        }
+                                                        System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                        System.out.print("Ingrese ingreso total: ");
+                                                        String Fondos = input.nextLine();
+                                                        int ingreso = 0;
+                                                        if (Fondos.equals("")) {
+                                                            ingreso = multinacional.ingresoTotal;
+                                                        } else {
+                                                            ingreso = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                        System.out.print("Ingrese gasto total: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")) {
+                                                            gasto = multinacional.gastoTotal;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        System.out.println("NIT: " + multinacional.NIT);
+                                                        System.out.print("Ingrese NIT nuevo: ");
+                                                        String nit = input.nextLine();
+                                                        int NIT = 0;
+                                                        if (nit.equals("")) {
+                                                            NIT = multinacional.NIT;
+                                                        } else {
+                                                            NIT = Integer.parseInt(nit);
+                                                        }
+                                                        Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                        multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                        System.out.println("Multinacional editada con exito");
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : multinacionales) {
+                                                if (multinacional.ingresoTotal == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        multinacionales.remove(multinacional);
+                                                        System.out.println("Multinacional eliminada con exito");
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        busqueda();
+                                    }
+                                }
+                                case "2": {
                                     System.out.print("Ingrese el valor de ingreso total maximo a buscar: ");
                                     double ValorMaximo = input.nextDouble();
-                                    int count2 = 0;
-                                    int index2 = 1;
+                                    int count = 0;
+                                    int index = 1;
                                     for (Multinacional multinacional : repuesto) {
                                         if (multinacional.ingresoTotal <= ValorMaximo) {
-                                            System.out.println(index2 + " " + multinacional);
-                                            index2++;
+                                            System.out.println(index + " " + multinacional);
+                                            index++;
                                         } else {
-                                            count2++;
-                                            if (count2 == multinacionales.size()) {
+                                            count++;
+                                            if (count == multinacionales.size()) {
                                                 System.out.println("No se encuentra la multinacional");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
-                                    break;
-                                case "3":
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                if (multinacional.ingresoTotal <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + multinacional.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = multinacional.nombre;
+                                                        }
+                                                        System.out.println("Ceo: " + multinacional.ceo);
+                                                        System.out.print("Ingrese nuevo ceo: ");
+                                                        String ceo = input.nextLine();
+                                                        if (ceo.equals("")) {
+                                                            ceo = multinacional.ceo;
+                                                        }
+                                                        System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                        System.out.print("Ingrese ingreso total: ");
+                                                        String Fondos = input.nextLine();
+                                                        int ingreso = 0;
+                                                        if (Fondos.equals("")) {
+                                                            ingreso = multinacional.ingresoTotal;
+                                                        } else {
+                                                            ingreso = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                        System.out.print("Ingrese gasto total: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")) {
+                                                            gasto = multinacional.gastoTotal;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        System.out.println("NIT: " + multinacional.NIT);
+                                                        System.out.print("Ingrese NIT nuevo: ");
+                                                        String nit = input.nextLine();
+                                                        int NIT = 0;
+                                                        if (nit.equals("")) {
+                                                            NIT = multinacional.NIT;
+                                                        } else {
+                                                            NIT = Integer.parseInt(nit);
+                                                        }
+                                                        Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                        multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                        System.out.println("Multinacional editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                if (multinacional.ingresoTotal <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        multinacionales.remove(multinacional);
+                                                        System.out.println("Multinacional eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
+                                }
+                                case "3": {
                                     System.out.print("Ingrese el valor de ingreso total minimo a buscar: ");
                                     double ValorMinimo = input.nextDouble();
-                                    int count3 = 0;
-                                    int index3 = 1;
+                                    int count = 0;
+                                    int index = 1;
                                     for (Multinacional multinacional : repuesto) {
                                         if (multinacional.ingresoTotal >= ValorMinimo) {
-                                            System.out.println(index3 + " " + multinacional);
-                                            index3++;
+                                            System.out.println(index + " " + multinacional);
+                                            index++;
                                         } else {
-                                            count3++;
-                                            if (count3 == multinacionales.size()) {
+                                            count++;
+                                            if (count == multinacionales.size()) {
                                                 System.out.println("No se encuentra la multinacional");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
-                                    break;
-                                case "4" :
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                if (multinacional.ingresoTotal >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + multinacional.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = multinacional.nombre;
+                                                        }
+                                                        System.out.println("Ceo: " + multinacional.ceo);
+                                                        System.out.print("Ingrese nuevo ceo: ");
+                                                        String ceo = input.nextLine();
+                                                        if (ceo.equals("")) {
+                                                            ceo = multinacional.ceo;
+                                                        }
+                                                        System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                        System.out.print("Ingrese ingreso total: ");
+                                                        String Fondos = input.nextLine();
+                                                        int ingreso = 0;
+                                                        if (Fondos.equals("")) {
+                                                            ingreso = multinacional.ingresoTotal;
+                                                        } else {
+                                                            ingreso = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                        System.out.print("Ingrese gasto total: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")) {
+                                                            gasto = multinacional.gastoTotal;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        System.out.println("NIT: " + multinacional.NIT);
+                                                        System.out.print("Ingrese NIT nuevo: ");
+                                                        String nit = input.nextLine();
+                                                        int NIT = 0;
+                                                        if (nit.equals("")) {
+                                                            NIT = multinacional.NIT;
+                                                        } else {
+                                                            NIT = Integer.parseInt(nit);
+                                                        }
+                                                        Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                        multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                        System.out.println("Multinacional editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                if (multinacional.ingresoTotal >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        multinacionales.remove(multinacional);
+                                                        System.out.println("Multinacional eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
+                                }
+                                case "4": {
                                     System.out.print("Ingrese valor minimo del rango: ");
                                     int Min = input.nextInt();
                                     System.out.println("Ingrese valor maximo del rango: ");
                                     int Max = input.nextInt();
-                                    int index4 = 1;
-                                    int count4 = 0;
+                                    int index = 1;
+                                    int count = 0;
                                     for (Multinacional multinacional : repuesto) {
                                         if (multinacional.ingresoTotal <= Max && multinacional.ingresoTotal >= Min) {
-                                            System.out.println(index4 + " " + multinacional);
-                                            index4++;
+                                            System.out.println(index + " " + multinacional);
+                                            index++;
                                         } else {
-                                            count4++;
+                                            count++;
                                         }
-                                        if (count4 == multinacionales.size()) {
+                                        if (count == multinacionales.size()) {
                                             System.out.println("No se encuentran multinacionales");
+                                            busqueda();
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
-                                    break;
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                if (multinacional.ingresoTotal <= Max && multinacional.ingresoTotal >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + multinacional.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = multinacional.nombre;
+                                                        }
+                                                        System.out.println("Ceo: " + multinacional.ceo);
+                                                        System.out.print("Ingrese nuevo ceo: ");
+                                                        String ceo = input.nextLine();
+                                                        if (ceo.equals("")) {
+                                                            ceo = multinacional.ceo;
+                                                        }
+                                                        System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                        System.out.print("Ingrese ingreso total: ");
+                                                        String Fondos = input.nextLine();
+                                                        int ingreso = 0;
+                                                        if (Fondos.equals("")) {
+                                                            ingreso = multinacional.ingresoTotal;
+                                                        } else {
+                                                            ingreso = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                        System.out.print("Ingrese gasto total: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")) {
+                                                            gasto = multinacional.gastoTotal;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        System.out.println("NIT: " + multinacional.NIT);
+                                                        System.out.print("Ingrese NIT nuevo: ");
+                                                        String nit = input.nextLine();
+                                                        int NIT = 0;
+                                                        if (nit.equals("")) {
+                                                            NIT = multinacional.NIT;
+                                                        } else {
+                                                            NIT = Integer.parseInt(nit);
+                                                        }
+                                                        Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                        multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                        System.out.println("Multinacional editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                if (multinacional.ingresoTotal <= Max && multinacional.ingresoTotal >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        multinacionales.remove(multinacional);
+                                                        System.out.println("Multinacional eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
                                 }
                             }
                         }
-                case "5":
+                    }
+                }
+                case "5": {
 
                     while (true) {
                         System.out.println("¿De que manera desea organizar el resultado?");
@@ -740,7 +1767,7 @@ public  class  Principal {
                             System.out.println("4. Rango");
                             String option3 = input.next();
                             switch (option3) {
-                                case "1":
+                                case "1": {
                                     System.out.print("Ingrese el valor de gasto total a buscar: ");
                                     double buscarTotal = input.nextDouble();
                                     int count = 0;
@@ -753,108 +1780,712 @@ public  class  Principal {
                                             count++;
                                             if (count == multinacionales.size()) {
                                                 System.out.println("No se encuentra la multinacional");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    busqueda();
-                                break;
-                                case "2":
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : multinacionales) {
+                                                if (multinacional.gastoTotal == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + multinacional.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = multinacional.nombre;
+                                                        }
+                                                        System.out.println("Ceo: " + multinacional.ceo);
+                                                        System.out.print("Ingrese nuevo ceo: ");
+                                                        String ceo = input.nextLine();
+                                                        if (ceo.equals("")) {
+                                                            ceo = multinacional.ceo;
+                                                        }
+                                                        System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                        System.out.print("Ingrese ingreso total: ");
+                                                        String Fondos = input.nextLine();
+                                                        int ingreso = 0;
+                                                        if (Fondos.equals("")) {
+                                                            ingreso = multinacional.ingresoTotal;
+                                                        } else {
+                                                            ingreso = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                        System.out.print("Ingrese gasto total: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")) {
+                                                            gasto = multinacional.gastoTotal;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        System.out.println("NIT: " + multinacional.NIT);
+                                                        System.out.print("Ingrese NIT nuevo: ");
+                                                        String nit = input.nextLine();
+                                                        int NIT = 0;
+                                                        if (nit.equals("")) {
+                                                            NIT = multinacional.NIT;
+                                                        } else {
+                                                            NIT = Integer.parseInt(nit);
+                                                        }
+                                                        Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                        multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                        System.out.println("Multinacional editada con exito");
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : multinacionales) {
+                                                if (multinacional.gastoTotal == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        multinacionales.remove(multinacional);
+                                                        System.out.println("Multinacional eliminada con exito");
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        busqueda();
+                                    }
+                                }
+                                case "2": {
                                     System.out.print("Ingrese el valor de gasto total maximo a buscar: ");
                                     double ValorMaximo = input.nextDouble();
-                                    int count2 = 0;
-                                    int index2 = 1;
+                                    int count = 0;
+                                    int index = 1;
                                     for (Multinacional multinacional : repuesto) {
                                         if (multinacional.gastoTotal <= ValorMaximo) {
-                                            System.out.println(index2 + " " + multinacional);
-                                            index2++;
+                                            System.out.println(index + " " + multinacional);
+                                            index++;
                                         } else {
-                                            count2++;
-                                            if (count2 == multinacionales.size()) {
+                                            count++;
+                                            if (count == multinacionales.size()) {
                                                 System.out.println("No se encuentra la multinacional");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
-                                    break;
-                                case "3":
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                if (multinacional.gastoTotal <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + multinacional.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = multinacional.nombre;
+                                                        }
+                                                        System.out.println("Ceo: " + multinacional.ceo);
+                                                        System.out.print("Ingrese nuevo ceo: ");
+                                                        String ceo = input.nextLine();
+                                                        if (ceo.equals("")) {
+                                                            ceo = multinacional.ceo;
+                                                        }
+                                                        System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                        System.out.print("Ingrese ingreso total: ");
+                                                        String Fondos = input.nextLine();
+                                                        int ingreso = 0;
+                                                        if (Fondos.equals("")) {
+                                                            ingreso = multinacional.ingresoTotal;
+                                                        } else {
+                                                            ingreso = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                        System.out.print("Ingrese gasto total: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")) {
+                                                            gasto = multinacional.gastoTotal;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        System.out.println("NIT: " + multinacional.NIT);
+                                                        System.out.print("Ingrese NIT nuevo: ");
+                                                        String nit = input.nextLine();
+                                                        int NIT = 0;
+                                                        if (nit.equals("")) {
+                                                            NIT = multinacional.NIT;
+                                                        } else {
+                                                            NIT = Integer.parseInt(nit);
+                                                        }
+                                                        Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                        multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                        System.out.println("Multinacional editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                if (multinacional.gastoTotal <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        multinacionales.remove(multinacional);
+                                                        System.out.println("Multinacional eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
+                            }
+                                case "3": {
                                     System.out.print("Ingrese el valor de gasto total minimo a buscar: ");
                                     double ValorMinimo = input.nextDouble();
-                                    int count3 = 0;
-                                    int index3 = 1;
+                                    int count = 0;
+                                    int index = 1;
                                     for (Multinacional multinacional : repuesto) {
                                         if (multinacional.gastoTotal >= ValorMinimo) {
-                                            System.out.println(index3 + " " + multinacional);
-                                            index3++;
+                                            System.out.println(index + " " + multinacional);
+                                            index++;
                                         } else {
-                                            count3++;
-                                            if (count3 == multinacionales.size()) {
+                                            count++;
+                                            if (count == multinacionales.size()) {
                                                 System.out.println("No se encuentra la multinacional");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
-                                    break;
-                                case "4":
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                if (multinacional.gastoTotal >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + multinacional.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = multinacional.nombre;
+                                                        }
+                                                        System.out.println("Ceo: " + multinacional.ceo);
+                                                        System.out.print("Ingrese nuevo ceo: ");
+                                                        String ceo = input.nextLine();
+                                                        if (ceo.equals("")) {
+                                                            ceo = multinacional.ceo;
+                                                        }
+                                                        System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                        System.out.print("Ingrese ingreso total: ");
+                                                        String Fondos = input.nextLine();
+                                                        int ingreso = 0;
+                                                        if (Fondos.equals("")) {
+                                                            ingreso = multinacional.ingresoTotal;
+                                                        } else {
+                                                            ingreso = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                        System.out.print("Ingrese gasto total: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")) {
+                                                            gasto = multinacional.gastoTotal;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        System.out.println("NIT: " + multinacional.NIT);
+                                                        System.out.print("Ingrese NIT nuevo: ");
+                                                        String nit = input.nextLine();
+                                                        int NIT = 0;
+                                                        if (nit.equals("")) {
+                                                            NIT = multinacional.NIT;
+                                                        } else {
+                                                            NIT = Integer.parseInt(nit);
+                                                        }
+                                                        Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                        multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                        System.out.println("Multinacional editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                if (multinacional.gastoTotal >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        multinacionales.remove(multinacional);
+                                                        System.out.println("Multinacional eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
+                                }
+                                case "4": {
                                     System.out.print("Ingrese valor minimo del rango: ");
                                     int Min = input.nextInt();
                                     System.out.println("Ingrese valor maximo del rango: ");
                                     int Max = input.nextInt();
-                                    int index4 = 1;
-                                    int count4= 0;
+                                    int index = 1;
+                                    int count = 0;
                                     for (Multinacional multinacional : repuesto) {
                                         if (multinacional.gastoTotal <= Max && multinacional.gastoTotal >= Min) {
-                                            System.out.println(index4 + " " + multinacional);
-                                            index4++;
+                                            System.out.println(index + " " + multinacional);
+                                            index++;
                                         } else {
-                                            count4++;
-                                            if (count4 == multinacionales.size()) {
+                                            count++;
+                                            if (count == multinacionales.size()) {
                                                 System.out.println("No se encuentran multinacionales");
+                                                busqueda();
                                             }
                                         }
-
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
-                                    break;
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                if (multinacional.gastoTotal <= Max && multinacional.gastoTotal >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + multinacional.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = multinacional.nombre;
+                                                        }
+                                                        System.out.println("Ceo: " + multinacional.ceo);
+                                                        System.out.print("Ingrese nuevo ceo: ");
+                                                        String ceo = input.nextLine();
+                                                        if (ceo.equals("")) {
+                                                            ceo = multinacional.ceo;
+                                                        }
+                                                        System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                        System.out.print("Ingrese ingreso total: ");
+                                                        String Fondos = input.nextLine();
+                                                        int ingreso = 0;
+                                                        if (Fondos.equals("")) {
+                                                            ingreso = multinacional.ingresoTotal;
+                                                        } else {
+                                                            ingreso = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                        System.out.print("Ingrese gasto total: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")) {
+                                                            gasto = multinacional.gastoTotal;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        System.out.println("NIT: " + multinacional.NIT);
+                                                        System.out.print("Ingrese NIT nuevo: ");
+                                                        String nit = input.nextLine();
+                                                        int NIT = 0;
+                                                        if (nit.equals("")) {
+                                                            NIT = multinacional.NIT;
+                                                        } else {
+                                                            NIT = Integer.parseInt(nit);
+                                                        }
+                                                        Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                        multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                        System.out.println("Multinacional editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                if (multinacional.gastoTotal <= Max && multinacional.gastoTotal >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        multinacionales.remove(multinacional);
+                                                        System.out.println("Multinacional eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
+                                }
                             }
                         }
                     }
-                    case "6":
-                    while (true) {
-                        System.out.println("Seleccione el atributo por el cual ordenar: ");
-                        System.out.println("1. NIT");
-                        System.out.println("2. Ingreso total");
-                        System.out.println("3. Gasto total");
-                        String option3 = input.next();
-                        switch (option3) {
-                            case "1":
-                                int index = 1;
-                                repuesto.sort(new ComparadorM());
-                                for (Multinacional multinacional : repuesto) {
-                                    System.out.println(index + " " + multinacional);
-                                    index++;
+                }
+                case "6": {
+                        while (true) {
+                            System.out.println("Seleccione el atributo por el cual ordenar: ");
+                            System.out.println("1. NIT");
+                            System.out.println("2. Ingreso total");
+                            System.out.println("3. Gasto total");
+                            String option3 = input.next();
+                            switch (option3) {
+                                case "1": {
+                                    int index = 1;
+                                    repuesto.sort(new ComparadorM());
+                                    for (Multinacional multinacional : repuesto) {
+                                        System.out.println(index + " " + multinacional);
+                                        index++;
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + multinacional.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = multinacional.nombre;
+                                                        }
+                                                        System.out.println("Ceo: " + multinacional.ceo);
+                                                        System.out.print("Ingrese nuevo ceo: ");
+                                                        String ceo = input.nextLine();
+                                                        if (ceo.equals("")) {
+                                                            ceo = multinacional.ceo;
+                                                        }
+                                                        System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                        System.out.print("Ingrese ingreso total: ");
+                                                        String Fondos = input.nextLine();
+                                                        int ingreso = 0;
+                                                        if (Fondos.equals("")) {
+                                                            ingreso = multinacional.ingresoTotal;
+                                                        } else {
+                                                            ingreso = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                        System.out.print("Ingrese gasto total: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")) {
+                                                            gasto = multinacional.gastoTotal;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        System.out.println("NIT: " + multinacional.NIT);
+                                                        System.out.print("Ingrese NIT nuevo: ");
+                                                        String nit = input.nextLine();
+                                                        int NIT = 0;
+                                                        if (nit.equals("")) {
+                                                            NIT = multinacional.NIT;
+                                                        } else {
+                                                            NIT = Integer.parseInt(nit);
+                                                        }
+                                                        Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                        multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                        System.out.println("Multinacional editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                    if (index2 == iBuscar) {
+                                                        multinacionales.remove(multinacional);
+                                                        System.out.println("Multinacional eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
                                 }
-                                break;
-                            case "2":
-                                int index2 = 1;
-                                repuesto.sort(new ComparadorMIT());
-                                for (Multinacional multinacional : repuesto) {
-                                    System.out.println(index2 + " " + multinacional);
-                                    index2++;}
-                                break;
-                            case "3":
-                                int index3 = 1;
-                                repuesto.sort(new ComparadorMGT());
-                                for (Multinacional multinacional : repuesto) {
-                                    System.out.println(index3 + " " + multinacional);
-                                    index3++;
+                                case "2": {
+                                    int index = 1;
+                                    repuesto.sort(new ComparadorMIT());
+                                    for (Multinacional multinacional : repuesto) {
+                                        System.out.println(index + " " + multinacional);
+                                        index++;
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + multinacional.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = multinacional.nombre;
+                                                        }
+                                                        System.out.println("Ceo: " + multinacional.ceo);
+                                                        System.out.print("Ingrese nuevo ceo: ");
+                                                        String ceo = input.nextLine();
+                                                        if (ceo.equals("")) {
+                                                            ceo = multinacional.ceo;
+                                                        }
+                                                        System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                        System.out.print("Ingrese ingreso total: ");
+                                                        String Fondos = input.nextLine();
+                                                        int ingreso = 0;
+                                                        if (Fondos.equals("")) {
+                                                            ingreso = multinacional.ingresoTotal;
+                                                        } else {
+                                                            ingreso = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                        System.out.print("Ingrese gasto total: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")) {
+                                                            gasto = multinacional.gastoTotal;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        System.out.println("NIT: " + multinacional.NIT);
+                                                        System.out.print("Ingrese NIT nuevo: ");
+                                                        String nit = input.nextLine();
+                                                        int NIT = 0;
+                                                        if (nit.equals("")) {
+                                                            NIT = multinacional.NIT;
+                                                        } else {
+                                                            NIT = Integer.parseInt(nit);
+                                                        }
+                                                        Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                        multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                        System.out.println("Multinacional editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                    if (index2 == iBuscar) {
+                                                        multinacionales.remove(multinacional);
+                                                        System.out.println("Multinacional eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
                                 }
-                                break;
+                                case "3": {
+                                    int index = 1;
+                                    repuesto.sort(new ComparadorMGT());
+                                    for (Multinacional multinacional : repuesto) {
+                                        System.out.println(index + " " + multinacional);
+                                        index++;
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + multinacional.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = multinacional.nombre;
+                                                        }
+                                                        System.out.println("Ceo: " + multinacional.ceo);
+                                                        System.out.print("Ingrese nuevo ceo: ");
+                                                        String ceo = input.nextLine();
+                                                        if (ceo.equals("")) {
+                                                            ceo = multinacional.ceo;
+                                                        }
+                                                        System.out.println("Fondos: " + multinacional.ingresoTotal);
+                                                        System.out.print("Ingrese ingreso total: ");
+                                                        String Fondos = input.nextLine();
+                                                        int ingreso = 0;
+                                                        if (Fondos.equals("")) {
+                                                            ingreso = multinacional.ingresoTotal;
+                                                        } else {
+                                                            ingreso = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gasto: " + multinacional.gastoTotal);
+                                                        System.out.print("Ingrese gasto total: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")) {
+                                                            gasto = multinacional.gastoTotal;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        System.out.println("NIT: " + multinacional.NIT);
+                                                        System.out.print("Ingrese NIT nuevo: ");
+                                                        String nit = input.nextLine();
+                                                        int NIT = 0;
+                                                        if (nit.equals("")) {
+                                                            NIT = multinacional.NIT;
+                                                        } else {
+                                                            NIT = Integer.parseInt(nit);
+                                                        }
+                                                        Multinacional multinacionalaux = new Multinacional(nombre, ceo, ingreso, gasto, NIT);
+                                                        multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
+                                                        System.out.println("Multinacional editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Multinacional multinacional : repuesto) {
+                                                    if (index2 == iBuscar) {
+                                                        multinacionales.remove(multinacional);
+                                                        System.out.println("Multinacional eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
+                                }
+                            }
                         }
-                        repuesto.removeAll(repuesto);
-                        busqueda();
                     }
                 }
             }
@@ -864,10 +2495,6 @@ public  class  Principal {
         if (paises.size() == 0) {
             System.out.println("No hay paises registrados");
         } else {
-            LinkedList<Pais> repuesto = new LinkedList<>();
-            for (Pais pais: paises) {
-                repuesto.add(pais);
-            }
             while (true) {
                 System.out.println("Escoja un atributo de busqueda:");
                 System.out.println("1. Nombre");
@@ -895,11 +2522,70 @@ public  class  Principal {
                                         count++;
                                         if (count == paises.size()) {
                                             System.out.println("No se encuentra el pais");
+                                            busqueda();
                                         }
                                     }
                                 }
-                                busqueda();
-                            } else if (option3.equals("2")) {
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Pais pais : paises) {
+                                            if (pais.nombre.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + pais.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = pais.nombre;
+                                                    }
+                                                    System.out.println("Presidente: " + pais.presidente);
+                                                    System.out.print("Ingrese nuevo presidente: ");
+                                                    String presidente = input.nextLine();
+                                                    if (presidente.equals("")) {
+                                                        presidente = pais.presidente;
+                                                    }
+                                                    Pais paisAux = new Pais(nombre, presidente);
+                                                    paises.set(paises.indexOf(pais), paisAux);
+                                                    System.out.println("Pais editado con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Pais pais : paises) {
+                                            if (pais.nombre.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    paises.remove(pais);
+                                                    System.out.println("Pais eliminado con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("0")) {
+                                        busqueda();
+                                    }
+                                } else if (option4.equals("2")) {
+                                    busqueda();
+                                }
+                            }
+                            else if (option3.equals("2")) {
                                 input.nextLine();
                                 System.out.print("Ingrese el nombre del pais a buscar: ");
                                 String buscarNombre = input.nextLine();
@@ -915,10 +2601,70 @@ public  class  Principal {
                                         count++;
                                         if (count == paises.size()) {
                                             System.out.println("No se encuentra el pais");
+                                            busqueda();
                                         }
                                     }
                                 }
-                                busqueda();
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Pais pais : paises) {
+                                            String minusculas = pais.nombre.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + pais.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = pais.nombre;
+                                                    }
+                                                    System.out.println("Presidente: " + pais.presidente);
+                                                    System.out.print("Ingrese nuevo presidente: ");
+                                                    String presidente = input.nextLine();
+                                                    if (presidente.equals("")) {
+                                                        presidente = pais.presidente;
+                                                    }
+                                                    Pais paisAux = new Pais(nombre, presidente);
+                                                    paises.set(paises.indexOf(pais), paisAux);
+                                                    System.out.println("Pais editado con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Pais pais : paises) {
+                                            String minusculas = pais.nombre.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    paises.remove(pais);
+                                                    System.out.println("Pais eliminado con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("0")) {
+                                        busqueda();
+                                    }
+                                } else if (option4.equals("2")) {
+                                    busqueda();
+                                }
                             }
                         }
                     }
@@ -935,7 +2681,7 @@ public  class  Principal {
                                 String buscarM = input.nextLine();
                                 int count = 0;
                                 int index = 1;
-                                for (Pais pais : repuesto) {
+                                for (Pais pais : paises) {
                                     if (pais.presidente.equals(buscarM)) {
                                         System.out.println(index + " " + pais);
                                         index++;
@@ -943,11 +2689,68 @@ public  class  Principal {
                                         count++;
                                         if (count == paises.size()) {
                                             System.out.println("No se encuentra el pais");
+                                            busqueda();
                                         }
                                     }
                                 }
-                                repuesto.removeAll(repuesto);
-                                busqueda();
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Pais pais : paises) {
+                                            if (pais.presidente.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + pais.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = pais.nombre;
+                                                    }
+                                                    System.out.println("Presidente" + pais.presidente);
+                                                    System.out.print("Ingrese nuevo presidente: ");
+                                                    String presidente = input.nextLine();
+                                                    if (presidente.equals("")) {
+                                                        presidente = pais.presidente;
+                                                    }
+                                                    Pais paisAux = new Pais(nombre, presidente);
+                                                    paises.set(paises.indexOf(pais), paisAux);
+                                                    System.out.println("Pais editado con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Pais pais : paises) {
+                                            if (pais.presidente.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    paises.remove(pais);
+                                                    System.out.println("Pais eliminado con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("0")) {
+                                        busqueda();
+                                    }
+                                } else if (option4.equals("2")) {
+                                    busqueda();
+                                }
                             } else if (option3.equals("2")) {
                                 input.nextLine();
                                 System.out.print("Ingrese el nombre del presidente a buscar: ");
@@ -955,7 +2758,7 @@ public  class  Principal {
                                 String nombreMinuscula = buscarNombre.toLowerCase();
                                 int count = 0;
                                 int index = 1;
-                                for (Pais pais : repuesto) {
+                                for (Pais pais : paises) {
                                     String minusculas = pais.presidente.toLowerCase();
                                     if (minusculas.equals(nombreMinuscula)) {
                                         System.out.println(index + " " + pais);
@@ -964,11 +2767,70 @@ public  class  Principal {
                                         count++;
                                         if (count == paises.size()) {
                                             System.out.println("No se encuentra el pais");
+                                            busqueda();
                                         }
                                     }
                                 }
-                                repuesto.removeAll(repuesto);
-                                busqueda();
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Pais pais : paises) {
+                                            String minusculas = pais.presidente.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + pais.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = pais.nombre;
+                                                    }
+                                                    System.out.println("Presidente: " + pais.presidente);
+                                                    System.out.print("Ingrese nuevo presidente: ");
+                                                    String presidente = input.nextLine();
+                                                    if (presidente.equals("")) {
+                                                        presidente = pais.presidente;
+                                                    }
+                                                    Pais paisAux = new Pais(nombre, presidente);
+                                                    paises.set(paises.indexOf(pais), paisAux);
+                                                    System.out.println("Pais editado con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Pais pais : paises) {
+                                            String minusculas = pais.presidente.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    paises.remove(pais);
+                                                    System.out.println("Pais eliminado con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("0")) {
+                                        busqueda();
+                                    }
+                                } else if (option4.equals("2")) {
+                                    busqueda();
+                                }
                             }
                         }
                     }
@@ -980,7 +2842,60 @@ public  class  Principal {
                             System.out.println(index + " " + pais);
                             index++;
                         }
-                        busqueda();
+                        System.out.println("Desea editar o eliminar algun elemento? :");
+                        System.out.println("1. Si");
+                        System.out.println("2. No");
+                        String option4 = input.next();
+                        if (option4.equals("1")) {
+                            System.out.print("Ingrese el numero indice del objeto: ");
+                            int iBuscar = input.nextInt();
+                            System.out.println("¿Desea editar o eliminar el objeto?: ");
+                            System.out.println("1. Editar");
+                            System.out.println("2. Eliminar");
+                            System.out.println("0. Salir");
+                            String option5 = input.next();
+                            if (option5.equals("1")) {
+                                int index2 = 1;
+                                for (Pais pais : paises) {
+                                        if (index2 == iBuscar) {
+                                            System.out.println("Nombre: " + pais.nombre);
+                                            System.out.print("Ingrese nuevo nombre: ");
+                                            input.nextLine();
+                                            String nombre = input.nextLine();
+                                            if (nombre.equals("")) {
+                                                nombre = pais.nombre;
+                                            }
+                                            System.out.println("Presidente: " + pais.presidente);
+                                            System.out.print("Ingrese nuevo presidente: ");
+                                            String presidente = input.nextLine();
+                                            if (presidente.equals("")) {
+                                                presidente = pais.presidente;
+                                            }
+                                            Pais paisAux = new Pais(nombre, presidente);
+                                            paises.set(paises.indexOf(pais), paisAux);
+                                            System.out.println("Pais editado con exito");
+                                            busqueda();
+                                        } else {
+                                            index2++;
+                                        }
+                                    }
+                                } else if (option5.equals("2")) {
+                                int index2 = 1;
+                                for (Pais pais : paises) {
+                                        if (index2 == iBuscar) {
+                                            paises.remove(pais);
+                                            System.out.println("Pais eliminado con exito");
+                                            busqueda();
+                                        } else {
+                                            index2++;
+                                        }
+                                    }
+                            } else if (option5.equals("0")) {
+                                busqueda();
+                            }
+                        } else if (option4.equals("2")) {
+                            busqueda();
+                        }
                     }
                 }
             }
@@ -989,6 +2904,7 @@ public  class  Principal {
     private static void buscarSedes(){
         if (sedes.isEmpty()) {
             System.out.println("No hay sedes registradas");
+            busqueda();
         } else {
             LinkedList<Sede> repuesto = new LinkedList<>();
             for (Sede sede:sedes) {
@@ -1000,7 +2916,8 @@ public  class  Principal {
                 System.out.println("1. Gerente");
                 System.out.println("2. Ingresos totales");
                 System.out.println("3. Gastos totales");
-                System.out.println("4. Sedes totales");
+                System.out.println("4. Nombre de sede");
+                System.out.println("5. Sedes totales");
                 option2 = input.next();
                 switch (option2) {
                     case "1": {
@@ -1024,10 +2941,86 @@ public  class  Principal {
                                         count++;
                                         if (count == sedes.size()) {
                                             System.out.println("No se encuentra la sede");
+                                            busqueda();
                                         }
                                     }
                                 }
-                                busqueda();
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Sede sede : sedes) {
+                                            if (sede.gerente.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Gerente: " + sede.gerente);
+                                                    System.out.print("Ingrese nuevo gerente: ");
+                                                    input.nextLine();
+                                                    String gerente = input.nextLine();
+                                                    if (gerente.equals("")) {
+                                                        gerente = sede.gerente;
+                                                    }
+                                                    System.out.println("Fondos: " + sede.ingresoSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Fondos = input.nextLine();
+                                                    int fondos = 0;
+                                                    if (Fondos.equals("")) {
+                                                        fondos = sede.ingresoSede;
+                                                    } else {
+                                                        fondos = Integer.parseInt(Fondos);
+                                                    }
+                                                    System.out.println("Gastos: " + sede.gastosSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Gastos = input.nextLine();
+                                                    int gastos = 0;
+                                                    if (Gastos.equals("")){
+                                                        gastos = sede.gastosSede;
+                                                    } else {
+                                                        gastos = Integer.parseInt(Gastos);
+                                                    }
+                                                    System.out.println("Nombre: " + sede.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")){
+                                                        nombre = sede.nombre;
+                                                    }
+                                                    Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                    sedes.set(sedes.indexOf(sede), SedeAux);
+                                                    System.out.println("Sede editada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Sede sede : sedes) {
+                                            if (sede.gerente.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    sedes.remove(sede);
+                                                    System.out.println("Sede eliminada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("0")) {
+                                        busqueda();
+                                    }
+                                } else if (option4.equals("2")) {
+                                    busqueda();
+                                }
                             } else if (option3.equals("2")) {
                                 input.nextLine();
                                 System.out.print("Ingrese el nombre del gerente a buscar: ");
@@ -1044,10 +3037,88 @@ public  class  Principal {
                                         count++;
                                         if (count == sedes.size()) {
                                             System.out.println("No se encuentra la sede");
+                                            busqueda();
                                         }
                                     }
                                 }
-                                busqueda();
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Sede sede : sedes) {
+                                            String minusculas = sede.gerente.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Gerente: " + sede.gerente);
+                                                    System.out.print("Ingrese nuevo gerente: ");
+                                                    input.nextLine();
+                                                    String gerente = input.nextLine();
+                                                    if (gerente.equals("")) {
+                                                        gerente = sede.gerente;
+                                                    }
+                                                    System.out.println("Fondos: " + sede.ingresoSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Fondos = input.nextLine();
+                                                    int fondos = 0;
+                                                    if (Fondos.equals("")) {
+                                                        fondos = sede.ingresoSede;
+                                                    } else {
+                                                        fondos = Integer.parseInt(Fondos);
+                                                    }
+                                                    System.out.println("Gastos: " + sede.gastosSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Gastos = input.nextLine();
+                                                    int gastos = 0;
+                                                    if (Gastos.equals("")){
+                                                        gastos = sede.gastosSede;
+                                                    } else {
+                                                        gastos = Integer.parseInt(Gastos);
+                                                    }
+                                                    System.out.println("Nombre: " + sede.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")){
+                                                        nombre = sede.nombre;
+                                                    }
+                                                    Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                    sedes.set(sedes.indexOf(sede), SedeAux);
+                                                    System.out.println("Sede editada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Sede sede : sedes) {
+                                            String minusculas = sede.gerente.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    sedes.remove(sede);
+                                                    System.out.println("Sede eliminada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("0")) {
+                                        busqueda();
+                                    }
+                                } else if (option4.equals("2")) {
+                                    busqueda();
+                                }
                             }
                         }
                     }
@@ -1085,10 +3156,86 @@ public  class  Principal {
                                             count++;
                                             if (count == sedes.size()) {
                                                 System.out.println("No se encuentra la sede");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    busqueda();
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Sede sede : sedes) {
+                                                if (sede.ingresoSede == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Gerente: " + sede.gerente);
+                                                        System.out.print("Ingrese nuevo gerente: ");
+                                                        input.nextLine();
+                                                        String gerente = input.nextLine();
+                                                        if (gerente.equals("")) {
+                                                            gerente = sede.gerente;
+                                                        }
+                                                        System.out.println("Fondos: " + sede.ingresoSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Fondos = input.nextLine();
+                                                        int fondos = 0;
+                                                        if (Fondos.equals("")) {
+                                                            fondos = sede.ingresoSede;
+                                                        } else {
+                                                            fondos = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gastos: " + sede.gastosSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gastos = input.nextLine();
+                                                        int gastos = 0;
+                                                        if (Gastos.equals("")){
+                                                            gastos = sede.gastosSede;
+                                                        } else {
+                                                            gastos = Integer.parseInt(Gastos);
+                                                        }
+                                                        System.out.println("Nombre: " + sede.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")){
+                                                            nombre = sede.nombre;
+                                                        }
+                                                        Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                        sedes.set(sedes.indexOf(sede), SedeAux);
+                                                        System.out.println("Sede editada con exito");
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Sede sede : sedes) {
+                                                if (sede.ingresoSede == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        sedes.remove(sede);
+                                                        System.out.println("Sede eliminada con exito");
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        busqueda();
+                                    }
                                 }
                                 if (option3.equals("2")) {
                                     System.out.print("Ingrese el valor de ingreso total maximo a buscar: ");
@@ -1103,11 +3250,90 @@ public  class  Principal {
                                             count++;
                                             if (count == sedes.size()) {
                                                 System.out.println("No se encuentra la sede");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Sede sede : repuesto) {
+                                                if (sede.ingresoSede <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Gerente: " + sede.gerente);
+                                                        System.out.print("Ingrese nuevo gerente: ");
+                                                        input.nextLine();
+                                                        String gerente = input.nextLine();
+                                                        if (gerente.equals("")) {
+                                                            gerente = sede.gerente;
+                                                        }
+                                                        System.out.println("Fondos: " + sede.ingresoSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Fondos = input.nextLine();
+                                                        int fondos = 0;
+                                                        if (Fondos.equals("")) {
+                                                            fondos = sede.ingresoSede;
+                                                        } else {
+                                                            fondos = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gastos: " + sede.gastosSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gastos = input.nextLine();
+                                                        int gastos = 0;
+                                                        if (Gastos.equals("")){
+                                                            gastos = sede.gastosSede;
+                                                        } else {
+                                                            gastos = Integer.parseInt(Gastos);
+                                                        }
+                                                        System.out.println("Nombre: " + sede.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")){
+                                                            nombre = sede.nombre;
+                                                        }
+                                                        Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                        sedes.set(sedes.indexOf(sede), SedeAux);
+                                                        System.out.println("Sede editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Sede sede : repuesto) {
+                                                if (sede.ingresoSede <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        sedes.remove(sede);
+                                                        System.out.println("Sede eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
                                 }
                                 if (option3.equals("3")) {
                                     System.out.print("Ingrese el valor de ingreso total minimo a buscar: ");
@@ -1122,11 +3348,90 @@ public  class  Principal {
                                             count++;
                                             if (count == sedes.size()) {
                                                 System.out.println("No se encuentra la sede");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Sede sede : repuesto) {
+                                                if (sede.ingresoSede >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Gerente: " + sede.gerente);
+                                                        System.out.print("Ingrese nuevo gerente: ");
+                                                        input.nextLine();
+                                                        String gerente = input.nextLine();
+                                                        if (gerente.equals("")) {
+                                                            gerente = sede.gerente;
+                                                        }
+                                                        System.out.println("Fondos: " + sede.ingresoSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Fondos = input.nextLine();
+                                                        int fondos = 0;
+                                                        if (Fondos.equals("")) {
+                                                            fondos = sede.ingresoSede;
+                                                        } else {
+                                                            fondos = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gastos: " + sede.gastosSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gastos = input.nextLine();
+                                                        int gastos = 0;
+                                                        if (Gastos.equals("")){
+                                                            gastos = sede.gastosSede;
+                                                        } else {
+                                                            gastos = Integer.parseInt(Gastos);
+                                                        }
+                                                        System.out.println("Nombre: " + sede.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")){
+                                                            nombre = sede.nombre;
+                                                        }
+                                                        Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                        sedes.set(sedes.indexOf(sede), SedeAux);
+                                                        System.out.println("Sede editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Sede sede : repuesto) {
+                                                if (sede.ingresoSede >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        sedes.remove(sede);
+                                                        System.out.println("Sede eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
                                 }
                                 if (option3.equals("4")) {
                                     System.out.print("Ingrese valor minimo del rango: ");
@@ -1143,10 +3448,89 @@ public  class  Principal {
                                         }
                                         if (count == sedes.size()) {
                                             System.out.println("No se encuentra la sede");
+                                            busqueda();
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Sede sede : repuesto) {
+                                                if (sede.ingresoSede <= Max && sede.ingresoSede >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Gerente: " + sede.gerente);
+                                                        System.out.print("Ingrese nuevo gerente: ");
+                                                        input.nextLine();
+                                                        String gerente = input.nextLine();
+                                                        if (gerente.equals("")) {
+                                                            gerente = sede.gerente;
+                                                        }
+                                                        System.out.println("Fondos: " + sede.ingresoSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Fondos = input.nextLine();
+                                                        int fondos = 0;
+                                                        if (Fondos.equals("")) {
+                                                            fondos = sede.ingresoSede;
+                                                        } else {
+                                                            fondos = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gastos: " + sede.gastosSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gastos = input.nextLine();
+                                                        int gastos = 0;
+                                                        if (Gastos.equals("")){
+                                                            gastos = sede.gastosSede;
+                                                        } else {
+                                                            gastos = Integer.parseInt(Gastos);
+                                                        }
+                                                        System.out.println("Nombre: " + sede.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")){
+                                                            nombre = sede.nombre;
+                                                        }
+                                                        Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                        sedes.set(sedes.indexOf(sede), SedeAux);
+                                                        System.out.println("Sede editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Sede sede : repuesto) {
+                                                if (sede.ingresoSede <= Max && sede.ingresoSede >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        sedes.remove(sede);
+                                                        System.out.println("Sede eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
                                 }
                             }
                         }
@@ -1177,7 +3561,7 @@ public  class  Principal {
                                     double buscarTotal = input.nextDouble();
                                     int count = 0;
                                     int index = 1;
-                                    for (Sede sede : repuesto) {
+                                    for (Sede sede : sedes) {
                                         if (sede.gastosSede == buscarTotal) {
                                             System.out.println(index + " " + sede);
                                             index++;
@@ -1185,11 +3569,86 @@ public  class  Principal {
                                             count++;
                                             if (count == sedes.size()) {
                                                 System.out.println("No se encuentra la sede");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Sede sede : sedes) {
+                                                if (sede.gastosSede == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Gerente: " + sede.gerente);
+                                                        System.out.print("Ingrese nuevo gerente: ");
+                                                        input.nextLine();
+                                                        String gerente = input.nextLine();
+                                                        if (gerente.equals("")) {
+                                                            gerente = sede.gerente;
+                                                        }
+                                                        System.out.println("Fondos: " + sede.ingresoSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Fondos = input.nextLine();
+                                                        int fondos = 0;
+                                                        if (Fondos.equals("")) {
+                                                            fondos = sede.ingresoSede;
+                                                        } else {
+                                                            fondos = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gastos: " + sede.gastosSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gastos = input.nextLine();
+                                                        int gastos = 0;
+                                                        if (Gastos.equals("")){
+                                                            gastos = sede.gastosSede;
+                                                        } else {
+                                                            gastos = Integer.parseInt(Gastos);
+                                                        }
+                                                        System.out.println("Nombre: " + sede.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")){
+                                                            nombre = sede.nombre;
+                                                        }
+                                                        Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                        sedes.set(sedes.indexOf(sede), SedeAux);
+                                                        System.out.println("Sede editada con exito");
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Sede sede : sedes) {
+                                                if (sede.gastosSede == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        sedes.remove(sede);
+                                                        System.out.println("Sede eliminada con exito");
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        busqueda();
+                                    }
                                 }
                                 if (option3.equals("2")) {
                                     System.out.print("Ingrese el valor de gasto total maximo a buscar: ");
@@ -1204,11 +3663,90 @@ public  class  Principal {
                                             count++;
                                             if (count == sedes.size()) {
                                                 System.out.println("No se encuentra la sede");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Sede sede : repuesto) {
+                                                if (sede.gastosSede <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Gerente: " + sede.gerente);
+                                                        System.out.print("Ingrese nuevo gerente: ");
+                                                        input.nextLine();
+                                                        String gerente = input.nextLine();
+                                                        if (gerente.equals("")) {
+                                                            gerente = sede.gerente;
+                                                        }
+                                                        System.out.println("Fondos: " + sede.ingresoSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Fondos = input.nextLine();
+                                                        int fondos = 0;
+                                                        if (Fondos.equals("")) {
+                                                            fondos = sede.ingresoSede;
+                                                        } else {
+                                                            fondos = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gastos: " + sede.gastosSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gastos = input.nextLine();
+                                                        int gastos = 0;
+                                                        if (Gastos.equals("")){
+                                                            gastos = sede.gastosSede;
+                                                        } else {
+                                                            gastos = Integer.parseInt(Gastos);
+                                                        }
+                                                        System.out.println("Nombre: " + sede.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")){
+                                                            nombre = sede.nombre;
+                                                        }
+                                                        Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                        sedes.set(sedes.indexOf(sede), SedeAux);
+                                                        System.out.println("Sede editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Sede sede : repuesto) {
+                                                if (sede.gastosSede <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        sedes.remove(sede);
+                                                        System.out.println("Sede eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
                                 }
                                 if (option3.equals("3")) {
                                     System.out.print("Ingrese el valor de gasto total minimo a buscar: ");
@@ -1223,11 +3761,90 @@ public  class  Principal {
                                             count++;
                                             if (count == sedes.size()) {
                                                 System.out.println("No se encuentra la sede");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Sede sede : repuesto) {
+                                                if (sede.gastosSede >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Gerente: " + sede.gerente);
+                                                        System.out.print("Ingrese nuevo gerente: ");
+                                                        input.nextLine();
+                                                        String gerente = input.nextLine();
+                                                        if (gerente.equals("")) {
+                                                            gerente = sede.gerente;
+                                                        }
+                                                        System.out.println("Fondos: " + sede.ingresoSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Fondos = input.nextLine();
+                                                        int fondos = 0;
+                                                        if (Fondos.equals("")) {
+                                                            fondos = sede.ingresoSede;
+                                                        } else {
+                                                            fondos = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gastos: " + sede.gastosSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gastos = input.nextLine();
+                                                        int gastos = 0;
+                                                        if (Gastos.equals("")){
+                                                            gastos = sede.gastosSede;
+                                                        } else {
+                                                            gastos = Integer.parseInt(Gastos);
+                                                        }
+                                                        System.out.println("Nombre: " + sede.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")){
+                                                            nombre = sede.nombre;
+                                                        }
+                                                        Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                        sedes.set(sedes.indexOf(sede), SedeAux);
+                                                        System.out.println("Sede editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Sede sede : repuesto) {
+                                                if (sede.gastosSede >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        sedes.remove(sede);
+                                                        System.out.println("Sede eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
                                 }
                                 if (option3.equals("4")) {
                                     System.out.print("Ingrese valor minimo del rango: ");
@@ -1244,15 +3861,296 @@ public  class  Principal {
                                         }
                                         if (count == sedes.size()) {
                                             System.out.println("No se encuentra la sede");
+                                            busqueda();
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Sede sede : repuesto) {
+                                                if (sede.gastosSede <= Max && sede.gastosSede >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Gerente: " + sede.gerente);
+                                                        System.out.print("Ingrese nuevo gerente: ");
+                                                        input.nextLine();
+                                                        String gerente = input.nextLine();
+                                                        if (gerente.equals("")) {
+                                                            gerente = sede.gerente;
+                                                        }
+                                                        System.out.println("Fondos: " + sede.ingresoSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Fondos = input.nextLine();
+                                                        int fondos = 0;
+                                                        if (Fondos.equals("")) {
+                                                            fondos = sede.ingresoSede;
+                                                        } else {
+                                                            fondos = Integer.parseInt(Fondos);
+                                                        }
+                                                        System.out.println("Gastos: " + sede.gastosSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gastos = input.nextLine();
+                                                        int gastos = 0;
+                                                        if (Gastos.equals("")){
+                                                            gastos = sede.gastosSede;
+                                                        } else {
+                                                            gastos = Integer.parseInt(Gastos);
+                                                        }
+                                                        System.out.println("Nombre: " + sede.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")){
+                                                            nombre = sede.nombre;
+                                                        }
+                                                        Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                        sedes.set(sedes.indexOf(sede), SedeAux);
+                                                        System.out.println("Sede editada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Sede sede : repuesto) {
+                                                if (sede.gastosSede <= Max && sede.gastosSede >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        sedes.remove(sede);
+                                                        System.out.println("Sede eliminada con exito");
+                                                        repuesto.removeAll(repuesto);
+                                                        busqueda();
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
+                                        }
+                                    } else if (option4.equals("2")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
                                 }
                             }
                         }
                     }
                     case "4": {
+                        String option3;
+                        while (true) {
+                            System.out.println("Escoja una opcion:");
+                            System.out.println("1. Valor exacto");
+                            System.out.println("2. Valor sin considerar las mayusculas");
+                            option3 = input.next();
+                            if (option3.equals("1")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el nombre de sede a buscar: ");
+                                String buscarM = input.nextLine();
+                                int count = 0;
+                                int index = 1;
+                                for (Sede sede : sedes) {
+                                    if (sede.nombre.equals(buscarM)) {
+                                        System.out.println(index + " " + sede);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == sedes.size()) {
+                                            System.out.println("No se encuentra la sede");
+                                            busqueda();
+                                        }
+                                    }
+                                }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Sede sede : sedes) {
+                                            if (sede.nombre.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Gerente: " + sede.gerente);
+                                                    System.out.print("Ingrese nuevo gerente: ");
+                                                    input.nextLine();
+                                                    String gerente = input.nextLine();
+                                                    if (gerente.equals("")) {
+                                                        gerente = sede.gerente;
+                                                    }
+                                                    System.out.println("Fondos: " + sede.ingresoSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Fondos = input.nextLine();
+                                                    int fondos = 0;
+                                                    if (Fondos.equals("")) {
+                                                        fondos = sede.ingresoSede;
+                                                    } else {
+                                                        fondos = Integer.parseInt(Fondos);
+                                                    }
+                                                    System.out.println("Gastos: " + sede.gastosSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Gastos = input.nextLine();
+                                                    int gastos = 0;
+                                                    if (Gastos.equals("")){
+                                                        gastos = sede.gastosSede;
+                                                    } else {
+                                                        gastos = Integer.parseInt(Gastos);
+                                                    }
+                                                    System.out.println("Nombre: " + sede.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")){
+                                                        nombre = sede.nombre;
+                                                    }
+                                                    Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                    sedes.set(sedes.indexOf(sede), SedeAux);
+                                                    System.out.println("Sede editada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Sede sede : sedes) {
+                                            if (sede.nombre.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    sedes.remove(sede);
+                                                    System.out.println("Sede eliminada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("0")) {
+                                        busqueda();
+                                    }
+                                } else if (option4.equals("2")) {
+                                    busqueda();
+                                }
+                            } else if (option3.equals("2")) {
+                                input.nextLine();
+                                System.out.print("Ingrese el nombre del gerente a buscar: ");
+                                String buscarNombre = input.nextLine();
+                                String nombreMinuscula = buscarNombre.toLowerCase();
+                                int count = 0;
+                                int index = 1;
+                                for (Sede sede : sedes) {
+                                    String minusculas = sede.nombre.toLowerCase();
+                                    if (minusculas.equals(nombreMinuscula)) {
+                                        System.out.println(index + " " + sede);
+                                        index++;
+                                    } else {
+                                        count++;
+                                        if (count == sedes.size()) {
+                                            System.out.println("No se encuentra la sede");
+                                            busqueda();
+                                        }
+                                    }
+                                }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Sede sede : sedes) {
+                                            String minusculas = sede.nombre.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Gerente: " + sede.gerente);
+                                                    System.out.print("Ingrese nuevo gerente: ");
+                                                    input.nextLine();
+                                                    String gerente = input.nextLine();
+                                                    if (gerente.equals("")) {
+                                                        gerente = sede.gerente;
+                                                    }
+                                                    System.out.println("Fondos: " + sede.ingresoSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Fondos = input.nextLine();
+                                                    int fondos = 0;
+                                                    if (Fondos.equals("")) {
+                                                        fondos = sede.ingresoSede;
+                                                    } else {
+                                                        fondos = Integer.parseInt(Fondos);
+                                                    }
+                                                    System.out.println("Gastos: " + sede.gastosSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Gastos = input.nextLine();
+                                                    int gastos = 0;
+                                                    if (Gastos.equals("")){
+                                                        gastos = sede.gastosSede;
+                                                    } else {
+                                                        gastos = Integer.parseInt(Gastos);
+                                                    }
+                                                    System.out.println("Nombre: " + sede.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")){
+                                                        nombre = sede.nombre;
+                                                    }
+                                                    Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                    sedes.set(sedes.indexOf(sede), SedeAux);
+                                                    System.out.println("Sede editada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Sede sede : sedes) {
+                                            String minusculas = sede.nombre.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    sedes.remove(sede);
+                                                    System.out.println("Sede eliminada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("0")) {
+                                        busqueda();
+                                    }
+                                } else if (option4.equals("2")) {
+                                    busqueda();
+                                }
+                            }
+                        }
+                    }
+                    case "5": {
                         String option3;
                         while (true) {
                             System.out.println("Escoja un atributo de busqueda:");
@@ -1266,6 +4164,82 @@ public  class  Principal {
                                     System.out.println(index + " " + sede);
                                     index++;
                                 }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Sede sede : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Gerente: " + sede.gerente);
+                                                    System.out.print("Ingrese nuevo gerente: ");
+                                                    input.nextLine();
+                                                    String gerente = input.nextLine();
+                                                    if (gerente.equals("")) {
+                                                        gerente = sede.gerente;
+                                                    }
+                                                    System.out.println("Fondos: " + sede.ingresoSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Fondos = input.nextLine();
+                                                    int fondos = 0;
+                                                    if (Fondos.equals("")) {
+                                                        fondos = sede.ingresoSede;
+                                                    } else {
+                                                        fondos = Integer.parseInt(Fondos);
+                                                    }
+                                                    System.out.println("Gastos: " + sede.gastosSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Gastos = input.nextLine();
+                                                    int gastos = 0;
+                                                    if (Gastos.equals("")){
+                                                        gastos = sede.gastosSede;
+                                                    } else {
+                                                        gastos = Integer.parseInt(Gastos);
+                                                    }
+                                                    System.out.println("Nombre: " + sede.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")){
+                                                        nombre = sede.nombre;
+                                                    }
+                                                    Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                    sedes.set(sedes.indexOf(sede), SedeAux);
+                                                    System.out.println("Sede editada con exito");
+                                                    repuesto.removeAll(repuesto);
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Sede sede : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    sedes.remove(sede);
+                                                    System.out.println("Sede eliminada con exito");
+                                                    repuesto.removeAll(repuesto);
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                        }
+                                    } else if (option5.equals("0")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
+                                } else if (option4.equals("2")) {
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
                             } else if (option3.equals("2")) {
                                 int index = 1;
                                 Collections.sort(repuesto, new ComparadorSIT());
@@ -1273,9 +4247,83 @@ public  class  Principal {
                                     System.out.println(index + " " + sede);
                                     index++;
                                 }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Sede sede : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Gerente: " + sede.gerente);
+                                                    System.out.print("Ingrese nuevo gerente: ");
+                                                    input.nextLine();
+                                                    String gerente = input.nextLine();
+                                                    if (gerente.equals("")) {
+                                                        gerente = sede.gerente;
+                                                    }
+                                                    System.out.println("Fondos: " + sede.ingresoSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Fondos = input.nextLine();
+                                                    int fondos = 0;
+                                                    if (Fondos.equals("")) {
+                                                        fondos = sede.ingresoSede;
+                                                    } else {
+                                                        fondos = Integer.parseInt(Fondos);
+                                                    }
+                                                    System.out.println("Gastos: " + sede.gastosSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Gastos = input.nextLine();
+                                                    int gastos = 0;
+                                                    if (Gastos.equals("")){
+                                                        gastos = sede.gastosSede;
+                                                    } else {
+                                                        gastos = Integer.parseInt(Gastos);
+                                                    }
+                                                    System.out.println("Nombre: " + sede.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")){
+                                                        nombre = sede.nombre;
+                                                    }
+                                                    Sede SedeAux = new Sede(nombre,gerente,fondos,gastos, sede.multinacional, sede.paisPertenece);
+                                                    sedes.set(sedes.indexOf(sede), SedeAux);
+                                                    System.out.println("Sede editada con exito");
+                                                    repuesto.removeAll(repuesto);
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Sede sede : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    sedes.remove(sede);
+                                                    System.out.println("Sede eliminada con exito");
+                                                    repuesto.removeAll(repuesto);
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                        }
+                                    } else if (option5.equals("0")) {
+                                        repuesto.removeAll(repuesto);
+                                        busqueda();
+                                    }
+                                } else if (option4.equals("2")) {
+                                    repuesto.removeAll(repuesto);
+                                    busqueda();
+                                }
                             }
-                            repuesto.removeAll(repuesto);
-                            busqueda();
                         }
                     }
                 }
@@ -1285,11 +4333,10 @@ public  class  Principal {
     private static void buscarInversionistas(){
         if (inversionistas.size() == 0) {
             System.out.println("No hay inversionistas registrados");
+            busqueda();
         } else {
             LinkedList<Inversionista> repuesto = new LinkedList<>();
-            for (Inversionista inversionista : inversionistas) {
-                repuesto.add(inversionista);
-            }
+            repuesto.addAll(inversionistas);
             String option2;
             while (true) {
                 System.out.println("Escoja un atributo de busqueda:");
@@ -1307,45 +4354,204 @@ public  class  Principal {
                             System.out.println("1. Valor exacto");
                             System.out.println("2. Valor sin considerar las mayusculas");
                             option3 = input.next();
-                            if (option3.equals("1")) {
-                                input.nextLine();
-                                System.out.print("Ingrese la firma del inversionista a buscar: ");
-                                String buscarM = input.nextLine();
-                                int count = 0;
-                                int index = 1;
-                                for (Inversionista inversionista : inversionistas) {
-                                    if (inversionista.firma.equals(buscarM)) {
-                                        System.out.println(index + " " + inversionista);
-                                        index++;
-                                    } else {
-                                        count++;
-                                        if (count == inversionistas.size()) {
-                                            System.out.println("No se encuentra el inversionista");
+                            switch (option3) {
+                                case "1": {
+                                    input.nextLine();
+                                    System.out.print("Ingrese la firma del inversionista a buscar: ");
+                                    String buscarM = input.nextLine();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Inversionista inversionista : inversionistas) {
+                                        if (inversionista.firma.equals(buscarM)) {
+                                            System.out.println(index + " " + inversionista);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == inversionistas.size()) {
+                                                System.out.println("No se encuentra el inversionista");
+                                                busqueda();
+                                            }
                                         }
                                     }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : inversionistas) {
+                                                if (inversionista.firma.equals(buscarM)) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")) {
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")) {
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista(firma, imultinacional, isede, ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : inversionistas) {
+                                                if (inversionista.firma.equals(buscarM)) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            busqueda();
+                                        }
+                                        busqueda();
+                                    }
+                                    break;
                                 }
-                                busqueda();
-                            } else if (option3.equals("2")) {
-                                input.nextLine();
-                                System.out.print("Ingrese la firma del inversionista a buscar: ");
-                                String buscarNombre = input.nextLine();
-                                String nombreMinuscula = buscarNombre.toLowerCase();
-                                int count = 0;
-                                int index = 1;
-                                for (Inversionista inversionista : inversionistas) {
-                                    String minusculas = inversionista.firma.toLowerCase();
-                                    if (minusculas.equals(nombreMinuscula)) {
-                                        System.out.println(index + " " + inversionista);
-                                        index++;
-                                    } else {
-                                        count++;
-                                        if (count == inversionistas.size()) {
-                                            System.out.println("No se encuentra el inversionista");
+                                case "2": {
+                                    input.nextLine();
+                                    System.out.print("Ingrese la firma del inversionista a buscar: ");
+                                    String buscarNombre = input.nextLine();
+                                    String nombreMinuscula = buscarNombre.toLowerCase();
+                                    int count = 0;
+                                    int index = 1;
+                                    for (Inversionista inversionista : inversionistas) {
+                                        String minusculas = inversionista.firma.toLowerCase();
+                                        if (minusculas.equals(nombreMinuscula)) {
+                                            System.out.println(index + " " + inversionista);
+                                            index++;
+                                        } else {
+                                            count++;
+                                            if (count == inversionistas.size()) {
+                                                System.out.println("No se encuentra el inversionista");
+                                                busqueda();
+                                            }
                                         }
                                     }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : inversionistas) {
+                                                String minusculas = inversionista.firma.toLowerCase();
+                                                if (minusculas.equals(nombreMinuscula)) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")) {
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")) {
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista(firma, imultinacional, isede, ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : inversionistas) {
+                                                String minusculas = inversionista.firma.toLowerCase();
+                                                if (minusculas.equals(nombreMinuscula)) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            busqueda();
+                                        }
+                                    }
+                                    break;
                                 }
-                                busqueda();
                             }
+                            busqueda();
                         }
                     }
                     case "2": {
@@ -1357,8 +4563,9 @@ public  class  Principal {
                             orden = input.next();
                             if (orden.equals("1")) {
                                 Collections.sort(repuesto, new ComparadorGIN());
-                            } else if (orden.equals("2")) {
-                                Collections.sort(repuesto, new ComparadorGIN().reversed());
+                            }
+                            else if (orden.equals("2")) {
+                                repuesto.sort(new ComparadorGIN().reversed());
                             }
                             String option3;
                             while (true) {
@@ -1374,7 +4581,7 @@ public  class  Principal {
                                     double buscarTotal = input.nextDouble();
                                     int count = 0;
                                     int index = 1;
-                                    for (Inversionista inversionista : repuesto) {
+                                    for (Inversionista inversionista : inversionistas) {
                                         if (inversionista.ganancias == buscarTotal) {
                                             System.out.println(index + " " + inversionista);
                                             index++;
@@ -1382,10 +4589,85 @@ public  class  Principal {
                                             count++;
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentra el inversionista");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : inversionistas) {
+                                                if (inversionista.ganancias == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")){
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")){
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : inversionistas) {
+                                                if (inversionista.ganancias == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            busqueda();
+                                        }
+                                    }
                                     busqueda();
                                 }
                                 if (option3.equals("2")) {
@@ -1401,7 +4683,84 @@ public  class  Principal {
                                             count++;
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentran inversionistas");
+                                                busqueda();
                                             }
+                                        }
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.ganancias <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")){
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")){
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.ganancias <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
@@ -1420,7 +4779,84 @@ public  class  Principal {
                                             count++;
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentran inversionistas");
+                                                busqueda();
                                             }
+                                        }
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.ganancias >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")){
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")){
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.ganancias >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
@@ -1441,6 +4877,83 @@ public  class  Principal {
                                         }
                                         if (count == inversionistas.size()) {
                                             System.out.println("No se encuentran inversionistas");
+                                            busqueda();
+                                        }
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.ganancias <= Max && inversionista.ganancias >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")){
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")){
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.ganancias <= Max && inversionista.ganancias >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
@@ -1475,7 +4988,7 @@ public  class  Principal {
                                     double buscarTotal = input.nextDouble();
                                     int count = 0;
                                     int index = 1;
-                                    for (Inversionista inversionista : repuesto) {
+                                    for (Inversionista inversionista : inversionistas) {
                                         if (inversionista.inversionSede == buscarTotal) {
                                             System.out.println(index + " " + inversionista);
                                             index++;
@@ -1483,10 +4996,85 @@ public  class  Principal {
                                             count++;
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentra el inversionista");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : inversionistas) {
+                                                if (inversionista.inversionSede == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")){
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")){
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : inversionistas) {
+                                                if (inversionista.inversionSede == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            busqueda();
+                                        }
+                                    }
                                     busqueda();
                                 }
                                 if (option3.equals("2")) {
@@ -1502,7 +5090,84 @@ public  class  Principal {
                                             count++;
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentran inversionistas");
+                                                busqueda();
                                             }
+                                        }
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.inversionSede <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")){
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")){
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.inversionSede <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
@@ -1521,7 +5186,84 @@ public  class  Principal {
                                             count++;
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentran inversionistas");
+                                                busqueda();
                                             }
+                                        }
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.inversionSede >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")){
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")){
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.inversionSede >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
@@ -1542,12 +5284,88 @@ public  class  Principal {
                                         }
                                         if (count == inversionistas.size()) {
                                             System.out.println("No se encuentran inversionistas");
+                                            busqueda();
+                                        }
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.inversionSede <= Max && inversionista.inversionSede >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")){
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")){
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.inversionSede <= Max && inversionista.inversionSede >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
                                     busqueda();
                                 }
-
                             }
                         }
                     }
@@ -1577,7 +5395,7 @@ public  class  Principal {
                                     double buscarTotal = input.nextDouble();
                                     int count = 0;
                                     int index = 1;
-                                    for (Inversionista inversionista : repuesto) {
+                                    for (Inversionista inversionista : inversionistas) {
                                         if (inversionista.inversionMN == buscarTotal) {
                                             System.out.println(index + " " + inversionista);
                                             index++;
@@ -1585,10 +5403,86 @@ public  class  Principal {
                                             count++;
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentra el inversionista");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : inversionistas) {
+                                                if (inversionista.inversionMN == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")){
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")){
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : inversionistas) {
+                                                if (inversionista.inversionMN == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            busqueda();
+                                        }
+                                    }
                                     busqueda();
                                 }
                                 if (option3.equals("2")) {
@@ -1604,7 +5498,84 @@ public  class  Principal {
                                             count++;
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentran inversionistas");
+                                                busqueda();
                                             }
+                                        }
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.inversionMN <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")){
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")){
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.inversionMN <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
@@ -1623,7 +5594,84 @@ public  class  Principal {
                                             count++;
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentran inversionistas");
+                                                busqueda();
                                             }
+                                        }
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.inversionMN >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")){
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")){
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.inversionMN >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
@@ -1644,6 +5692,83 @@ public  class  Principal {
                                         }
                                         if (count == inversionistas.size()) {
                                             System.out.println("No se encuentran inversionistas");
+                                            busqueda();
+                                        }
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.inversionMN <= Max && inversionista.inversionMN >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Firma: " + inversionista.firma);
+                                                        System.out.print("Ingrese nueva firma: ");
+                                                        input.nextLine();
+                                                        String firma = input.nextLine();
+                                                        if (firma.equals("")) {
+                                                            firma = inversionista.firma;
+                                                        }
+                                                        System.out.println("Ganancias: " + inversionista.ganancias);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = inversionista.ganancias;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iSede = input.nextLine();
+                                                        int isede = 0;
+                                                        if (iSede.equals("")){
+                                                            isede = inversionista.inversionSede;
+                                                        } else {
+                                                            isede = Integer.parseInt(iSede);
+                                                        }
+                                                        System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String iMultinacional = input.nextLine();
+                                                        int imultinacional = 0;
+                                                        if (iMultinacional.equals("")){
+                                                            imultinacional = inversionista.inversionMN;
+                                                        } else {
+                                                            imultinacional = Integer.parseInt(iMultinacional);
+                                                        }
+                                                        Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                        inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                        System.out.println("Inversionista editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Inversionista inversionista : repuesto) {
+                                                if (inversionista.inversionMN <= Max && inversionista.inversionMN >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        inversionistas.remove(inversionista);
+                                                        System.out.println("Inversionista eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(repuesto);
+                                            busqueda();
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
@@ -1667,22 +5792,240 @@ public  class  Principal {
                                     System.out.println(index + " " + inversionista);
                                     index++;
                                 }
-                            } else if (option3.equals("2")) {
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Inversionista inversionista : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Firma: " + inversionista.firma);
+                                                    System.out.print("Ingrese nueva firma: ");
+                                                    input.nextLine();
+                                                    String firma = input.nextLine();
+                                                    if (firma.equals("")) {
+                                                        firma = inversionista.firma;
+                                                    }
+                                                    System.out.println("Ganancias: " + inversionista.ganancias);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Ganancia = input.nextLine();
+                                                    int ganancia = 0;
+                                                    if (Ganancia.equals("")) {
+                                                        ganancia = inversionista.ganancias;
+                                                    } else {
+                                                        ganancia = Integer.parseInt(Ganancia);
+                                                    }
+                                                    System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String iSede = input.nextLine();
+                                                    int isede = 0;
+                                                    if (iSede.equals("")){
+                                                        isede = inversionista.inversionSede;
+                                                    } else {
+                                                        isede = Integer.parseInt(iSede);
+                                                    }
+                                                    System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String iMultinacional = input.nextLine();
+                                                    int imultinacional = 0;
+                                                    if (iMultinacional.equals("")){
+                                                        imultinacional = inversionista.inversionMN;
+                                                    } else {
+                                                        imultinacional = Integer.parseInt(iMultinacional);
+                                                    }
+                                                    Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                    inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                    System.out.println("Inversionista editado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Inversionista inversionista : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    inversionistas.remove(inversionista);
+                                                    System.out.println("Inversionista eliminado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("0") || option4.equals("2")) {
+                                        repuesto.removeAll(inversionistas);
+                                        busqueda();
+                                    }
+                                }
+                            }
+                            else if (option3.equals("2")) {
                                 int index = 1;
-                                Collections.sort(repuesto, new ComparadorINsede());
+                                repuesto.sort(new ComparadorINsede());
                                 for (Inversionista inversionista : repuesto) {
                                     System.out.println(index + " " + inversionista);
                                     index++;
                                 }
-                            } else if (option3.equals("3")) {
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Inversionista inversionista : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Firma: " + inversionista.firma);
+                                                    System.out.print("Ingrese nueva firma: ");
+                                                    input.nextLine();
+                                                    String firma = input.nextLine();
+                                                    if (firma.equals("")) {
+                                                        firma = inversionista.firma;
+                                                    }
+                                                    System.out.println("Ganancias: " + inversionista.ganancias);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Ganancia = input.nextLine();
+                                                    int ganancia = 0;
+                                                    if (Ganancia.equals("")) {
+                                                        ganancia = inversionista.ganancias;
+                                                    } else {
+                                                        ganancia = Integer.parseInt(Ganancia);
+                                                    }
+                                                    System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String iSede = input.nextLine();
+                                                    int isede = 0;
+                                                    if (iSede.equals("")){
+                                                        isede = inversionista.inversionSede;
+                                                    } else {
+                                                        isede = Integer.parseInt(iSede);
+                                                    }
+                                                    System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String iMultinacional = input.nextLine();
+                                                    int imultinacional = 0;
+                                                    if (iMultinacional.equals("")){
+                                                        imultinacional = inversionista.inversionMN;
+                                                    } else {
+                                                        imultinacional = Integer.parseInt(iMultinacional);
+                                                    }
+                                                    Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                    inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                    System.out.println("Inversionista editado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Inversionista inversionista : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    inversionistas.remove(inversionista);
+                                                    System.out.println("Inversionista eliminado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("0") || option4.equals("2")) {
+                                        repuesto.removeAll(inversionistas);
+                                        busqueda();
+                                    }
+                                }
+                            }
+                            else if (option3.equals("3")) {
                                 int index = 1;
                                 Collections.sort(repuesto, new ComparadorINmulti());
                                 for (Inversionista inversionista : repuesto) {
                                     System.out.println(index + " " + repuesto);
                                     index++;
                                 }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Inversionista inversionista : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Firma: " + inversionista.firma);
+                                                    System.out.print("Ingrese nueva firma: ");
+                                                    input.nextLine();
+                                                    String firma = input.nextLine();
+                                                    if (firma.equals("")) {
+                                                        firma = inversionista.firma;
+                                                    }
+                                                    System.out.println("Ganancias: " + inversionista.ganancias);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Ganancia = input.nextLine();
+                                                    int ganancia = 0;
+                                                    if (Ganancia.equals("")) {
+                                                        ganancia = inversionista.ganancias;
+                                                    } else {
+                                                        ganancia = Integer.parseInt(Ganancia);
+                                                    }
+                                                    System.out.println("Inversion sede: " + inversionista.inversionSede);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String iSede = input.nextLine();
+                                                    int isede = 0;
+                                                    if (iSede.equals("")){
+                                                        isede = inversionista.inversionSede;
+                                                    } else {
+                                                        isede = Integer.parseInt(iSede);
+                                                    }
+                                                    System.out.println("Inversion multinacional: " + inversionista.inversionMN);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String iMultinacional = input.nextLine();
+                                                    int imultinacional = 0;
+                                                    if (iMultinacional.equals("")){
+                                                        imultinacional = inversionista.inversionMN;
+                                                    } else {
+                                                        imultinacional = Integer.parseInt(iMultinacional);
+                                                    }
+                                                    Inversionista inverAux = new Inversionista (firma,imultinacional,isede,ganancia);
+                                                    inversionistas.set(inversionistas.indexOf(inversionista), inverAux);
+                                                    System.out.println("Inversionista editado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Inversionista inversionista : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    inversionistas.remove(inversionista);
+                                                    System.out.println("Inversionista eliminado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("0") || option4.equals("2")) {
+                                        repuesto.removeAll(inversionistas);
+                                        busqueda();
+                                    }
+                                }
                             }
-                            repuesto.removeAll(repuesto);
+                            repuesto.removeAll(inversionistas);
                             busqueda();
                         }
                     }
@@ -1693,9 +6036,10 @@ public  class  Principal {
     private static void buscarAreas(){
         if (areas.size() == 0) {
             System.out.println("No hay areas registradas");
+            busqueda();
         } else {
             LinkedList<Area> repuesto = new LinkedList<>();
-            for (Area area : repuesto) {
+            for (Area area : areas) {
                 repuesto.add(area);
             }
             String option2;
@@ -1728,11 +6072,82 @@ public  class  Principal {
                                         count++;
                                         if (count == areas.size()) {
                                             System.out.println("No se encuentra el area");
+                                            busqueda();
                                         }
                                     }
                                 }
-                                busqueda();
-                            } else if (option3.equals("2")) {
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Area area : areas) {
+                                            if (area.nombreDelArea.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Tipo de area: " + area.nombreDelArea);
+                                                    System.out.print("Ingrese nuevo area: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = area.nombreDelArea;
+                                                    }
+                                                    System.out.println("Fondos: " + area.ingresoArea);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Ganancia = input.nextLine();
+                                                    int ganancia = 0;
+                                                    if (Ganancia.equals("")) {
+                                                        ganancia = area.ingresoArea;
+                                                    } else {
+                                                        ganancia = Integer.parseInt(Ganancia);
+                                                    }
+                                                    System.out.println("Gasto: " + area.gastoArea);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Gasto = input.nextLine();
+                                                    int gasto = 0;
+                                                    if (Gasto.equals("")){
+                                                        gasto = area.gastoArea;
+                                                    } else {
+                                                        gasto = Integer.parseInt(Gasto);
+                                                    }
+                                                    Area areaAux = new Area (nombre,ganancia,gasto, area.sede);
+                                                    areas.set(areas.indexOf(area), areaAux);
+                                                    System.out.println("Area editada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Area area : areas) {
+                                            if (area.nombreDelArea.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    areas.remove(area);
+                                                    System.out.println("Area eliminada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("0")) {
+                                        busqueda();
+                                    }
+                                } else if (option4.equals("2")) {
+                                    busqueda();
+                                }
+                            }
+                            else if (option3.equals("2")) {
                                 input.nextLine();
                                 System.out.print("Ingrese el tipo de area a buscar: ");
                                 String buscarNombre = input.nextLine();
@@ -1748,10 +6163,82 @@ public  class  Principal {
                                         count++;
                                         if (count == areas.size()) {
                                             System.out.println("No se encuentra el area");
+                                            busqueda();
                                         }
                                     }
                                 }
-                                busqueda();
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Area area : areas) {
+                                            String minusculas = area.nombreDelArea.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Tipo de area: " + area.nombreDelArea);
+                                                    System.out.print("Ingrese nuevo area: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = area.nombreDelArea;
+                                                    }
+                                                    System.out.println("Fondos: " + area.ingresoArea);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Ganancia = input.nextLine();
+                                                    int ganancia = 0;
+                                                    if (Ganancia.equals("")) {
+                                                        ganancia = area.ingresoArea;
+                                                    } else {
+                                                        ganancia = Integer.parseInt(Ganancia);
+                                                    }
+                                                    System.out.println("Gasto: " + area.gastoArea);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Gasto = input.nextLine();
+                                                    int gasto = 0;
+                                                    if (Gasto.equals("")){
+                                                        gasto = area.gastoArea;
+                                                    } else {
+                                                        gasto = Integer.parseInt(Gasto);
+                                                    }
+                                                    Area areaAux = new Area (nombre,ganancia,gasto, area.sede);
+                                                    areas.set(areas.indexOf(area), areaAux);
+                                                    System.out.println("Area editada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Area area : areas) {
+                                            String minusculas = area.nombreDelArea.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    areas.remove(area);
+                                                    System.out.println("Area eliminada con exito");
+                                                    busqueda();
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("0")) {
+                                        busqueda();
+                                    }
+                                } else if (option4.equals("2")) {
+                                    busqueda();
+                                }
                             }
                         }
                     }
@@ -1764,7 +6251,8 @@ public  class  Principal {
                             orden = input.next();
                             if (orden.equals("1")) {
                                 Collections.sort(repuesto, new ComparadorIarea());
-                            } else if (orden.equals("2")) {
+                            }
+                            else if (orden.equals("2")) {
                                 Collections.sort(repuesto, new ComparadorIarea().reversed());
                             }
                             String option3;
@@ -1789,7 +6277,76 @@ public  class  Principal {
                                             count++;
                                             if (count == areas.size()) {
                                                 System.out.println("No se encuentra el area");
+                                                repuesto.removeAll(areas);
+                                                busqueda();
                                             }
+                                        }
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Area area : areas) {
+                                                if (area.ingresoArea == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Tipo de area: " + area.nombreDelArea);
+                                                        System.out.print("Ingrese nuevo area: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = area.nombreDelArea;
+                                                        }
+                                                        System.out.println("Fondos: " + area.ingresoArea);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = area.ingresoArea;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Gasto: " + area.gastoArea);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")){
+                                                            gasto = area.gastoArea;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        Area areaAux = new Area (nombre,ganancia,gasto, area.sede);
+                                                        areas.set(areas.indexOf(area), areaAux);
+                                                        System.out.println("Area editada con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Area area : areas) {
+                                                if (area.ingresoArea == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        areas.remove(area);
+                                                        System.out.println("Area eliminada con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            busqueda();
                                         }
                                     }
                                     busqueda();
@@ -1807,10 +6364,79 @@ public  class  Principal {
                                             count++;
                                             if (count == areas.size()) {
                                                 System.out.println("No se encuentra el area");
+                                                repuesto.removeAll(areas);
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Area area : repuesto) {
+                                                if (area.ingresoArea <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Tipo de area: " + area.nombreDelArea);
+                                                        System.out.print("Ingrese nuevo area: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = area.nombreDelArea;
+                                                        }
+                                                        System.out.println("Fondos: " + area.ingresoArea);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = area.ingresoArea;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Gasto: " + area.gastoArea);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")){
+                                                            gasto = area.gastoArea;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        Area areaAux = new Area (nombre,ganancia,gasto, area.sede);
+                                                        areas.set(areas.indexOf(area), areaAux);
+                                                        System.out.println("Area editada con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Area area : repuesto) {
+                                                if (area.ingresoArea <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        areas.remove(area);
+                                                        System.out.println("Area eliminada con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(areas);
+                                            busqueda();
+                                        }
+                                    }
+                                    repuesto.removeAll(areas);
                                     busqueda();
                                 }
                                 if (option3.equals("3")) {
@@ -1826,11 +6452,10 @@ public  class  Principal {
                                             count++;
                                             if (count == areas.size()) {
                                                 System.out.println("No se encuentra el area");
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
                                 }
                                 if (option3.equals("4")) {
                                     System.out.print("Ingrese valor minimo del rango: ");
@@ -1889,7 +6514,75 @@ public  class  Principal {
                                             count++;
                                             if (count == areas.size()) {
                                                 System.out.println("No se encuentra el area");
+                                                repuesto.removeAll(areas);
+                                                busqueda();
                                             }
+                                        }
+                                    }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Area area : areas) {
+                                                if (area.gastoArea == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Tipo de area: " + area.nombreDelArea);
+                                                        System.out.print("Ingrese nuevo area: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = area.nombreDelArea;
+                                                        }
+                                                        System.out.println("Fondos: " + area.ingresoArea);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = area.ingresoArea;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Gasto: " + area.gastoArea);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")){
+                                                            gasto = area.gastoArea;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        Area areaAux = new Area (nombre,ganancia,gasto, area.sede);
+                                                        areas.set(areas.indexOf(area), areaAux);
+                                                        System.out.println("Area editada con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Area area : areas) {
+                                                if (area.gastoArea == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        areas.remove(area);
+                                                        System.out.println("Area eliminada con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            busqueda();
                                         }
                                     }
                                     busqueda();
@@ -1907,11 +6600,78 @@ public  class  Principal {
                                             count++;
                                             if (count == areas.size()) {
                                                 System.out.println("No se encuentra el area");
+                                                repuesto.removeAll(areas);
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
-                                    busqueda();
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Area area : repuesto) {
+                                                if (area.gastoArea <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Tipo de area: " + area.nombreDelArea);
+                                                        System.out.print("Ingrese nuevo area: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = area.nombreDelArea;
+                                                        }
+                                                        System.out.println("Fondos: " + area.ingresoArea);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = area.ingresoArea;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Gasto: " + area.gastoArea);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")){
+                                                            gasto = area.gastoArea;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        Area areaAux = new Area (nombre,ganancia,gasto, area.sede);
+                                                        areas.set(areas.indexOf(area), areaAux);
+                                                        System.out.println("Area editada con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Area area : repuesto) {
+                                                if (area.gastoArea <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        areas.remove(area);
+                                                        System.out.println("Area eliminada con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(areas);
+                                            busqueda();
+                                        }
+                                    }
                                 }
                                 if (option3.equals("3")) {
                                     System.out.print("Ingrese el valor de gastos minimo a buscar: ");
@@ -1926,10 +6686,79 @@ public  class  Principal {
                                             count++;
                                             if (count == areas.size()) {
                                                 System.out.println("No se encuentra el area");
+                                                repuesto.removeAll(areas);
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Area area : repuesto) {
+                                                if (area.gastoArea >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Tipo de area: " + area.nombreDelArea);
+                                                        System.out.print("Ingrese nuevo area: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = area.nombreDelArea;
+                                                        }
+                                                        System.out.println("Fondos: " + area.ingresoArea);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = area.ingresoArea;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Gasto: " + area.gastoArea);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")){
+                                                            gasto = area.gastoArea;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        Area areaAux = new Area (nombre,ganancia,gasto, area.sede);
+                                                        areas.set(areas.indexOf(area), areaAux);
+                                                        System.out.println("Area editada con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Area area : repuesto) {
+                                                if (area.gastoArea >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        areas.remove(area);
+                                                        System.out.println("Area eliminada con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(areas);
+                                            busqueda();
+                                        }
+                                    }
+                                    repuesto.removeAll(areas);
                                     busqueda();
                                 }
                                 if (option3.equals("4")) {
@@ -1947,9 +6776,78 @@ public  class  Principal {
                                         }
                                         if (count == areas.size()) {
                                             System.out.println("No se encuentran areas");
+                                            repuesto.removeAll(areas);
+                                            busqueda();
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Area area : repuesto) {
+                                                if (area.gastoArea <= Max && area.gastoArea >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Tipo de area: " + area.nombreDelArea);
+                                                        System.out.print("Ingrese nuevo area: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = area.nombreDelArea;
+                                                        }
+                                                        System.out.println("Fondos: " + area.ingresoArea);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Ganancia = input.nextLine();
+                                                        int ganancia = 0;
+                                                        if (Ganancia.equals("")) {
+                                                            ganancia = area.ingresoArea;
+                                                        } else {
+                                                            ganancia = Integer.parseInt(Ganancia);
+                                                        }
+                                                        System.out.println("Gasto: " + area.gastoArea);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Gasto = input.nextLine();
+                                                        int gasto = 0;
+                                                        if (Gasto.equals("")){
+                                                            gasto = area.gastoArea;
+                                                        } else {
+                                                            gasto = Integer.parseInt(Gasto);
+                                                        }
+                                                        Area areaAux = new Area (nombre,ganancia,gasto, area.sede);
+                                                        areas.set(areas.indexOf(area), areaAux);
+                                                        System.out.println("Area editada con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Area area : repuesto) {
+                                                if (area.gastoArea <= Max && area.gastoArea >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        areas.remove(area);
+                                                        System.out.println("Area eliminada con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(areas);
+                                            busqueda();
+                                        }
+                                    }
+                                    repuesto.removeAll(areas);
                                     busqueda();
                                 }
                             }
@@ -1964,20 +6862,147 @@ public  class  Principal {
                             option3 = input.next();
                             if (option3.equals("1")) {
                                 int index = 1;
-                                Collections.sort(repuesto, new ComparadorIarea());
+                                repuesto.sort(new ComparadorIarea());
                                 for (Area area : repuesto) {
                                     System.out.println(index + " " + area);
                                     index++;
                                 }
-                            } else if (option3.equals("2")) {
-                                int index = 1;
-                                Collections.sort(repuesto, new ComparadorGarea());
-                                for (Area area : repuesto) {
-                                    System.out.println(index + " " + area);
-                                    index++;
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Area area : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Tipo de area: " + area.nombreDelArea);
+                                                    System.out.print("Ingrese nuevo area: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = area.nombreDelArea;
+                                                    }
+                                                    System.out.println("Fondos: " + area.ingresoArea);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Ganancia = input.nextLine();
+                                                    int ganancia = 0;
+                                                    if (Ganancia.equals("")) {
+                                                        ganancia = area.ingresoArea;
+                                                    } else {
+                                                        ganancia = Integer.parseInt(Ganancia);
+                                                    }
+                                                    System.out.println("Gasto: " + area.gastoArea);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Gasto = input.nextLine();
+                                                    int gasto = 0;
+                                                    if (Gasto.equals("")){
+                                                        gasto = area.gastoArea;
+                                                    } else {
+                                                        gasto = Integer.parseInt(Gasto);
+                                                    }
+                                                    Area areaAux = new Area (nombre,ganancia,gasto, area.sede);
+                                                    areas.set(areas.indexOf(area), areaAux);
+                                                    System.out.println("Area editada con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Area area : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    areas.remove(area);
+                                                    System.out.println("Area eliminada con exito");
+                                                } else {
+                                                    index2++;
+                                            }
+                                        }
+                                    } else if (option5.equals("0") || option4.equals("2")) {
+                                        repuesto.removeAll(areas);
+                                        busqueda();
+                                    }
                                 }
                             }
-                            repuesto.removeAll(repuesto);
+                            else if (option3.equals("2")) {
+                                int index = 1;
+                                repuesto.sort(new ComparadorGarea());
+                                for (Area area : repuesto) {
+                                    System.out.println(index + " " + area);
+                                    index++;
+                                }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Area area : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Tipo de area: " + area.nombreDelArea);
+                                                    System.out.print("Ingrese nuevo area: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = area.nombreDelArea;
+                                                    }
+                                                    System.out.println("Fondos: " + area.ingresoArea);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Ganancia = input.nextLine();
+                                                    int ganancia = 0;
+                                                    if (Ganancia.equals("")) {
+                                                        ganancia = area.ingresoArea;
+                                                    } else {
+                                                        ganancia = Integer.parseInt(Ganancia);
+                                                    }
+                                                    System.out.println("Gasto: " + area.gastoArea);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Gasto = input.nextLine();
+                                                    int gasto = 0;
+                                                    if (Gasto.equals("")){
+                                                        gasto = area.gastoArea;
+                                                    } else {
+                                                        gasto = Integer.parseInt(Gasto);
+                                                    }
+                                                    Area areaAux = new Area (nombre,ganancia,gasto, area.sede);
+                                                    areas.set(areas.indexOf(area), areaAux);
+                                                    System.out.println("Area editada con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Area area : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    areas.remove(area);
+                                                    System.out.println("Area eliminada con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                        }
+                                    } else if (option5.equals("0") || option4.equals("2")) {
+                                        repuesto.removeAll(areas);
+                                        busqueda();
+                                    }
+                                }
+                            }
+                            repuesto.removeAll(areas);
                             busqueda();
                         }
                     }
@@ -1990,9 +7015,7 @@ public  class  Principal {
             System.out.println("No hay empleados registradas");
         } else {
             LinkedList<Empleado> repuesto = new LinkedList<>();
-            for (Empleado empleado : repuesto) {
-                repuesto.add(empleado);
-            }
+            repuesto.addAll(empleados);
             String option2;
             while (true) {
                 System.out.println("Escoja un atributo de busqueda:");
@@ -2024,11 +7047,88 @@ public  class  Principal {
                                         count++;
                                         if (count == empleados.size()) {
                                             System.out.println("No se encuentra el empleado");
+                                            busqueda();
                                         }
                                     }
                                 }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Empleado empleado : empleados) {
+                                            if (empleado.nombre.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + empleado.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = empleado.nombre;
+                                                    }
+                                                    System.out.println("Cedula: " + empleado.cedula);
+                                                    System.out.print("Ingrese nueva cedula: ");
+                                                    String Cedula = input.nextLine();
+                                                    int cedula;
+                                                    if (Cedula.equals("")) {
+                                                        cedula = empleado.cedula;
+                                                    } else {
+                                                        cedula = Integer.parseInt(Cedula);
+                                                    }
+                                                    System.out.println("Edad: " + empleado.edad);
+                                                    System.out.print("Ingrese nueva edad: ");
+                                                    String Edad = input.nextLine();
+                                                    int edad;
+                                                    if (Edad.equals("")){
+                                                        edad = empleado.edad;
+                                                    } else {
+                                                        edad = Integer.parseInt(Edad);
+                                                    }
+                                                    System.out.println("Salario: " + empleado.salario);
+                                                    System.out.print("Ingrese nuevo salario: ");
+                                                    String Salario = input.nextLine();
+                                                    int salario;
+                                                    if (Salario.equals("")){
+                                                        salario = empleado.salario;
+                                                    } else {
+                                                        salario = Integer.parseInt(Salario);
+                                                    }
+                                                    Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                    empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                    System.out.println("Empleado editado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Empleado empleado : empleados) {
+                                            if (empleado.nombre.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    empleados.remove(empleado);
+                                                    System.out.println("Empleado eliminado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("0") || option4.equals("2")) {
+                                        busqueda();
+                                    }
+                                }
                                 busqueda();
-                            } else if (option3.equals("2")) {
+                            }
+                            else if (option3.equals("2")) {
                                 input.nextLine();
                                 System.out.print("Ingrese el nombre a buscar: ");
                                 String buscarNombre = input.nextLine();
@@ -2044,9 +7144,89 @@ public  class  Principal {
                                         count++;
                                         if (count == empleados.size()) {
                                             System.out.println("No se encuentra el empleado");
+                                            busqueda();
                                         }
                                     }
                                 }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Empleado empleado : empleados) {
+                                            String minusculas = empleado.nombre.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + empleado.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = empleado.nombre;
+                                                    }
+                                                    System.out.println("Cedula: " + empleado.cedula);
+                                                    System.out.print("Ingrese nueva cedula: ");
+                                                    String Cedula = input.nextLine();
+                                                    int cedula;
+                                                    if (Cedula.equals("")) {
+                                                        cedula = empleado.cedula;
+                                                    } else {
+                                                        cedula = Integer.parseInt(Cedula);
+                                                    }
+                                                    System.out.println("Edad: " + empleado.edad);
+                                                    System.out.print("Ingrese nueva edad: ");
+                                                    String Edad = input.nextLine();
+                                                    int edad;
+                                                    if (Edad.equals("")){
+                                                        edad = empleado.edad;
+                                                    } else {
+                                                        edad = Integer.parseInt(Edad);
+                                                    }
+                                                    System.out.println("Salario: " + empleado.salario);
+                                                    System.out.print("Ingrese nuevo salario: ");
+                                                    String Salario = input.nextLine();
+                                                    int salario;
+                                                    if (Salario.equals("")){
+                                                        salario = empleado.salario;
+                                                    } else {
+                                                        salario = Integer.parseInt(Salario);
+                                                    }
+                                                    Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                    empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                    System.out.println("Empleado editado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Empleado empleado : empleados) {
+                                            String minusculas = empleado.nombre.toLowerCase();
+                                            if (minusculas.equals(buscarNombre)) {
+                                                if (index2 == iBuscar) {
+                                                    empleados.remove(empleado);
+                                                    System.out.println("Empleado eliminado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("0") || option4.equals("2")) {
+                                        repuesto.removeAll(empleados);
+                                        busqueda();
+                                    }
+                                }
+                                repuesto.removeAll(empleados);
                                 busqueda();
                             }
                         }
@@ -2059,9 +7239,9 @@ public  class  Principal {
                             System.out.println("2. Descendente");
                             orden = input.next();
                             if (orden.equals("1")) {
-                                Collections.sort(repuesto, new ComparadorEcedula());
+                                repuesto.sort(new ComparadorEcedula());
                             } else if (orden.equals("2")) {
-                                Collections.sort(repuesto, new ComparadorEcedula().reversed());
+                                repuesto.sort(new ComparadorEcedula().reversed());
                             }
                             String option3;
                             while (true) {
@@ -2085,9 +7265,87 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
+                                                busqueda();
                                             }
                                         }
                                     }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : empleados) {
+                                                if (empleado.cedula == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + empleado.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = empleado.nombre;
+                                                        }
+                                                        System.out.println("Cedula: " + empleado.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = empleado.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        System.out.println("Edad: " + empleado.edad);
+                                                        System.out.print("Ingrese nueva edad: ");
+                                                        String Edad = input.nextLine();
+                                                        int edad;
+                                                        if (Edad.equals("")){
+                                                            edad = empleado.edad;
+                                                        } else {
+                                                            edad = Integer.parseInt(Edad);
+                                                        }
+                                                        System.out.println("Salario: " + empleado.salario);
+                                                        System.out.print("Ingrese nuevo salario: ");
+                                                        String Salario = input.nextLine();
+                                                        int salario;
+                                                        if (Salario.equals("")){
+                                                            salario = empleado.salario;
+                                                        } else {
+                                                            salario = Integer.parseInt(Salario);
+                                                        }
+                                                        Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                        empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                        System.out.println("Empleado editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : empleados) {
+                                                if (empleado.cedula == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        empleados.remove(empleado);
+                                                        System.out.println("Empleado eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                            repuesto.removeAll(empleados);
+                                            busqueda();
+                                        }
+                                    }
+                                    repuesto.removeAll(empleados);
                                     busqueda();
                                 }
                                 if (option3.equals("2")) {
@@ -2103,10 +7361,88 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
+                                                repuesto.removeAll(empleados);
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.cedula <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + empleado.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = empleado.nombre;
+                                                        }
+                                                        System.out.println("Cedula: " + empleado.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = empleado.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        System.out.println("Edad: " + empleado.edad);
+                                                        System.out.print("Ingrese nueva edad: ");
+                                                        String Edad = input.nextLine();
+                                                        int edad;
+                                                        if (Edad.equals("")){
+                                                            edad = empleado.edad;
+                                                        } else {
+                                                            edad = Integer.parseInt(Edad);
+                                                        }
+                                                        System.out.println("Salario: " + empleado.salario);
+                                                        System.out.print("Ingrese nuevo salario: ");
+                                                        String Salario = input.nextLine();
+                                                        int salario;
+                                                        if (Salario.equals("")){
+                                                            salario = empleado.salario;
+                                                        } else {
+                                                            salario = Integer.parseInt(Salario);
+                                                        }
+                                                        Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                        empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                        System.out.println("Empleado editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.cedula <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        empleados.remove(empleado);
+                                                        System.out.println("Empleado eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(empleados);
+                                            busqueda();
+                                        }
+                                    }
+                                    repuesto.removeAll(empleados);
                                     busqueda();
                                 }
                                 if (option3.equals("3")) {
@@ -2122,10 +7458,88 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
+                                                repuesto.removeAll(empleados);
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.cedula >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + empleado.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = empleado.nombre;
+                                                        }
+                                                        System.out.println("Cedula: " + empleado.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = empleado.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        System.out.println("Edad: " + empleado.edad);
+                                                        System.out.print("Ingrese nueva edad: ");
+                                                        String Edad = input.nextLine();
+                                                        int edad;
+                                                        if (Edad.equals("")){
+                                                            edad = empleado.edad;
+                                                        } else {
+                                                            edad = Integer.parseInt(Edad);
+                                                        }
+                                                        System.out.println("Salario: " + empleado.salario);
+                                                        System.out.print("Ingrese nuevo salario: ");
+                                                        String Salario = input.nextLine();
+                                                        int salario;
+                                                        if (Salario.equals("")){
+                                                            salario = empleado.salario;
+                                                        } else {
+                                                            salario = Integer.parseInt(Salario);
+                                                        }
+                                                        Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                        empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                        System.out.println("Empleado editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.cedula >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        empleados.remove(empleado);
+                                                        System.out.println("Empleado eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(empleados);
+                                            busqueda();
+                                        }
+                                    }
+                                    repuesto.removeAll(empleados);
                                     busqueda();
                                 }
                                 if (option3.equals("4")) {
@@ -2143,9 +7557,84 @@ public  class  Principal {
                                         }
                                         if (count == empleados.size()) {
                                             System.out.println("No se encuentran empleados");
+                                            repuesto.removeAll(empleados);
+                                            busqueda();
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.cedula <= Max && empleado.cedula >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + empleado.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = empleado.nombre;
+                                                        }
+                                                        System.out.println("Cedula: " + empleado.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = empleado.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        System.out.println("Edad: " + empleado.edad);
+                                                        System.out.print("Ingrese nueva edad: ");
+                                                        String Edad = input.nextLine();
+                                                        int edad;
+                                                        if (Edad.equals("")){
+                                                            edad = empleado.edad;
+                                                        } else {
+                                                            edad = Integer.parseInt(Edad);
+                                                        }
+                                                        System.out.println("Salario: " + empleado.salario);
+                                                        System.out.print("Ingrese nuevo salario: ");
+                                                        String Salario = input.nextLine();
+                                                        int salario;
+                                                        if (Salario.equals("")){
+                                                            salario = empleado.salario;
+                                                        } else {
+                                                            salario = Integer.parseInt(Salario);
+                                                        }
+                                                        Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                        empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                        System.out.println("Empleado editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.cedula <= Max && empleado.cedula >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        empleados.remove(empleado);
+                                                        System.out.println("Empleado eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(empleados);
                                     busqueda();
                                 }
                             }
@@ -2185,9 +7674,85 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
+                                                repuesto.removeAll(empleados);
+                                                busqueda();
                                             }
                                         }
                                     }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : empleados) {
+                                                if (empleado.edad == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + empleado.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = empleado.nombre;
+                                                        }
+                                                        System.out.println("Cedula: " + empleado.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = empleado.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        System.out.println("Edad: " + empleado.edad);
+                                                        System.out.print("Ingrese nueva edad: ");
+                                                        String Edad = input.nextLine();
+                                                        int edad;
+                                                        if (Edad.equals("")){
+                                                            edad = empleado.edad;
+                                                        } else {
+                                                            edad = Integer.parseInt(Edad);
+                                                        }
+                                                        System.out.println("Salario: " + empleado.salario);
+                                                        System.out.print("Ingrese nuevo salario: ");
+                                                        String Salario = input.nextLine();
+                                                        int salario;
+                                                        if (Salario.equals("")){
+                                                            salario = empleado.salario;
+                                                        } else {
+                                                            salario = Integer.parseInt(Salario);
+                                                        }
+                                                        Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                        empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                        System.out.println("Empleado editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : empleados) {
+                                                if (empleado.edad == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        empleados.remove(empleado);
+                                                        System.out.println("Empleado eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(empleados);
                                     busqueda();
                                 }
                                 if (option3.equals("2")) {
@@ -2203,10 +7768,85 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
+                                                repuesto.removeAll(empleados);
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.edad <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + empleado.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = empleado.nombre;
+                                                        }
+                                                        System.out.println("Cedula: " + empleado.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = empleado.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        System.out.println("Edad: " + empleado.edad);
+                                                        System.out.print("Ingrese nueva edad: ");
+                                                        String Edad = input.nextLine();
+                                                        int edad;
+                                                        if (Edad.equals("")){
+                                                            edad = empleado.edad;
+                                                        } else {
+                                                            edad = Integer.parseInt(Edad);
+                                                        }
+                                                        System.out.println("Salario: " + empleado.salario);
+                                                        System.out.print("Ingrese nuevo salario: ");
+                                                        String Salario = input.nextLine();
+                                                        int salario;
+                                                        if (Salario.equals("")){
+                                                            salario = empleado.salario;
+                                                        } else {
+                                                            salario = Integer.parseInt(Salario);
+                                                        }
+                                                        Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                        empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                        System.out.println("Empleado editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.edad <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        empleados.remove(empleado);
+                                                        System.out.println("Empleado eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(empleados);
                                     busqueda();
                                 }
                                 if (option3.equals("3")) {
@@ -2222,10 +7862,85 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
+                                                repuesto.removeAll(empleados);
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.edad >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + empleado.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = empleado.nombre;
+                                                        }
+                                                        System.out.println("Cedula: " + empleado.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = empleado.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        System.out.println("Edad: " + empleado.edad);
+                                                        System.out.print("Ingrese nueva edad: ");
+                                                        String Edad = input.nextLine();
+                                                        int edad;
+                                                        if (Edad.equals("")){
+                                                            edad = empleado.edad;
+                                                        } else {
+                                                            edad = Integer.parseInt(Edad);
+                                                        }
+                                                        System.out.println("Salario: " + empleado.salario);
+                                                        System.out.print("Ingrese nuevo salario: ");
+                                                        String Salario = input.nextLine();
+                                                        int salario;
+                                                        if (Salario.equals("")){
+                                                            salario = empleado.salario;
+                                                        } else {
+                                                            salario = Integer.parseInt(Salario);
+                                                        }
+                                                        Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                        empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                        System.out.println("Empleado editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.edad >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        empleados.remove(empleado);
+                                                        System.out.println("Empleado eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(empleados);
                                     busqueda();
                                 }
                                 if (option3.equals("4")) {
@@ -2244,9 +7959,84 @@ public  class  Principal {
                                         }
                                         if (count == empleados.size()) {
                                             System.out.println("No se encuentran empleados");
+                                            repuesto.removeAll(empleados);
+                                            busqueda();
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.edad <= Max && empleado.edad >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + empleado.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = empleado.nombre;
+                                                        }
+                                                        System.out.println("Cedula: " + empleado.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = empleado.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        System.out.println("Edad: " + empleado.edad);
+                                                        System.out.print("Ingrese nueva edad: ");
+                                                        String Edad = input.nextLine();
+                                                        int edad;
+                                                        if (Edad.equals("")){
+                                                            edad = empleado.edad;
+                                                        } else {
+                                                            edad = Integer.parseInt(Edad);
+                                                        }
+                                                        System.out.println("Salario: " + empleado.salario);
+                                                        System.out.print("Ingrese nuevo salario: ");
+                                                        String Salario = input.nextLine();
+                                                        int salario;
+                                                        if (Salario.equals("")){
+                                                            salario = empleado.salario;
+                                                        } else {
+                                                            salario = Integer.parseInt(Salario);
+                                                        }
+                                                        Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                        empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                        System.out.println("Empleado editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.edad <= Max && empleado.edad >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        empleados.remove(empleado);
+                                                        System.out.println("Empleado eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(empleados);
                                     busqueda();
                                 }
                             }
@@ -2260,9 +8050,9 @@ public  class  Principal {
                             System.out.println("2. Descendente");
                             orden = input.next();
                             if (orden.equals("1")) {
-                                Collections.sort(repuesto, new ComparadorEsalario());
+                                repuesto.sort(new ComparadorEsalario());
                             } else if (orden.equals("2")) {
-                                Collections.sort(repuesto, new ComparadorEsalario().reversed());
+                                repuesto.sort(new ComparadorEsalario().reversed());
                             }
                             String option3;
                             while (true) {
@@ -2286,9 +8076,85 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
+                                                repuesto.removeAll(empleados);
+                                                busqueda();
                                             }
                                         }
                                     }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : empleados) {
+                                                if (empleado.salario == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + empleado.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = empleado.nombre;
+                                                        }
+                                                        System.out.println("Cedula: " + empleado.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = empleado.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        System.out.println("Edad: " + empleado.edad);
+                                                        System.out.print("Ingrese nueva edad: ");
+                                                        String Edad = input.nextLine();
+                                                        int edad;
+                                                        if (Edad.equals("")){
+                                                            edad = empleado.edad;
+                                                        } else {
+                                                            edad = Integer.parseInt(Edad);
+                                                        }
+                                                        System.out.println("Salario: " + empleado.salario);
+                                                        System.out.print("Ingrese nuevo salario: ");
+                                                        String Salario = input.nextLine();
+                                                        int salario;
+                                                        if (Salario.equals("")){
+                                                            salario = empleado.salario;
+                                                        } else {
+                                                            salario = Integer.parseInt(Salario);
+                                                        }
+                                                        Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                        empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                        System.out.println("Empleado editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : empleados) {
+                                                if (empleado.salario == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        empleados.remove(empleado);
+                                                        System.out.println("Empleado eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(empleados);
                                     busqueda();
                                 }
                                 if (option3.equals("2")) {
@@ -2304,10 +8170,85 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
+                                                repuesto.removeAll(empleados);
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.salario <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + empleado.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = empleado.nombre;
+                                                        }
+                                                        System.out.println("Cedula: " + empleado.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = empleado.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        System.out.println("Edad: " + empleado.edad);
+                                                        System.out.print("Ingrese nueva edad: ");
+                                                        String Edad = input.nextLine();
+                                                        int edad;
+                                                        if (Edad.equals("")){
+                                                            edad = empleado.edad;
+                                                        } else {
+                                                            edad = Integer.parseInt(Edad);
+                                                        }
+                                                        System.out.println("Salario: " + empleado.salario);
+                                                        System.out.print("Ingrese nuevo salario: ");
+                                                        String Salario = input.nextLine();
+                                                        int salario;
+                                                        if (Salario.equals("")){
+                                                            salario = empleado.salario;
+                                                        } else {
+                                                            salario = Integer.parseInt(Salario);
+                                                        }
+                                                        Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                        empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                        System.out.println("Empleado editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.salario <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        empleados.remove(empleado);
+                                                        System.out.println("Empleado eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(empleados);
                                     busqueda();
                                 }
                                 if (option3.equals("3")) {
@@ -2323,10 +8264,85 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
+                                                repuesto.removeAll(empleados);
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.salario >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + empleado.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = empleado.nombre;
+                                                        }
+                                                        System.out.println("Cedula: " + empleado.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = empleado.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        System.out.println("Edad: " + empleado.edad);
+                                                        System.out.print("Ingrese nueva edad: ");
+                                                        String Edad = input.nextLine();
+                                                        int edad;
+                                                        if (Edad.equals("")){
+                                                            edad = empleado.edad;
+                                                        } else {
+                                                            edad = Integer.parseInt(Edad);
+                                                        }
+                                                        System.out.println("Salario: " + empleado.salario);
+                                                        System.out.print("Ingrese nuevo salario: ");
+                                                        String Salario = input.nextLine();
+                                                        int salario;
+                                                        if (Salario.equals("")){
+                                                            salario = empleado.salario;
+                                                        } else {
+                                                            salario = Integer.parseInt(Salario);
+                                                        }
+                                                        Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                        empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                        System.out.println("Empleado editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Empleado empleado : repuesto) {
+                                                if (empleado.salario >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        empleados.remove(empleado);
+                                                        System.out.println("Empleado eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(empleados);
                                     busqueda();
                                 }
                                 if (option3.equals("4")) {
@@ -2363,27 +8379,236 @@ public  class  Principal {
                             option3 = input.next();
                             if (option3.equals("1")) {
                                 int index = 1;
-                                Collections.sort(repuesto, new ComparadorEcedula());
+                                repuesto.sort(new ComparadorEcedula());
                                 for (Empleado empleado : repuesto) {
                                     System.out.println(index + " " + empleado);
                                     index++;
                                 }
-                            } else if (option3.equals("2")) {
-                                int index = 1;
-                                Collections.sort(repuesto, new ComparadorEedad());
-                                for (Empleado empleado : repuesto) {
-                                    System.out.println(index + " " + empleado);
-                                    index++;
-                                }
-                            } else if (option3.equals("3")) {
-                                int index = 1;
-                                Collections.sort(repuesto, new ComparadorEsalario());
-                                for (Empleado empleado : repuesto) {
-                                    System.out.println(index + " " + empleado);
-                                    index++;
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Empleado empleado : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + empleado.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = empleado.nombre;
+                                                    }
+                                                    System.out.println("Cedula: " + empleado.cedula);
+                                                    System.out.print("Ingrese nueva cedula: ");
+                                                    String Cedula = input.nextLine();
+                                                    int cedula;
+                                                    if (Cedula.equals("")) {
+                                                        cedula = empleado.cedula;
+                                                    } else {
+                                                        cedula = Integer.parseInt(Cedula);
+                                                    }
+                                                    System.out.println("Edad: " + empleado.edad);
+                                                    System.out.print("Ingrese nueva edad: ");
+                                                    String Edad = input.nextLine();
+                                                    int edad;
+                                                    if (Edad.equals("")){
+                                                        edad = empleado.edad;
+                                                    } else {
+                                                        edad = Integer.parseInt(Edad);
+                                                    }
+                                                    System.out.println("Salario: " + empleado.salario);
+                                                    System.out.print("Ingrese nuevo salario: ");
+                                                    String Salario = input.nextLine();
+                                                    int salario;
+                                                    if (Salario.equals("")){
+                                                        salario = empleado.salario;
+                                                    } else {
+                                                        salario = Integer.parseInt(Salario);
+                                                    }
+                                                    Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                    empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                    System.out.println("Empleado editado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Empleado empleado : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    empleados.remove(empleado);
+                                                    System.out.println("Empleado eliminado con exito");
+                                                } else {
+                                                    index2++;
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                            repuesto.removeAll(repuesto);
+                            else if (option3.equals("2")) {
+                                int index = 1;
+                                repuesto.sort(new ComparadorEedad());
+                                for (Empleado empleado : repuesto) {
+                                    System.out.println(index + " " + empleado);
+                                    index++;
+                                }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Empleado empleado : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + empleado.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = empleado.nombre;
+                                                    }
+                                                    System.out.println("Cedula: " + empleado.cedula);
+                                                    System.out.print("Ingrese nueva cedula: ");
+                                                    String Cedula = input.nextLine();
+                                                    int cedula;
+                                                    if (Cedula.equals("")) {
+                                                        cedula = empleado.cedula;
+                                                    } else {
+                                                        cedula = Integer.parseInt(Cedula);
+                                                    }
+                                                    System.out.println("Edad: " + empleado.edad);
+                                                    System.out.print("Ingrese nueva edad: ");
+                                                    String Edad = input.nextLine();
+                                                    int edad;
+                                                    if (Edad.equals("")){
+                                                        edad = empleado.edad;
+                                                    } else {
+                                                        edad = Integer.parseInt(Edad);
+                                                    }
+                                                    System.out.println("Salario: " + empleado.salario);
+                                                    System.out.print("Ingrese nuevo salario: ");
+                                                    String Salario = input.nextLine();
+                                                    int salario;
+                                                    if (Salario.equals("")){
+                                                        salario = empleado.salario;
+                                                    } else {
+                                                        salario = Integer.parseInt(Salario);
+                                                    }
+                                                    Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                    empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                    System.out.println("Empleado editado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Empleado empleado : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    empleados.remove(empleado);
+                                                    System.out.println("Empleado eliminado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            else if (option3.equals("3")) {
+                                int index = 1;
+                                repuesto.sort(new ComparadorEsalario());
+                                for (Empleado empleado : repuesto) {
+                                    System.out.println(index + " " + empleado);
+                                    index++;
+                                }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Empleado empleado : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + empleado.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = empleado.nombre;
+                                                    }
+                                                    System.out.println("Cedula: " + empleado.cedula);
+                                                    System.out.print("Ingrese nueva cedula: ");
+                                                    String Cedula = input.nextLine();
+                                                    int cedula;
+                                                    if (Cedula.equals("")) {
+                                                        cedula = empleado.cedula;
+                                                    } else {
+                                                        cedula = Integer.parseInt(Cedula);
+                                                    }
+                                                    System.out.println("Edad: " + empleado.edad);
+                                                    System.out.print("Ingrese nueva edad: ");
+                                                    String Edad = input.nextLine();
+                                                    int edad;
+                                                    if (Edad.equals("")){
+                                                        edad = empleado.edad;
+                                                    } else {
+                                                        edad = Integer.parseInt(Edad);
+                                                    }
+                                                    System.out.println("Salario: " + empleado.salario);
+                                                    System.out.print("Ingrese nuevo salario: ");
+                                                    String Salario = input.nextLine();
+                                                    int salario;
+                                                    if (Salario.equals("")){
+                                                        salario = empleado.salario;
+                                                    } else {
+                                                        salario = Integer.parseInt(Salario);
+                                                    }
+                                                    Empleado empleadoAux = new Empleado (nombre,cedula,edad,salario,empleado.areaPertenece);
+                                                    empleados.set(empleados.indexOf(empleado), empleadoAux);
+                                                    System.out.println("Empleado editado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Empleado empleado : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    empleados.remove(empleado);
+                                                    System.out.println("Empleado eliminado con exito");
+                                                } else {
+                                                    index2++;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            repuesto.removeAll(empleados);
                             busqueda();
                         }
                     }
@@ -2396,9 +8621,7 @@ public  class  Principal {
             System.out.println("No hay clientes registrados");
         } else {
             LinkedList<Cliente> repuesto = new LinkedList<>();
-            for (Cliente cliente : repuesto) {
-                repuesto.add(cliente);
-            }
+            repuesto.addAll(clientes);
             String option2;
             while (true) {
                 System.out.println("Escoja un atributo de busqueda:");
@@ -2429,11 +8652,79 @@ public  class  Principal {
                                         count++;
                                         if (count == clientes.size()) {
                                             System.out.println("No se encuentra el cliente");
+                                            repuesto.removeAll(clientes);
+                                            busqueda();
                                         }
                                     }
                                 }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Cliente cliente : clientes) {
+                                            if (cliente.nombre.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + cliente.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = cliente.nombre;
+                                                    }
+                                                    System.out.println("Dinero: " + cliente.dinero);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Dinero = input.nextLine();
+                                                    int dinero;
+                                                    if (Dinero.equals("")) {
+                                                        dinero = cliente.dinero;
+                                                    } else {
+                                                        dinero = Integer.parseInt(Dinero);
+                                                    }
+                                                    System.out.println("Cedula: " + cliente.cedula);
+                                                    System.out.print("Ingrese nueva cedula: ");
+                                                    String Cedula = input.nextLine();
+                                                    int cedula;
+                                                    if (Cedula.equals("")){
+                                                        cedula = cliente.cedula;
+                                                    } else {
+                                                        cedula = Integer.parseInt(Cedula);
+                                                    }
+                                                    Cliente clienteAux = new Cliente (nombre,cedula,dinero, cliente.AreaConsumo);
+                                                    clientes.set(clientes.indexOf(cliente), clienteAux);
+                                                    System.out.println("Cliente editado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Cliente cliente : clientes) {
+                                            if (cliente.nombre.equals(buscarM)) {
+                                                if (index2 == iBuscar) {
+                                                    clientes.remove(cliente);
+                                                    System.out.println("Cliente eliminado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                repuesto.removeAll(clientes);
                                 busqueda();
-                            } else if (option3.equals("2")) {
+                            }
+                            else if (option3.equals("2")) {
                                 input.nextLine();
                                 System.out.print("Ingrese el nombre a buscar: ");
                                 String buscarNombre = input.nextLine();
@@ -2449,9 +8740,78 @@ public  class  Principal {
                                         count++;
                                         if (count == clientes.size()) {
                                             System.out.println("No se encuentra el cliente");
+                                            repuesto.removeAll(clientes);
+                                            busqueda();
                                         }
                                     }
                                 }
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Cliente cliente : clientes) {
+                                            String minusculas = cliente.nombre.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + cliente.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = cliente.nombre;
+                                                    }
+                                                    System.out.println("Dinero: " + cliente.dinero);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Dinero = input.nextLine();
+                                                    int dinero;
+                                                    if (Dinero.equals("")) {
+                                                        dinero = cliente.dinero;
+                                                    } else {
+                                                        dinero = Integer.parseInt(Dinero);
+                                                    }
+                                                    System.out.println("Cedula: " + cliente.cedula);
+                                                    System.out.print("Ingrese nueva cedula: ");
+                                                    String Cedula = input.nextLine();
+                                                    int cedula;
+                                                    if (Cedula.equals("")){
+                                                        cedula = cliente.cedula;
+                                                    } else {
+                                                        cedula = Integer.parseInt(Cedula);
+                                                    }
+                                                    Cliente clienteAux = new Cliente (nombre,cedula,dinero, cliente.AreaConsumo);
+                                                    clientes.set(clientes.indexOf(cliente), clienteAux);
+                                                    System.out.println("Cliente editado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Cliente cliente : clientes) {
+                                            String minusculas = cliente.nombre.toLowerCase();
+                                            if (minusculas.equals(nombreMinuscula)) {
+                                                if (index2 == iBuscar) {
+                                                    clientes.remove(cliente);
+                                                    System.out.println("Cliente eliminado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                repuesto.removeAll(clientes);
                                 busqueda();
                             }
                         }
@@ -2464,9 +8824,9 @@ public  class  Principal {
                             System.out.println("2. Descendente");
                             orden = input.next();
                             if (orden.equals("1")) {
-                                Collections.sort(repuesto, new ComparadorCdinero());
+                                repuesto.sort(new ComparadorCdinero());
                             } else if (orden.equals("2")) {
-                                Collections.sort(repuesto, new ComparadorCdinero().reversed());
+                                repuesto.sort(new ComparadorCdinero().reversed());
                             }
                             String option3;
                             while (true) {
@@ -2490,9 +8850,76 @@ public  class  Principal {
                                             count++;
                                             if (count == clientes.size()) {
                                                 System.out.println("No se encuentra el cliente");
+                                                repuesto.removeAll(clientes);
+                                                busqueda();
                                             }
                                         }
                                     }
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Cliente cliente : clientes) {
+                                                if (cliente.dinero == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + cliente.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = cliente.nombre;
+                                                        }
+                                                        System.out.println("Dinero: " + cliente.dinero);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Dinero = input.nextLine();
+                                                        int dinero;
+                                                        if (Dinero.equals("")) {
+                                                            dinero = cliente.dinero;
+                                                        } else {
+                                                            dinero = Integer.parseInt(Dinero);
+                                                        }
+                                                        System.out.println("Cedula: " + cliente.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = cliente.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        Cliente clienteAux = new Cliente(nombre, cedula, dinero, cliente.AreaConsumo);
+                                                        clientes.set(clientes.indexOf(cliente), clienteAux);
+                                                        System.out.println("Cliente editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Cliente cliente : clientes) {
+                                                if (cliente.dinero == buscarTotal) {
+                                                    if (index2 == iBuscar) {
+                                                        clientes.remove(cliente);
+                                                        System.out.println("Cliente eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(clientes);
                                     busqueda();
                                 }
                                 if (option3.equals("2")) {
@@ -2508,10 +8935,76 @@ public  class  Principal {
                                             count++;
                                             if (count == clientes.size()) {
                                                 System.out.println("No se encuentra el cliente");
+                                                repuesto.removeAll(clientes);
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Cliente cliente : repuesto) {
+                                                if (cliente.dinero <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + cliente.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = cliente.nombre;
+                                                        }
+                                                        System.out.println("Dinero: " + cliente.dinero);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Dinero = input.nextLine();
+                                                        int dinero;
+                                                        if (Dinero.equals("")) {
+                                                            dinero = cliente.dinero;
+                                                        } else {
+                                                            dinero = Integer.parseInt(Dinero);
+                                                        }
+                                                        System.out.println("Cedula: " + cliente.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = cliente.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        Cliente clienteAux = new Cliente(nombre, cedula, dinero, cliente.AreaConsumo);
+                                                        clientes.set(clientes.indexOf(cliente), clienteAux);
+                                                        System.out.println("Cliente editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Cliente cliente : repuesto) {
+                                                if (cliente.dinero <= ValorMaximo) {
+                                                    if (index2 == iBuscar) {
+                                                        clientes.remove(cliente);
+                                                        System.out.println("Cliente eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(clientes);
                                     busqueda();
                                 }
                                 if (option3.equals("3")) {
@@ -2527,10 +9020,76 @@ public  class  Principal {
                                             count++;
                                             if (count == clientes.size()) {
                                                 System.out.println("No se encuentra el cliente");
+                                                repuesto.removeAll(clientes);
+                                                busqueda();
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Cliente cliente : repuesto) {
+                                                if (cliente.dinero >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + cliente.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = cliente.nombre;
+                                                        }
+                                                        System.out.println("Dinero: " + cliente.dinero);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Dinero = input.nextLine();
+                                                        int dinero;
+                                                        if (Dinero.equals("")) {
+                                                            dinero = cliente.dinero;
+                                                        } else {
+                                                            dinero = Integer.parseInt(Dinero);
+                                                        }
+                                                        System.out.println("Cedula: " + cliente.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = cliente.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        Cliente clienteAux = new Cliente(nombre, cedula, dinero, cliente.AreaConsumo);
+                                                        clientes.set(clientes.indexOf(cliente), clienteAux);
+                                                        System.out.println("Cliente editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Cliente cliente : repuesto) {
+                                                if (cliente.dinero >= ValorMinimo) {
+                                                    if (index2 == iBuscar) {
+                                                        clientes.remove(cliente);
+                                                        System.out.println("Cliente eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(clientes);
                                     busqueda();
                                 }
                                 if (option3.equals("4")) {
@@ -2549,9 +9108,75 @@ public  class  Principal {
                                         }
                                         if (count == empleados.size()) {
                                             System.out.println("No se encuentran empleados");
+                                            repuesto.removeAll(clientes);
+                                            busqueda();
                                         }
                                     }
-                                    repuesto.removeAll(repuesto);
+                                    System.out.println("Desea editar o eliminar algun elemento? :");
+                                    System.out.println("1. Si");
+                                    System.out.println("2. No");
+                                    String option4 = input.next();
+                                    if (option4.equals("1")) {
+                                        System.out.print("Ingrese el numero indice del objeto: ");
+                                        int iBuscar = input.nextInt();
+                                        System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                        System.out.println("1. Editar");
+                                        System.out.println("2. Eliminar");
+                                        System.out.println("0. Salir");
+                                        String option5 = input.next();
+                                        if (option5.equals("1")) {
+                                            int index2 = 1;
+                                            for (Cliente cliente : repuesto) {
+                                                if (cliente.dinero <= Max && cliente.dinero >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        System.out.println("Nombre: " + cliente.nombre);
+                                                        System.out.print("Ingrese nuevo nombre: ");
+                                                        input.nextLine();
+                                                        String nombre = input.nextLine();
+                                                        if (nombre.equals("")) {
+                                                            nombre = cliente.nombre;
+                                                        }
+                                                        System.out.println("Dinero: " + cliente.dinero);
+                                                        System.out.print("Ingrese nuevo valor: ");
+                                                        String Dinero = input.nextLine();
+                                                        int dinero;
+                                                        if (Dinero.equals("")) {
+                                                            dinero = cliente.dinero;
+                                                        } else {
+                                                            dinero = Integer.parseInt(Dinero);
+                                                        }
+                                                        System.out.println("Cedula: " + cliente.cedula);
+                                                        System.out.print("Ingrese nueva cedula: ");
+                                                        String Cedula = input.nextLine();
+                                                        int cedula;
+                                                        if (Cedula.equals("")) {
+                                                            cedula = cliente.cedula;
+                                                        } else {
+                                                            cedula = Integer.parseInt(Cedula);
+                                                        }
+                                                        Cliente clienteAux = new Cliente(nombre, cedula, dinero, cliente.AreaConsumo);
+                                                        clientes.set(clientes.indexOf(cliente), clienteAux);
+                                                        System.out.println("Cliente editado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        } else if (option5.equals("2")) {
+                                            int index2 = 1;
+                                            for (Cliente cliente : repuesto) {
+                                                if (cliente.dinero <= Max && cliente.dinero >= Min) {
+                                                    if (index2 == iBuscar) {
+                                                        clientes.remove(cliente);
+                                                        System.out.println("Cliente eliminado con exito");
+                                                    } else {
+                                                        index2++;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    repuesto.removeAll(clientes);
                                     busqueda();
                                 }
                             }
@@ -2565,9 +9190,9 @@ public  class  Principal {
                             System.out.println("2. Descendente");
                             orden = input.next();
                             if (orden.equals("1")) {
-                                Collections.sort(repuesto, new ComparadorCcedula());
+                                repuesto.sort(new ComparadorCcedula());
                             } else if (orden.equals("2")) {
-                                Collections.sort(repuesto, new ComparadorCcedula().reversed());
+                                repuesto.sort(new ComparadorCcedula().reversed());
                                 String option3;
                                 while (true) {
                                     System.out.println("Escoja una opcion:");
@@ -2590,9 +9215,76 @@ public  class  Principal {
                                                 count++;
                                                 if (count == clientes.size()) {
                                                     System.out.println("No se encuentra el cliente");
+                                                    repuesto.removeAll(clientes);
+                                                    busqueda();
                                                 }
                                             }
                                         }
+                                        System.out.println("Desea editar o eliminar algun elemento? :");
+                                        System.out.println("1. Si");
+                                        System.out.println("2. No");
+                                        String option4 = input.next();
+                                        if (option4.equals("1")) {
+                                            System.out.print("Ingrese el numero indice del objeto: ");
+                                            int iBuscar = input.nextInt();
+                                            System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                            System.out.println("1. Editar");
+                                            System.out.println("2. Eliminar");
+                                            System.out.println("0. Salir");
+                                            String option5 = input.next();
+                                            if (option5.equals("1")) {
+                                                int index2 = 1;
+                                                for (Cliente cliente : clientes) {
+                                                    if (cliente.cedula == buscarTotal) {
+                                                        if (index2 == iBuscar) {
+                                                            System.out.println("Nombre: " + cliente.nombre);
+                                                            System.out.print("Ingrese nuevo nombre: ");
+                                                            input.nextLine();
+                                                            String nombre = input.nextLine();
+                                                            if (nombre.equals("")) {
+                                                                nombre = cliente.nombre;
+                                                            }
+                                                            System.out.println("Dinero: " + cliente.dinero);
+                                                            System.out.print("Ingrese nuevo valor: ");
+                                                            String Dinero = input.nextLine();
+                                                            int dinero;
+                                                            if (Dinero.equals("")) {
+                                                                dinero = cliente.dinero;
+                                                            } else {
+                                                                dinero = Integer.parseInt(Dinero);
+                                                            }
+                                                            System.out.println("Cedula: " + cliente.cedula);
+                                                            System.out.print("Ingrese nueva cedula: ");
+                                                            String Cedula = input.nextLine();
+                                                            int cedula;
+                                                            if (Cedula.equals("")){
+                                                                cedula = cliente.cedula;
+                                                            } else {
+                                                                cedula = Integer.parseInt(Cedula);
+                                                            }
+                                                            Cliente clienteAux = new Cliente (nombre,cedula,dinero, cliente.AreaConsumo);
+                                                            clientes.set(clientes.indexOf(cliente), clienteAux);
+                                                            System.out.println("Cliente editado con exito");
+                                                        } else {
+                                                            index2++;
+                                                        }
+                                                    }
+                                                }
+                                            } else if (option5.equals("2")) {
+                                                int index2 = 1;
+                                                for (Cliente cliente : clientes) {
+                                                    if (cliente.cedula == buscarTotal) {
+                                                        if (index2 == iBuscar) {
+                                                            clientes.remove(cliente);
+                                                            System.out.println("Cliente eliminado con exito");
+                                                        } else {
+                                                            index2++;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        repuesto.removeAll(clientes);
                                         busqueda();
                                     }
                                     if (option3.equals("2")) {
@@ -2608,10 +9300,76 @@ public  class  Principal {
                                                 count++;
                                                 if (count == clientes.size()) {
                                                     System.out.println("No se encuentra el cliente");
+                                                    repuesto.removeAll(clientes);
+                                                    busqueda();
                                                 }
                                             }
                                         }
-                                        repuesto.removeAll(repuesto);
+                                        System.out.println("Desea editar o eliminar algun elemento? :");
+                                        System.out.println("1. Si");
+                                        System.out.println("2. No");
+                                        String option4 = input.next();
+                                        if (option4.equals("1")) {
+                                            System.out.print("Ingrese el numero indice del objeto: ");
+                                            int iBuscar = input.nextInt();
+                                            System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                            System.out.println("1. Editar");
+                                            System.out.println("2. Eliminar");
+                                            System.out.println("0. Salir");
+                                            String option5 = input.next();
+                                            if (option5.equals("1")) {
+                                                int index2 = 1;
+                                                for (Cliente cliente : repuesto) {
+                                                    if (cliente.cedula <= ValorMaximo) {
+                                                        if (index2 == iBuscar) {
+                                                            System.out.println("Nombre: " + cliente.nombre);
+                                                            System.out.print("Ingrese nuevo nombre: ");
+                                                            input.nextLine();
+                                                            String nombre = input.nextLine();
+                                                            if (nombre.equals("")) {
+                                                                nombre = cliente.nombre;
+                                                            }
+                                                            System.out.println("Dinero: " + cliente.dinero);
+                                                            System.out.print("Ingrese nuevo valor: ");
+                                                            String Dinero = input.nextLine();
+                                                            int dinero;
+                                                            if (Dinero.equals("")) {
+                                                                dinero = cliente.dinero;
+                                                            } else {
+                                                                dinero = Integer.parseInt(Dinero);
+                                                            }
+                                                            System.out.println("Cedula: " + cliente.cedula);
+                                                            System.out.print("Ingrese nueva cedula: ");
+                                                            String Cedula = input.nextLine();
+                                                            int cedula;
+                                                            if (Cedula.equals("")){
+                                                                cedula = cliente.cedula;
+                                                            } else {
+                                                                cedula = Integer.parseInt(Cedula);
+                                                            }
+                                                            Cliente clienteAux = new Cliente (nombre,cedula,dinero, cliente.AreaConsumo);
+                                                            clientes.set(clientes.indexOf(cliente), clienteAux);
+                                                            System.out.println("Cliente editado con exito");
+                                                        } else {
+                                                            index2++;
+                                                        }
+                                                    }
+                                                }
+                                            } else if (option5.equals("2")) {
+                                                int index2 = 1;
+                                                for (Cliente cliente : repuesto) {
+                                                    if (cliente.cedula <= ValorMaximo) {
+                                                        if (index2 == iBuscar) {
+                                                            clientes.remove(cliente);
+                                                            System.out.println("Cliente eliminado con exito");
+                                                        } else {
+                                                            index2++;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        repuesto.removeAll(clientes);
                                         busqueda();
                                     }
                                     if (option3.equals("3")) {
@@ -2627,10 +9385,76 @@ public  class  Principal {
                                                 count++;
                                                 if (count == clientes.size()) {
                                                     System.out.println("No se encuentra el cliente");
+                                                    repuesto.removeAll(clientes);
+                                                    busqueda();
                                                 }
                                             }
                                         }
-                                        repuesto.removeAll(repuesto);
+                                        System.out.println("Desea editar o eliminar algun elemento? :");
+                                        System.out.println("1. Si");
+                                        System.out.println("2. No");
+                                        String option4 = input.next();
+                                        if (option4.equals("1")) {
+                                            System.out.print("Ingrese el numero indice del objeto: ");
+                                            int iBuscar = input.nextInt();
+                                            System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                            System.out.println("1. Editar");
+                                            System.out.println("2. Eliminar");
+                                            System.out.println("0. Salir");
+                                            String option5 = input.next();
+                                            if (option5.equals("1")) {
+                                                int index2 = 1;
+                                                for (Cliente cliente : repuesto) {
+                                                    if (cliente.cedula >= ValorMinimo) {
+                                                        if (index2 == iBuscar) {
+                                                            System.out.println("Nombre: " + cliente.nombre);
+                                                            System.out.print("Ingrese nuevo nombre: ");
+                                                            input.nextLine();
+                                                            String nombre = input.nextLine();
+                                                            if (nombre.equals("")) {
+                                                                nombre = cliente.nombre;
+                                                            }
+                                                            System.out.println("Dinero: " + cliente.dinero);
+                                                            System.out.print("Ingrese nuevo valor: ");
+                                                            String Dinero = input.nextLine();
+                                                            int dinero;
+                                                            if (Dinero.equals("")) {
+                                                                dinero = cliente.dinero;
+                                                            } else {
+                                                                dinero = Integer.parseInt(Dinero);
+                                                            }
+                                                            System.out.println("Cedula: " + cliente.cedula);
+                                                            System.out.print("Ingrese nueva cedula: ");
+                                                            String Cedula = input.nextLine();
+                                                            int cedula;
+                                                            if (Cedula.equals("")){
+                                                                cedula = cliente.cedula;
+                                                            } else {
+                                                                cedula = Integer.parseInt(Cedula);
+                                                            }
+                                                            Cliente clienteAux = new Cliente (nombre,cedula,dinero, cliente.AreaConsumo);
+                                                            clientes.set(clientes.indexOf(cliente), clienteAux);
+                                                            System.out.println("Cliente editado con exito");
+                                                        } else {
+                                                            index2++;
+                                                        }
+                                                    }
+                                                }
+                                            } else if (option5.equals("2")) {
+                                                int index2 = 1;
+                                                for (Cliente cliente : repuesto) {
+                                                    if (cliente.cedula >= ValorMinimo) {
+                                                        if (index2 == iBuscar) {
+                                                            clientes.remove(cliente);
+                                                            System.out.println("Cliente eliminado con exito");
+                                                        } else {
+                                                            index2++;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        repuesto.removeAll(clientes);
                                         busqueda();
                                     }
                                     if (option3.equals("4")) {
@@ -2649,9 +9473,75 @@ public  class  Principal {
                                             }
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentran empleados");
+                                                repuesto.removeAll(clientes);
+                                                busqueda();
                                             }
                                         }
-                                        repuesto.removeAll(repuesto);
+                                        System.out.println("Desea editar o eliminar algun elemento? :");
+                                        System.out.println("1. Si");
+                                        System.out.println("2. No");
+                                        String option4 = input.next();
+                                        if (option4.equals("1")) {
+                                            System.out.print("Ingrese el numero indice del objeto: ");
+                                            int iBuscar = input.nextInt();
+                                            System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                            System.out.println("1. Editar");
+                                            System.out.println("2. Eliminar");
+                                            System.out.println("0. Salir");
+                                            String option5 = input.next();
+                                            if (option5.equals("1")) {
+                                                int index2 = 1;
+                                                for (Cliente cliente : repuesto) {
+                                                    if (cliente.dinero <= Max && cliente.dinero >= Min) {
+                                                        if (index2 == iBuscar) {
+                                                            System.out.println("Nombre: " + cliente.nombre);
+                                                            System.out.print("Ingrese nuevo nombre: ");
+                                                            input.nextLine();
+                                                            String nombre = input.nextLine();
+                                                            if (nombre.equals("")) {
+                                                                nombre = cliente.nombre;
+                                                            }
+                                                            System.out.println("Dinero: " + cliente.dinero);
+                                                            System.out.print("Ingrese nuevo valor: ");
+                                                            String Dinero = input.nextLine();
+                                                            int dinero;
+                                                            if (Dinero.equals("")) {
+                                                                dinero = cliente.dinero;
+                                                            } else {
+                                                                dinero = Integer.parseInt(Dinero);
+                                                            }
+                                                            System.out.println("Cedula: " + cliente.cedula);
+                                                            System.out.print("Ingrese nueva cedula: ");
+                                                            String Cedula = input.nextLine();
+                                                            int cedula;
+                                                            if (Cedula.equals("")){
+                                                                cedula = cliente.cedula;
+                                                            } else {
+                                                                cedula = Integer.parseInt(Cedula);
+                                                            }
+                                                            Cliente clienteAux = new Cliente (nombre,cedula,dinero, cliente.AreaConsumo);
+                                                            clientes.set(clientes.indexOf(cliente), clienteAux);
+                                                            System.out.println("Cliente editado con exito");
+                                                        } else {
+                                                            index2++;
+                                                        }
+                                                    }
+                                                }
+                                            } else if (option5.equals("2")) {
+                                                int index2 = 1;
+                                                for (Cliente cliente : repuesto) {
+                                                    if (cliente.cedula <= Max && cliente.cedula >= Min) {
+                                                        if (index2 == iBuscar) {
+                                                            clientes.remove(cliente);
+                                                            System.out.println("Cliente eliminado con exito");
+                                                        } else {
+                                                            index2++;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        repuesto.removeAll(clientes);
                                         busqueda();
                                     }
                                 }
@@ -2667,20 +9557,141 @@ public  class  Principal {
                             option3 = input.next();
                             if (option3.equals("1")) {
                                 int index = 1;
-                                Collections.sort(repuesto, new ComparadorCdinero());
+                                repuesto.sort(new ComparadorCdinero());
                                 for (Cliente cliente : repuesto) {
                                     System.out.println(index + " " + cliente);
                                     index++;
                                 }
-                            } else if (option3.equals("2")) {
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Cliente cliente : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + cliente.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = cliente.nombre;
+                                                    }
+                                                    System.out.println("Dinero: " + cliente.dinero);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Dinero = input.nextLine();
+                                                    int dinero;
+                                                    if (Dinero.equals("")) {
+                                                        dinero = cliente.dinero;
+                                                    } else {
+                                                        dinero = Integer.parseInt(Dinero);
+                                                    }
+                                                    System.out.println("Cedula: " + cliente.cedula);
+                                                    System.out.print("Ingrese nueva cedula: ");
+                                                    String Cedula = input.nextLine();
+                                                    int cedula;
+                                                    if (Cedula.equals("")){
+                                                        cedula = cliente.cedula;
+                                                    } else {
+                                                        cedula = Integer.parseInt(Cedula);
+                                                    }
+                                                    Cliente clienteAux = new Cliente (nombre,cedula,dinero, cliente.AreaConsumo);
+                                                    clientes.set(clientes.indexOf(cliente), clienteAux);
+                                                    System.out.println("Cliente editado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Cliente cliente : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    clientes.remove(cliente);
+                                                    System.out.println("Cliente eliminado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    }
+                            }
+                            else if (option3.equals("2")) {
                                 int index = 1;
                                 Collections.sort(repuesto, new ComparadorCcedula());
                                 for (Cliente cliente : repuesto) {
                                     System.out.println(index + " " + cliente);
                                     index++;
                                 }
-                            }
-                            repuesto.removeAll(repuesto);
+                                System.out.println("Desea editar o eliminar algun elemento? :");
+                                System.out.println("1. Si");
+                                System.out.println("2. No");
+                                String option4 = input.next();
+                                if (option4.equals("1")) {
+                                    System.out.print("Ingrese el numero indice del objeto: ");
+                                    int iBuscar = input.nextInt();
+                                    System.out.println("¿Desea editar o eliminar el objeto?: ");
+                                    System.out.println("1. Editar");
+                                    System.out.println("2. Eliminar");
+                                    System.out.println("0. Salir");
+                                    String option5 = input.next();
+                                    if (option5.equals("1")) {
+                                        int index2 = 1;
+                                        for (Cliente cliente : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    System.out.println("Nombre: " + cliente.nombre);
+                                                    System.out.print("Ingrese nuevo nombre: ");
+                                                    input.nextLine();
+                                                    String nombre = input.nextLine();
+                                                    if (nombre.equals("")) {
+                                                        nombre = cliente.nombre;
+                                                    }
+                                                    System.out.println("Dinero: " + cliente.dinero);
+                                                    System.out.print("Ingrese nuevo valor: ");
+                                                    String Dinero = input.nextLine();
+                                                    int dinero;
+                                                    if (Dinero.equals("")) {
+                                                        dinero = cliente.dinero;
+                                                    } else {
+                                                        dinero = Integer.parseInt(Dinero);
+                                                    }
+                                                    System.out.println("Cedula: " + cliente.cedula);
+                                                    System.out.print("Ingrese nueva cedula: ");
+                                                    String Cedula = input.nextLine();
+                                                    int cedula;
+                                                    if (Cedula.equals("")){
+                                                        cedula = cliente.cedula;
+                                                    } else {
+                                                        cedula = Integer.parseInt(Cedula);
+                                                    }
+                                                    Cliente clienteAux = new Cliente (nombre,cedula,dinero, cliente.AreaConsumo);
+                                                    clientes.set(clientes.indexOf(cliente), clienteAux);
+                                                    System.out.println("Cliente editado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                    } else if (option5.equals("2")) {
+                                        int index2 = 1;
+                                        for (Cliente cliente : repuesto) {
+                                                if (index2 == iBuscar) {
+                                                    clientes.remove(cliente);
+                                                    System.out.println("Cliente eliminado con exito");
+                                                } else {
+                                                    index2++;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            repuesto.removeAll(clientes);
                             busqueda();
                         }
                     }
@@ -4065,7 +11076,7 @@ public  class  Principal {
                                 }
                             }
                         }
-                        System.out.println("No se encuentra cliente con esta cedeula");
+                        System.out.println("No se encuentra cliente con esta cedula");
                         EditarEmpleado();
                         return;
                     } else {
