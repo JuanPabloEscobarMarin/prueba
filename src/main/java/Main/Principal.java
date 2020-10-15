@@ -172,6 +172,7 @@ public  class  Principal {
             registrarUsuario();
         }
         while (true) {
+            input.nextLine();
             System.out.println("-----------------------------");
             System.out.println("Ingresar Documento/Correo");
             System.out.println("-----------------------------");
