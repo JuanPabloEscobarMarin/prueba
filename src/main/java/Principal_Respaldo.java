@@ -2,7 +2,7 @@
 import  java.util.LinkedList;
 import java.util.Scanner;
 
-public  class  Principal {
+public  class  Main.Principal {
 
     public static LinkedList<Multinacional>  multinacionales =new LinkedList<>();
     public static LinkedList<Sede>  sedes =new LinkedList<>();

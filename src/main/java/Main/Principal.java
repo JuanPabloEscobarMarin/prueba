@@ -1,6 +1,9 @@
+package Main;
+
 import Clases.*;
 import Comparadores.*;
 import Packaje_JSON.EscribirJSON;
+import Packaje_JSON.*;
 
 import  java.util.LinkedList;
 import java.util.Scanner;
@@ -20,6 +23,69 @@ public  class  Principal {
 
 
     public static void main(java.lang.String[] args) {
+        //Lectura de archivos JSON
+        //Aquí se deben relacionar las clases
+        usuarios = LeerJSON.leerUsuariosJson();
+        multinacionales = LeerMultinacionalJson.leerMultinacionalesJson();
+        paises = LeerPaisJSON.leerPaisesJson();
+        inversionistas = LeerInversionistaJSON.leerInversionistasJson();
+
+
+         //Creacion de objetos de prueba:
+        /*
+        areas = LeerAreaJSON.leerAreasJson();
+        empleados = LeerEmpleadoJSON.leerEmpleadosJson();
+        clientes = LeerClienteJSON.leerClientesJson();*/
+
+
+        Usuario Sebastian = new Usuario("1017249368","Sebastian","Velasquez","csevelasquez@unal.edu.co","123456789");
+        Usuario Pablo = new Usuario("1004871033","Pablo","Escobar","juescobarm@unal.edu.co","12345");
+        Usuario Kevin = new Usuario("1007340307","Kevin","Jay","kjayh@unal.edu.co","987654321");
+        Usuario Miguel = new Usuario("1193266332","Miguel","Olave","molave@unal.edu.co","sasuke");
+        usuarios.add((Miguel));
+        usuarios.add((Sebastian));
+        usuarios.add((Pablo));
+        usuarios.add((Kevin));
+        EscribirJSON.guardarUsuario(usuarios);
+
+
+
+        Multinacional multinacional1 = new Multinacional("multinacional1", "ceo1", 5000, 1000, 1231);
+        Multinacional multinacional2 = new Multinacional("multinacional2", "ceo2", 5002, 1002, 1232);
+        multinacionales.add((multinacional1));
+        multinacionales.add((multinacional2));
+        EscribirMultinacionalJSON.guardarMultinacional(multinacionales);
+
+        Pais pais1 = new Pais("nombre1", "presidente1");
+        Pais pais2 = new Pais("nombre2", "presidente2");
+        paises.add(pais1);
+        paises.add(pais2);
+        EscribirPaisJSON.guardarPais(paises);
+
+
+        Inversionista inversionista1 = new Inversionista("firma1", 5000, 1000, 1000);
+        Inversionista inversionista2 = new Inversionista("firma2", 5002, 1002, 1002);
+        inversionistas.add(inversionista1);
+        inversionistas.add(inversionista2);
+        EscribirInversionistaJSON.guardarInversionista(inversionistas);
+
+
+
+        /*
+        Area area1 = new Area("area1", 5000, 1000);
+        areas.add(area1);
+        EscribirAreaJSON.guardarArea(areas);
+
+        Empleado empleado1 = new Empleado("empleado1",1, 1, 5000);
+        empleados.add(empleado1);
+        EscribirEmpleadoJSON.guardarEmpleado(empleados);
+
+        Cliente cliente1 = new Cliente("cliente1", 1, 1);
+        clientes.add(cliente1);
+        EscribirClienteJSON.guardarCliente(clientes);*/
+
+
+
         String option;
         label:
         while (true) {
@@ -46,6 +112,7 @@ public  class  Principal {
     }
 
     private static void registrarUsuario() {
+
         System.out.print("Documento : ");
         int Documento = input.nextInt();
         String documentoString = String.valueOf(Documento);
@@ -86,9 +153,12 @@ public  class  Principal {
 
         Usuario nuevoUsuario = new Usuario(documentoString, Nombre, Apellido, Correo, Password);
         usuarios.add(nuevoUsuario);
-        Usuario prueba = new Usuario(documentoString,Nombre, Apellido, Correo, Password);
-        EscribirJSON.guardarUsuario(prueba);
+        EscribirJSON.guardarUsuario(usuarios);
         System.out.println("USUARIO REGISTRADO EXITOSAMENTE");
+
+        for (Usuario otroUsuario: usuarios) {
+            System.out.println(otroUsuario.toString());
+        }
 
 
         ingresarUsuario();
@@ -10115,9 +10185,30 @@ public  class  Principal {
     }
 
 
+    //Desde aquí importa----------------------------------------------------------------------------------------------------------------
+
 
     private static void guardar() {
-
+        System.out.println("¿Desea guardar los cambios?");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+        int opcion = input.nextInt();
+        //guardar todo lo que el usuario hizo en Escribir.... Si relacionó alguna clase, el identificador debe quedar
+        //guardado en ella para que al iniciar al programa, en el inicio de Principal, lea y relacione las clases
+        if (opcion == 1  ){
+            EscribirMultinacionalJSON.guardarMultinacional(multinacionales);
+            EscribirInversionistaJSON.guardarInversionista(inversionistas);
+            EscribirPaisJSON.guardarPais(paises);
+            EscribirSedeJSON.guardarSede(sedes);
+            //Sigue guardado de mas clases
+            //...
+            return;
+        } else if (opcion == 2){
+            return;
+        } else {
+            System.out.println("Valor invalido");
+            guardar();
+        }
     }
 
     private static void salirCancelar() {
@@ -10221,6 +10312,7 @@ public  class  Principal {
             System.out.print("Gastos: ");
             gastos=input.nextInt();
         }
+
 
         Multinacional nuevaMultinacional=new Multinacional(nombre,ceo,ingresos,gastos,NIT);
         multinacionales.add(nuevaMultinacional);
@@ -10327,6 +10419,7 @@ public  class  Principal {
                                     int indicemultinacional = multinacionales.indexOf(multinacional);
                                     multinacionales.remove(multinacional);
                                     multinacionales.add(indicemultinacional, multinacionalAux);
+                                    EscribirMultinacionalJSON.guardarMultinacional(multinacionales);
                                     return;
                                 case "N":
                                     return;
@@ -10860,6 +10953,7 @@ public  class  Principal {
                         int indice = paises.indexOf(pais);
                         paises.remove(pais);
                         paises.add(indice, paisAux);
+                        EscribirPaisJSON.guardarPais(paises);
                         System.out.println("Guardado con exito");
                         return;
                     case "N":

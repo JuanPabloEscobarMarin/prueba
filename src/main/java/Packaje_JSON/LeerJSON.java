@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import Packaje_JSON.EscribirJSON;
 import org.json.simple.JSONArray;
@@ -15,9 +16,9 @@ import org.json.simple.parser.ParseException;
 
 public class LeerJSON {
 
-    public static ArrayList<Usuario> leerUsuariosJson(){
-        ArrayList<Usuario> usuariosLeidos = new ArrayList<>();
-        JSONParser jsonParser = new JSONParser();
+    public static LinkedList<Usuario> leerUsuariosJson(){
+        LinkedList<Usuario> usuariosLeidos = new LinkedList<>();
+        JSONParser jsonParser = new JSONParser(); //
         try (FileReader reader = new FileReader(EscribirJSON.ruta+"UsuariosJSON.json"))   {
             Object obj = jsonParser.parse(reader);
             JSONArray ListaUsuarios = (JSONArray)obj ;
@@ -37,8 +38,8 @@ public class LeerJSON {
 
         return usuariosLeidos;
     }
-    private static Usuario parseUsuario(JSONObject usuarioJSON)
-    {
+
+    private static Usuario parseUsuario(JSONObject usuarioJSON) {
         JSONObject atributos = (JSONObject) usuarioJSON.get("Usuario");
 
         String  documento = (String) atributos.get("documento");
@@ -47,7 +48,13 @@ public class LeerJSON {
         String correo = (String) atributos.get("correo");
         String contraseña = (String) atributos.get("contraseña");
 
-        Usuario usuarioLeido = new Usuario(documento,nombre,apellido,contraseña,correo);
+        Usuario usuarioLeido = new Usuario(documento,nombre,apellido,correo,contraseña);
         return usuarioLeido;
     }
+
+
+
+
+
+
 }
