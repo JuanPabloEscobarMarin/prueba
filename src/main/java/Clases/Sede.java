@@ -25,6 +25,6 @@ public class Sede {
 
     @Override
     public String toString(){
-        return "Multinacional: "+multinacional.nombre+", Ubicacion"+paisPertenece.nombre+", nombre: "+nombre+", gerente: "+gerente+", numero de areas: "+areas.size()+", fondos: "+ingresoSede+", gastos: "+gastosSede;
+        return "Multinacional: "+multinacional.nombre+", Ubicacion: "+paisPertenece.nombre+", nombre: "+nombre+", gerente: "+gerente+", numero de areas: "+areas.size()+", fondos: "+ingresoSede+", gastos: "+gastosSede;
     }
 }

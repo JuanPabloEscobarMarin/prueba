@@ -38,62 +38,7 @@ public class EscribirJSON {
             System.out.println("Error en: "+e);
         }
     }
-
-
-    /*
-    public static void guardarUsuario(Usuario usuario){
-        JSONObject UsuarioDatos = new JSONObject();
-        UsuarioDatos.put("documento", String.valueOf(usuario.documento));
-        UsuarioDatos.put("nombre", usuario.nombre);
-        UsuarioDatos.put("apellido", usuario.apellido);
-        UsuarioDatos.put("correo", usuario.correo);
-        UsuarioDatos.put("contraseña", usuario.contraseña);
-        JSONObject UsuarioPerfil = new JSONObject();
-        UsuarioPerfil.put("Usuario", UsuarioDatos);
-
-        JSONArray UsuarioLista = new JSONArray();
-        UsuarioLista.add(UsuarioPerfil);
-        try (FileWriter file = new FileWriter(ruta+"UsuariosJSON.json")) {
-            file.write(UsuarioLista.toJSONString());
-            file.flush();
-        } catch (Exception e){
-            System.out.println("Error en: "+e);
-        }
-    }
-*/
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    /*public static void guardarUsuario(Usuario usuario){
-
-        JSONObject UsuarioDatos = new JSONObject();
-        UsuarioDatos.put("documento", usuario.documento);
-        UsuarioDatos.put("nombre", usuario.nombre);
-        UsuarioDatos.put("apellido", usuario.apellido);
-        UsuarioDatos.put("correo", usuario.correo);
-        UsuarioDatos.put("contraseña", usuario.contraseña);
-        JSONObject UsuarioPerfil = new JSONObject();
-        UsuarioPerfil.put("Usuario", UsuarioDatos);
-
-        JSONArray UsuarioLista = new JSONArray();
-        UsuarioLista.add(UsuarioPerfil);
-        try (FileWriter file = new FileWriter(ruta+"usuariosJSON.json")) {
-            file.write(UsuarioPerfil.toJSONString());
-            file.flush();
-        } catch (Exception e){
-            System.out.println("Error en: "+e);
-        }
-    }*/
 
 

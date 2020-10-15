@@ -9,7 +9,6 @@ import java.io.FileWriter;
 import java.util.LinkedList;
 
 public class EscribirSedeJSON {
-
     public static String ruta = "src/main/resources/database/";
 
     public static void guardarSede(LinkedList<Sede> sedes) {
@@ -20,10 +19,10 @@ public class EscribirSedeJSON {
             SedeDatos.put("gerente", String.valueOf(sede.gerente));
             SedeDatos.put("ingresoSede", String.valueOf(sede.ingresoSede));
             SedeDatos.put("gastosSede", String.valueOf(sede.gastosSede));
-            SedeDatos.put("multinacional", String.valueOf(sede.multinacional));
-            SedeDatos.put("paisPertenece", String.valueOf(sede.paisPertenece));
+            SedeDatos.put("paisPertenece", String.valueOf(sede.paisPertenece.nombre));
+            SedeDatos.put("multinacional", String.valueOf(sede.multinacional.NIT));
             JSONObject SedePerfil = new JSONObject();
-            SedePerfil.put("Usuario", SedeDatos);
+            SedePerfil.put("Sede", SedeDatos);
             SedeLista.add(SedePerfil);
         }
 

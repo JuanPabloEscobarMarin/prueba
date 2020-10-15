@@ -15,17 +15,15 @@ import java.util.LinkedList;
 
 public class LeerPaisJSON {
 
-    public static LinkedList<Pais> leerPaisesJson(){
-        LinkedList<Pais> paisesLeidos = new LinkedList<>();
-        JSONParser jsonParser = new JSONParser(); //
+    public static LinkedList<Pais> leerPaisesJSON(){
+        LinkedList<Pais> paisCreado = new LinkedList<>();
+        JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(EscribirJSON.ruta+"PaisesJSON.json"))  {
             Object obj = jsonParser.parse(reader);
             JSONArray ListaPaises = (JSONArray)obj ;
-            System.out.println(ListaPaises);
-
             for(Object paisObjeto : ListaPaises){
                 JSONObject paisJSON = (JSONObject) paisObjeto;
-                paisesLeidos.add(parsePais(paisJSON));
+                paisCreado.add(parsePais(paisJSON));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -34,8 +32,7 @@ public class LeerPaisJSON {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        return paisesLeidos;
+        return paisCreado;
     }
 
     private static Pais parsePais(JSONObject paisJSON) {

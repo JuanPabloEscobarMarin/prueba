@@ -17,17 +17,15 @@ import java.util.LinkedList;
 
 public class LeerMultinacionalJson {
 
-    public static LinkedList<Multinacional> leerMultinacionalesJson(){
-        LinkedList<Multinacional> multinacionalesLeidas = new LinkedList<>();
+    public static LinkedList<Multinacional> leerMultinacionalesJSON(){
+        LinkedList<Multinacional> multinacionCreada = new LinkedList<>();
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(EscribirJSON.ruta+"MultinacionalesJSON.json"))  {
             Object obj = jsonParser.parse(reader);
             JSONArray ListaMultinacionales = (JSONArray)obj ;
-            System.out.println(ListaMultinacionales);
-
             for(Object multinacionalObjeto : ListaMultinacionales){
                 JSONObject multinacionalJSON = (JSONObject) multinacionalObjeto;
-                multinacionalesLeidas.add(parseMultinacional(multinacionalJSON));
+                multinacionCreada.add(parseMultinacional(multinacionalJSON));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -36,8 +34,7 @@ public class LeerMultinacionalJson {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        return multinacionalesLeidas;
+        return multinacionCreada;
     }
 
     private static Multinacional parseMultinacional(JSONObject multinacionalJSON) {

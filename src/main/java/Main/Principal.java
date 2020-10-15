@@ -20,69 +20,29 @@ public  class  Principal {
     public static Usuario usuarioLogueado = new Usuario(null, null, null, null, null);
 
 
+
     public static void main(java.lang.String[] args) {
-        //Lectura de archivos JSON
-        //Aquí se deben relacionar las clases
-        usuarios = LeerJSON.leerUsuariosJson();
-        multinacionales = LeerMultinacionalJson.leerMultinacionalesJson();
-        paises = LeerPaisJSON.leerPaisesJson();
-        inversionistas = LeerInversionistaJSON.leerInversionistasJson();
+        usuarios = LeerJSON.leerUsuariosJSON();
+        multinacionales = LeerMultinacionalJson.leerMultinacionalesJSON();
+        paises = LeerPaisJSON.leerPaisesJSON();
+        inversionistas = LeerInversionistaJSON.leerInversionistasJSON();
 
-
-         //Creacion de objetos de prueba:
-        /*
-        areas = LeerAreaJSON.leerAreasJson();
-        empleados = LeerEmpleadoJSON.leerEmpleadosJson();
-        clientes = LeerClienteJSON.leerClientesJson();*/
-
-
-        Usuario Sebastian = new Usuario("1017249368","Sebastian","Velasquez","csevelasquez@unal.edu.co","123456789");
-        Usuario Pablo = new Usuario("1004871033","Pablo","Escobar","juescobarm@unal.edu.co","12345");
-        Usuario Kevin = new Usuario("1007340307","Kevin","Jay","kjayh@unal.edu.co","987654321");
-        Usuario Miguel = new Usuario("1193266332","Miguel","Olave","molave@unal.edu.co","sasuke");
-        usuarios.add((Miguel));
-        usuarios.add((Sebastian));
-        usuarios.add((Pablo));
-        usuarios.add((Kevin));
-        EscribirJSON.guardarUsuario(usuarios);
-
-
-
-        Multinacional multinacional1 = new Multinacional("multinacional1", "ceo1", 5000, 1000, 1231);
-        Multinacional multinacional2 = new Multinacional("multinacional2", "ceo2", 5002, 1002, 1232);
-        multinacionales.add((multinacional1));
-        multinacionales.add((multinacional2));
-        EscribirMultinacionalJSON.guardarMultinacional(multinacionales);
-
-        Pais pais1 = new Pais("nombre1", "presidente1");
-        Pais pais2 = new Pais("nombre2", "presidente2");
-        paises.add(pais1);
-        paises.add(pais2);
-        EscribirPaisJSON.guardarPais(paises);
-
-
-        Inversionista inversionista1 = new Inversionista("firma1", 5000, 1000, 1000);
-        Inversionista inversionista2 = new Inversionista("firma2", 5002, 1002, 1002);
-        inversionistas.add(inversionista1);
-        inversionistas.add(inversionista2);
-        EscribirInversionistaJSON.guardarInversionista(inversionistas);
-
-
-
-        /*
-        Area area1 = new Area("area1", 5000, 1000);
-        areas.add(area1);
-        EscribirAreaJSON.guardarArea(areas);
-
-        Empleado empleado1 = new Empleado("empleado1",1, 1, 5000);
-        empleados.add(empleado1);
-        EscribirEmpleadoJSON.guardarEmpleado(empleados);
-
-        Cliente cliente1 = new Cliente("cliente1", 1, 1);
-        clientes.add(cliente1);
-        EscribirClienteJSON.guardarCliente(clientes);*/
-
-
+        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.println("Clases creadas predeterminadamente: ");
+        System.out.println("Usuarios: ");
+        System.out.println("Sebastian: apellido:Velasquez,correo:csevelasquez@unal.edu.co, documento:1017249368,nombre:Sebastian,contraseña:123456789");
+        System.out.println("Pablo: apellido:Escobar,correo:juescobarm@unal.edu.co,documento:1004871033,nombre:Pablo,contraseña:12345");
+        System.out.println("Kevin: apellido:Jay,correo:kjayh@unal.edu.co,documento:1007340307,nombre:Kevin,contraseña:987654321");
+        System.out.println("Miguel: apellido:Olave,correo:molave@unal.edu.co,documento:1193266332,nombre:Miguel,contraseña:sasuke");
+        System.out.println();
+        System.out.println("Multinacionales: ");
+        System.out.println("multinacional1: gastoTotal:1000,NIT:1231,ingresoTotal:5000,ceo:ceo1,nombre:multinacional1");
+        System.out.println("multinacional2: gastoTotal:1002,NIT:1232,ingresoTotal:5002,ceo:ceo2,nombre:multinacional2");
+        System.out.println();
+        System.out.println("Inversionistas: ");
+        System.out.println("inversionista1: inversionSede:1000,ganancias:1000,inversionMN:5000,firma:firma1");
+        System.out.println("inversionista2: inversionSede:1002,ganancias:1002,inversionMN:5002,firma:firma2");
+        System.out.println("-----------------------------------------------------------------------------------------");
 
         String option;
         label:
@@ -9765,25 +9725,18 @@ public  class  Principal {
 
     }
 
-
-    //Desde aquí importa----------------------------------------------------------------------------------------------------------------
-
-
     private static void guardar() {
         System.out.println("¿Desea guardar los cambios?");
         System.out.println("1. Si");
         System.out.println("2. No");
         int opcion = input.nextInt();
-        //guardar todo lo que el usuario hizo en Escribir.... Si relacionó alguna clase, el identificador debe quedar
-        //guardado en ella para que al iniciar al programa, en el inicio de Principal, lea y relacione las clases
         if (opcion == 1  ){
-            //vaciar json y reescribirlo
-            EscribirMultinacionalJSON.guardarMultinacional(multinacionales);
             EscribirInversionistaJSON.guardarInversionista(inversionistas);
+            EscribirMultinacionalJSON.guardarMultinacional(multinacionales);
             EscribirPaisJSON.guardarPais(paises);
             EscribirSedeJSON.guardarSede(sedes);
-            //Sigue guardado de mas clases
-            //...
+            EscribirAreaJSON.guardarArea(areas);
+            System.out.println("Datos guardados exitosamente");
             return;
         } else if (opcion == 2){
             return;

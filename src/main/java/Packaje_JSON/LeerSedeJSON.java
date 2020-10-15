@@ -16,20 +16,18 @@ import java.security.Principal;
 import java.util.LinkedList;
 
 public class LeerSedeJSON {
-
-    //La sede solo se puede poner cuando esté relacionada con multinacional y pais
-    /*
-    public static LinkedList<Sede> leerSedesJson(){
-        LinkedList<Sede> sedesLeidas = new LinkedList<>();
-        JSONParser jsonParser = new JSONParser(); //
+/*
+    public static LinkedList<Pais> listaPaises = new LinkedList<>();
+    public static LinkedList<Multinacional> listaMultinacionales = new LinkedList<>();
+    public static LinkedList<Sede> leerSedesJSON(){
+        LinkedList<Sede> sedeCreada = new LinkedList<>();
+        JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(EscribirJSON.ruta+"SedesJSON.json"))   {
             Object obj = jsonParser.parse(reader);
             JSONArray ListaSedes = (JSONArray)obj ;
-            System.out.println(ListaSedes);
-
             for(Object sedeObjeto : ListaSedes){
                 JSONObject sedeJSON = (JSONObject) sedeObjeto;
-                sedesLeidas.add(parseSede(sedeJSON));
+                sedeCreada.add(parseSede(sedeJSON));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -38,8 +36,7 @@ public class LeerSedeJSON {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        return sedesLeidas;
+        return sedeCreada;
     }
 
     private static Sede parseSede(JSONObject sedeJSON) {
@@ -49,9 +46,26 @@ public class LeerSedeJSON {
         String gerente = (String) atributos.get("gerente");
         int ingresoSede = Integer.parseInt((String) atributos.get("ingresoSede"));
         int gastosSede = Integer.parseInt((String) atributos.get("gastosSede"));
+        String paisPertenece = (String) atributos.get("paisPertenece");
+        int NIT = Integer.parseInt((String) atributos.get("NIT"));
 
+        Pais paisaux = null;
+        for (Pais paisActual: listaPaises) {
+            if (paisActual.nombre.equals(paisPertenece)){
+                paisaux = paisActual;
+                break;
+            }
+        }
 
-        Sede sedeLeida = new Sede(nombre, gerente, ingresoSede, gastosSede);
+        Multinacional multinacionalaux = null;
+        for (Multinacional multinacionalActual: listaMultinacionales) {
+            if (multinacionalActual.NIT == NIT){
+                multinacionalaux = multinacionalActual;
+                break;
+            }
+        }
+
+        Sede sedeLeida = new Sede(nombre, gerente, ingresoSede, gastosSede, multinacionalaux, paisaux);
         return sedeLeida;
     }
 */

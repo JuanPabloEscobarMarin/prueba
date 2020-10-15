@@ -14,17 +14,15 @@ import java.util.LinkedList;
 
 public class LeerClienteJSON {
 /*
-    public static LinkedList<Cliente> leerClientesJson(){
-        LinkedList<Cliente> clientesleidos = new LinkedList<>();
+    public static LinkedList<Cliente> leerClientesJSON(){
+        LinkedList<Cliente> clienteCreado = new LinkedList<>();
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(EscribirJSON.ruta+"ClientesJSON.json"))  {
             Object obj = jsonParser.parse(reader);
             JSONArray ListaClientes = (JSONArray)obj ;
-            System.out.println(ListaClientes);
-
             for(Object clienteObjeto : ListaClientes){
                 JSONObject clienteJSON = (JSONObject) clienteObjeto;
-                clientesleidos.add(parseCliente(clienteJSON));
+                clienteCreado.add(parseCliente(clienteJSON));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -33,8 +31,7 @@ public class LeerClienteJSON {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        return clientesleidos;
+        return clienteCreado;
     }
 
     private static Cliente parseCliente(JSONObject clienteJSON) {

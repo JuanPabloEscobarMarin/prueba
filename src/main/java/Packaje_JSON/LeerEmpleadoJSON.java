@@ -14,17 +14,15 @@ import java.util.LinkedList;
 
 public class LeerEmpleadoJSON {
 /*
-    public static LinkedList<Empleado> leerEmpleadosJson(){
-        LinkedList<Empleado> empleadosLeidos = new LinkedList<>();
+    public static LinkedList<Empleado> leerEmpleadosJSON(){
+        LinkedList<Empleado> empleadoCreado = new LinkedList<>();
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(EscribirJSON.ruta+"EmpleadosJSON.json"))  {
             Object obj = jsonParser.parse(reader);
             JSONArray ListaEmpleados = (JSONArray)obj ;
-            System.out.println(ListaEmpleados);
-
             for(Object empleadoObjeto : ListaEmpleados){
                 JSONObject empleadoJSON = (JSONObject) empleadoObjeto;
-                empleadosLeidos.add(parseEmpleado(empleadoJSON));
+                empleadoCreado.add(parseEmpleado(empleadoJSON));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -33,8 +31,7 @@ public class LeerEmpleadoJSON {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        return empleadosLeidos;
+        return empleadoCreado;
     }
 
     private static Empleado parseEmpleado(JSONObject empleadoJSON) {

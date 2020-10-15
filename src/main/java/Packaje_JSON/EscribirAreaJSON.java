@@ -19,6 +19,7 @@ public class EscribirAreaJSON {
             AreaDatos.put("nombreDelArea", area.nombreDelArea);
             AreaDatos.put("ingresoArea", String.valueOf(area.ingresoArea));
             AreaDatos.put("gastoArea", String.valueOf(area.gastoArea));
+            AreaDatos.put("sede", area.sede.nombre);
             JSONObject AreaPerfil = new JSONObject();
             AreaPerfil.put("Multinacional", AreaDatos);
             AreaLista.add(AreaPerfil);

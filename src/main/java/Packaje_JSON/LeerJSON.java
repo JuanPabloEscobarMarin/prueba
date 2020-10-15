@@ -16,17 +16,15 @@ import org.json.simple.parser.ParseException;
 
 public class LeerJSON {
 
-    public static LinkedList<Usuario> leerUsuariosJson(){
-        LinkedList<Usuario> usuariosLeidos = new LinkedList<>();
-        JSONParser jsonParser = new JSONParser(); //
+    public static LinkedList<Usuario> leerUsuariosJSON(){
+        LinkedList<Usuario> usuarioCreado = new LinkedList<>();
+        JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(EscribirJSON.ruta+"UsuariosJSON.json"))   {
             Object obj = jsonParser.parse(reader);
             JSONArray ListaUsuarios = (JSONArray)obj ;
-            System.out.println(ListaUsuarios);
-
             for(Object usuarioObjeto : ListaUsuarios){
                 JSONObject usuarioJSON = (JSONObject) usuarioObjeto;
-                usuariosLeidos.add(parseUsuario(usuarioJSON));
+                usuarioCreado.add(parseUsuario(usuarioJSON));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -36,7 +34,7 @@ public class LeerJSON {
             e.printStackTrace();
         }
 
-        return usuariosLeidos;
+        return usuarioCreado;
     }
 
     private static Usuario parseUsuario(JSONObject usuarioJSON) {
@@ -51,10 +49,4 @@ public class LeerJSON {
         Usuario usuarioLeido = new Usuario(documento,nombre,apellido,correo,contraseña);
         return usuarioLeido;
     }
-
-
-
-
-
-
 }

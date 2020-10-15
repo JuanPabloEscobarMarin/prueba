@@ -20,8 +20,9 @@ public class EscribirInversionistaJSON {
             InversionistaDatos.put("ganancias", String.valueOf(inversionista.ganancias));
             InversionistaDatos.put("inversionSede", String.valueOf(inversionista.inversionSede));
             InversionistaDatos.put("inversionMN", String.valueOf(inversionista.inversionMN));
-            InversionistaDatos.put("Multinacional", String.valueOf(inversionista.multinacional));
-
+            if (inversionista.multinacional != null){
+                InversionistaDatos.put("NIT", String.valueOf(inversionista.multinacional.NIT));
+            }
             JSONObject InversionistaPerfil = new JSONObject();
             InversionistaPerfil.put("Inversionista", InversionistaDatos);
             InversionistaLista.add(InversionistaPerfil);
