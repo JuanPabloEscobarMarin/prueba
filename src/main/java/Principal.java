@@ -4,7 +4,6 @@ import Packaje_JSON.EscribirJSON;
 
 import  java.util.LinkedList;
 import java.util.Scanner;
-import java.util.Collections;
 
 public  class  Principal {
 
@@ -373,6 +372,7 @@ public  class  Principal {
 
     private static void busqueda() {
         String option;
+        label:
         while (true) {
             System.out.println();
             System.out.println("-----------------------------");
@@ -390,26 +390,35 @@ public  class  Principal {
             switch (option) {
                 case "1":
                     buscarMultinacionales();
+                    break;
                 case "2":
                     buscarPaises();
+                    break;
                 case "3":
                     buscarSedes();
+                    break;
                 case "4":
                     buscarInversionistas();
+                    break;
                 case "5":
                     buscarAreas();
+                    break;
                 case "6":
                     buscarEmpleados();
+                    break;
                 case "7":
                     buscarClientes();
+                    break;
                 case "0":
                     menuPrincipal();
+                    break label;
             }
         }
     }
     private static void buscarMultinacionales(){
         if (multinacionales.isEmpty()) {
             System.out.println("No Hay multinacionales");
+            busqueda();
         } else {
             while(true){
                 LinkedList<Multinacional> repuesto = new LinkedList<>(multinacionales);
@@ -443,6 +452,7 @@ public  class  Principal {
                                     if (count == multinacionales.size()) {
                                         System.out.println("No se encuentra la multinacional");
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
@@ -507,6 +517,7 @@ public  class  Principal {
                                                 multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
                                                 System.out.println("Multinacional editada con exito");
                                                 busqueda();
+                                                return;
                                             } else {
                                                 index2++;
                                             }
@@ -520,6 +531,7 @@ public  class  Principal {
                                                 multinacionales.remove(multinacional);
                                                 System.out.println("Multinacional eliminada con exito");
                                                 busqueda();
+                                                return;
                                             } else {
                                                 index2++;
                                             }
@@ -527,9 +539,11 @@ public  class  Principal {
                                     }
                                 } else if (option5.equals("0")) {
                                     busqueda();
+                                    return;
                                 }
                             } else if (option4.equals("2")) {
                                 busqueda();
+                                return;
                             }
                         } else if ("2".equals(option3)) {
                             input.nextLine();
@@ -543,11 +557,13 @@ public  class  Principal {
                                 if (minusculas.equals(nombreMinuscula)) {
                                     System.out.println(index2 + " " + multinacional);
                                     busqueda();
+                                    return;
                                 } else {
                                     count++;
                                     if (count == multinacionales.size()) {
                                         System.out.println("No se encuentra la multinacional");
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
@@ -614,6 +630,7 @@ public  class  Principal {
                                                     multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
                                                     System.out.println("Multinacional editada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index3++;
                                                 }
@@ -630,6 +647,7 @@ public  class  Principal {
                                                     multinacionales.remove(multinacional);
                                                     System.out.println("Multinacional eliminada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index3++;
                                                 }
@@ -643,6 +661,7 @@ public  class  Principal {
                                 }
                             } else if (option4.equals("2")) {
                                 busqueda();
+                                return;
                             }
                         }
                     }
@@ -680,6 +699,7 @@ public  class  Principal {
                                         if (count == multinacionales.size()) {
                                             System.out.println("No se encuentra la multinacional");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -744,6 +764,7 @@ public  class  Principal {
                                                     multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
                                                     System.out.println("Multinacional editada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -757,6 +778,7 @@ public  class  Principal {
                                                     multinacionales.remove(multinacional);
                                                     System.out.println("Multinacional eliminada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -764,9 +786,11 @@ public  class  Principal {
                                         }
                                     } else if (option6.equals("0")) {
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option5.equals("2")) {
                                     busqueda();
+                                    return;
                                 }
                             }
                             case "2": {
@@ -783,6 +807,7 @@ public  class  Principal {
                                         if (count == multinacionales.size()) {
                                             System.out.println("No se encuentra la multinacional");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -864,11 +889,13 @@ public  class  Principal {
                                             }
                                         }
                                     } else if (option6.equals("0")) {
-                                        repuesto.removeAll(multinacionales);
+                                        repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
-                                    repuesto.removeAll(multinacionales);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                             }
                             case "3": {
@@ -885,6 +912,7 @@ public  class  Principal {
                                         if (count == multinacionales.size()) {
                                             System.out.println("No se encuentra la multinacional");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -965,12 +993,14 @@ public  class  Principal {
                                             }
                                         }
                                     } else if (option6.equals("0")) {
-                                        repuesto.removeAll(multinacionales);
+                                        repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
-                                repuesto.removeAll(multinacionales);
+                                repuesto.removeAll(repuesto);
                                 busqueda();
+                                return;
                             }
                             case "4": {
                                 System.out.print("Ingrese un valor minimo de NIT: ");
@@ -988,6 +1018,7 @@ public  class  Principal {
                                         if (count == multinacionales.size()) {
                                             System.out.println("No se encuentra la multinacional");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -1068,12 +1099,14 @@ public  class  Principal {
                                             }
                                         }
                                     } else if (option6.equals("0")) {
-                                        repuesto.removeAll(multinacionales);
+                                        repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
-                                repuesto.removeAll(multinacionales);
+                                repuesto.removeAll(repuesto);
                                 busqueda();
+                                return;
                             }
                         }
                     }
@@ -1100,6 +1133,7 @@ public  class  Principal {
                                     if (count == multinacionales.size()) {
                                         System.out.println("No se encuentra la multinacional");
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
@@ -1164,6 +1198,7 @@ public  class  Principal {
                                                 multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
                                                 System.out.println("Multinacional editada con exito");
                                                 busqueda();
+                                                return;
                                             } else {
                                                 index2++;
                                             }
@@ -1177,6 +1212,7 @@ public  class  Principal {
                                                 multinacionales.remove(multinacional);
                                                 System.out.println("Multinacional eliminada con exito");
                                                 busqueda();
+                                                return;
                                             } else {
                                                 index2++;
                                             }
@@ -1184,9 +1220,11 @@ public  class  Principal {
                                     }
                                 } else if (option5.equals("0")) {
                                     busqueda();
+                                    return;
                                 }
                             } else if (option4.equals("2")) {
                                 busqueda();
+                                return;
                             }
                         } else if (option3.equals("2")) {
                             input.nextLine();
@@ -1205,6 +1243,7 @@ public  class  Principal {
                                     if (count == multinacionales.size()) {
                                         System.out.println("No se encuentra la multinacional");
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
@@ -1270,6 +1309,7 @@ public  class  Principal {
                                                 multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
                                                 System.out.println("Multinacional editada con exito");
                                                 busqueda();
+                                                return;
                                             } else {
                                                 index2++;
                                             }
@@ -1284,6 +1324,7 @@ public  class  Principal {
                                                 multinacionales.remove(multinacional);
                                                 System.out.println("Multinacional eliminada con exito");
                                                 busqueda();
+                                                return;
                                             } else {
                                                 index2++;
                                             }
@@ -1291,9 +1332,11 @@ public  class  Principal {
                                     }
                                 } else if (option5.equals("0")) {
                                     busqueda();
+                                    return;
                                 }
                             } else if (option4.equals("2")) {
                                 busqueda();
+                                return;
                             }
                         }
                     }
@@ -1395,6 +1438,7 @@ public  class  Principal {
                                                         multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
                                                         System.out.println("Multinacional editada con exito");
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -1408,6 +1452,7 @@ public  class  Principal {
                                                         multinacionales.remove(multinacional);
                                                         System.out.println("Multinacional eliminada con exito");
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -1415,9 +1460,11 @@ public  class  Principal {
                                             }
                                         } else if (option5.equals("0")) {
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 case "2": {
@@ -1434,6 +1481,7 @@ public  class  Principal {
                                             if (count == multinacionales.size()) {
                                                 System.out.println("No se encuentra la multinacional");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -1499,6 +1547,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -1513,6 +1562,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -1521,10 +1571,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 case "3": {
@@ -1541,6 +1593,7 @@ public  class  Principal {
                                             if (count == multinacionales.size()) {
                                                 System.out.println("No se encuentra la multinacional");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -1606,6 +1659,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -1620,6 +1674,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -1628,10 +1683,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 case "4": {
@@ -1651,6 +1708,7 @@ public  class  Principal {
                                         if (count == multinacionales.size()) {
                                             System.out.println("No se encuentran multinacionales");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     System.out.println("Desea editar o eliminar algun elemento? :");
@@ -1715,6 +1773,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -1729,6 +1788,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -1737,10 +1797,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
@@ -1781,6 +1843,7 @@ public  class  Principal {
                                             if (count == multinacionales.size()) {
                                                 System.out.println("No se encuentra la multinacional");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -1845,6 +1908,7 @@ public  class  Principal {
                                                         multinacionales.set(multinacionales.indexOf(multinacional), multinacionalaux);
                                                         System.out.println("Multinacional editada con exito");
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -1858,6 +1922,7 @@ public  class  Principal {
                                                         multinacionales.remove(multinacional);
                                                         System.out.println("Multinacional eliminada con exito");
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -1865,9 +1930,11 @@ public  class  Principal {
                                             }
                                         } else if (option5.equals("0")) {
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 case "2": {
@@ -1884,6 +1951,7 @@ public  class  Principal {
                                             if (count == multinacionales.size()) {
                                                 System.out.println("No se encuentra la multinacional");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -1949,6 +2017,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -1963,6 +2032,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -1971,10 +2041,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                             }
                                 case "3": {
@@ -1991,6 +2063,7 @@ public  class  Principal {
                                             if (count == multinacionales.size()) {
                                                 System.out.println("No se encuentra la multinacional");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -2056,6 +2129,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -2070,6 +2144,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -2078,10 +2153,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 case "4": {
@@ -2100,6 +2177,7 @@ public  class  Principal {
                                             if (count == multinacionales.size()) {
                                                 System.out.println("No se encuentran multinacionales");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -2165,6 +2243,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -2179,6 +2258,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -2187,10 +2267,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
@@ -2273,6 +2355,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -2285,6 +2368,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -2292,10 +2376,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 case "2": {
@@ -2366,6 +2452,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -2378,6 +2465,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -2385,10 +2473,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 case "3": {
@@ -2459,6 +2549,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -2471,6 +2562,7 @@ public  class  Principal {
                                                         System.out.println("Multinacional eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                 }
@@ -2478,10 +2570,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
@@ -2523,6 +2617,7 @@ public  class  Principal {
                                         if (count == paises.size()) {
                                             System.out.println("No se encuentra el pais");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -2560,6 +2655,7 @@ public  class  Principal {
                                                     paises.set(paises.indexOf(pais), paisAux);
                                                     System.out.println("Pais editado con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -2573,6 +2669,7 @@ public  class  Principal {
                                                     paises.remove(pais);
                                                     System.out.println("Pais eliminado con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -2580,9 +2677,11 @@ public  class  Principal {
                                         }
                                     } else if (option5.equals("0")) {
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option4.equals("2")) {
                                     busqueda();
+                                    return;
                                 }
                             }
                             else if (option3.equals("2")) {
@@ -2602,6 +2701,7 @@ public  class  Principal {
                                         if (count == paises.size()) {
                                             System.out.println("No se encuentra el pais");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -2640,6 +2740,7 @@ public  class  Principal {
                                                     paises.set(paises.indexOf(pais), paisAux);
                                                     System.out.println("Pais editado con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -2654,6 +2755,7 @@ public  class  Principal {
                                                     paises.remove(pais);
                                                     System.out.println("Pais eliminado con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -2661,9 +2763,11 @@ public  class  Principal {
                                         }
                                     } else if (option5.equals("0")) {
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option4.equals("2")) {
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -2690,6 +2794,7 @@ public  class  Principal {
                                         if (count == paises.size()) {
                                             System.out.println("No se encuentra el pais");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -2727,6 +2832,7 @@ public  class  Principal {
                                                     paises.set(paises.indexOf(pais), paisAux);
                                                     System.out.println("Pais editado con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -2740,6 +2846,7 @@ public  class  Principal {
                                                     paises.remove(pais);
                                                     System.out.println("Pais eliminado con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -2747,9 +2854,11 @@ public  class  Principal {
                                         }
                                     } else if (option5.equals("0")) {
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option4.equals("2")) {
                                     busqueda();
+                                    return;
                                 }
                             } else if (option3.equals("2")) {
                                 input.nextLine();
@@ -2768,6 +2877,7 @@ public  class  Principal {
                                         if (count == paises.size()) {
                                             System.out.println("No se encuentra el pais");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -2806,6 +2916,7 @@ public  class  Principal {
                                                     paises.set(paises.indexOf(pais), paisAux);
                                                     System.out.println("Pais editado con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -2820,6 +2931,7 @@ public  class  Principal {
                                                     paises.remove(pais);
                                                     System.out.println("Pais eliminado con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -2827,9 +2939,11 @@ public  class  Principal {
                                         }
                                     } else if (option5.equals("0")) {
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option4.equals("2")) {
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -2875,6 +2989,7 @@ public  class  Principal {
                                             paises.set(paises.indexOf(pais), paisAux);
                                             System.out.println("Pais editado con exito");
                                             busqueda();
+                                            return;
                                         } else {
                                             index2++;
                                         }
@@ -2886,15 +3001,18 @@ public  class  Principal {
                                             paises.remove(pais);
                                             System.out.println("Pais eliminado con exito");
                                             busqueda();
+                                            return;
                                         } else {
                                             index2++;
                                         }
                                     }
                             } else if (option5.equals("0")) {
                                 busqueda();
+                                return;
                             }
                         } else if (option4.equals("2")) {
                             busqueda();
+                            return;
                         }
                     }
                 }
@@ -2942,6 +3060,7 @@ public  class  Principal {
                                         if (count == sedes.size()) {
                                             System.out.println("No se encuentra la sede");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -2997,6 +3116,7 @@ public  class  Principal {
                                                     sedes.set(sedes.indexOf(sede), SedeAux);
                                                     System.out.println("Sede editada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -3010,6 +3130,7 @@ public  class  Principal {
                                                     sedes.remove(sede);
                                                     System.out.println("Sede eliminada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -3017,9 +3138,11 @@ public  class  Principal {
                                         }
                                     } else if (option5.equals("0")) {
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option4.equals("2")) {
                                     busqueda();
+                                    return;
                                 }
                             } else if (option3.equals("2")) {
                                 input.nextLine();
@@ -3038,6 +3161,7 @@ public  class  Principal {
                                         if (count == sedes.size()) {
                                             System.out.println("No se encuentra la sede");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -3094,6 +3218,7 @@ public  class  Principal {
                                                     sedes.set(sedes.indexOf(sede), SedeAux);
                                                     System.out.println("Sede editada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -3108,6 +3233,7 @@ public  class  Principal {
                                                     sedes.remove(sede);
                                                     System.out.println("Sede eliminada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -3115,9 +3241,11 @@ public  class  Principal {
                                         }
                                     } else if (option5.equals("0")) {
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option4.equals("2")) {
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -3157,6 +3285,7 @@ public  class  Principal {
                                             if (count == sedes.size()) {
                                                 System.out.println("No se encuentra la sede");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -3212,6 +3341,7 @@ public  class  Principal {
                                                         sedes.set(sedes.indexOf(sede), SedeAux);
                                                         System.out.println("Sede editada con exito");
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3225,6 +3355,7 @@ public  class  Principal {
                                                         sedes.remove(sede);
                                                         System.out.println("Sede eliminada con exito");
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3232,9 +3363,11 @@ public  class  Principal {
                                             }
                                         } else if (option5.equals("0")) {
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 if (option3.equals("2")) {
@@ -3251,6 +3384,7 @@ public  class  Principal {
                                             if (count == sedes.size()) {
                                                 System.out.println("No se encuentra la sede");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -3307,6 +3441,7 @@ public  class  Principal {
                                                         System.out.println("Sede editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3321,6 +3456,7 @@ public  class  Principal {
                                                         System.out.println("Sede eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3329,10 +3465,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 if (option3.equals("3")) {
@@ -3349,6 +3487,7 @@ public  class  Principal {
                                             if (count == sedes.size()) {
                                                 System.out.println("No se encuentra la sede");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -3405,6 +3544,7 @@ public  class  Principal {
                                                         System.out.println("Sede editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3419,6 +3559,7 @@ public  class  Principal {
                                                         System.out.println("Sede eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3427,10 +3568,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 if (option3.equals("4")) {
@@ -3449,6 +3592,7 @@ public  class  Principal {
                                         if (count == sedes.size()) {
                                             System.out.println("No se encuentra la sede");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     System.out.println("Desea editar o eliminar algun elemento? :");
@@ -3504,6 +3648,7 @@ public  class  Principal {
                                                         System.out.println("Sede editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3518,6 +3663,7 @@ public  class  Principal {
                                                         System.out.println("Sede eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3526,10 +3672,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
@@ -3570,6 +3718,7 @@ public  class  Principal {
                                             if (count == sedes.size()) {
                                                 System.out.println("No se encuentra la sede");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -3625,6 +3774,7 @@ public  class  Principal {
                                                         sedes.set(sedes.indexOf(sede), SedeAux);
                                                         System.out.println("Sede editada con exito");
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3638,6 +3788,7 @@ public  class  Principal {
                                                         sedes.remove(sede);
                                                         System.out.println("Sede eliminada con exito");
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3645,9 +3796,11 @@ public  class  Principal {
                                             }
                                         } else if (option5.equals("0")) {
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 if (option3.equals("2")) {
@@ -3664,6 +3817,7 @@ public  class  Principal {
                                             if (count == sedes.size()) {
                                                 System.out.println("No se encuentra la sede");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -3720,6 +3874,7 @@ public  class  Principal {
                                                         System.out.println("Sede editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3734,6 +3889,7 @@ public  class  Principal {
                                                         System.out.println("Sede eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3742,10 +3898,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 if (option3.equals("3")) {
@@ -3762,6 +3920,7 @@ public  class  Principal {
                                             if (count == sedes.size()) {
                                                 System.out.println("No se encuentra la sede");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -3818,6 +3977,7 @@ public  class  Principal {
                                                         System.out.println("Sede editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3832,6 +3992,7 @@ public  class  Principal {
                                                         System.out.println("Sede eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3840,10 +4001,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 if (option3.equals("4")) {
@@ -3862,6 +4025,7 @@ public  class  Principal {
                                         if (count == sedes.size()) {
                                             System.out.println("No se encuentra la sede");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     System.out.println("Desea editar o eliminar algun elemento? :");
@@ -3917,6 +4081,7 @@ public  class  Principal {
                                                         System.out.println("Sede editada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3931,6 +4096,7 @@ public  class  Principal {
                                                         System.out.println("Sede eliminada con exito");
                                                         repuesto.removeAll(repuesto);
                                                         busqueda();
+                                                        return;
                                                     } else {
                                                         index2++;
                                                     }
@@ -3939,10 +4105,12 @@ public  class  Principal {
                                         } else if (option5.equals("0")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     } else if (option4.equals("2")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
@@ -3970,6 +4138,7 @@ public  class  Principal {
                                         if (count == sedes.size()) {
                                             System.out.println("No se encuentra la sede");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -4025,6 +4194,7 @@ public  class  Principal {
                                                     sedes.set(sedes.indexOf(sede), SedeAux);
                                                     System.out.println("Sede editada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -4038,6 +4208,7 @@ public  class  Principal {
                                                     sedes.remove(sede);
                                                     System.out.println("Sede eliminada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -4045,9 +4216,11 @@ public  class  Principal {
                                         }
                                     } else if (option5.equals("0")) {
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option4.equals("2")) {
                                     busqueda();
+                                    return;
                                 }
                             } else if (option3.equals("2")) {
                                 input.nextLine();
@@ -4066,6 +4239,7 @@ public  class  Principal {
                                         if (count == sedes.size()) {
                                             System.out.println("No se encuentra la sede");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -4122,6 +4296,7 @@ public  class  Principal {
                                                     sedes.set(sedes.indexOf(sede), SedeAux);
                                                     System.out.println("Sede editada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -4136,6 +4311,7 @@ public  class  Principal {
                                                     sedes.remove(sede);
                                                     System.out.println("Sede eliminada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -4143,9 +4319,11 @@ public  class  Principal {
                                         }
                                     } else if (option5.equals("0")) {
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option4.equals("2")) {
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -4159,7 +4337,7 @@ public  class  Principal {
                             option3 = input.next();
                             if (option3.equals("1")) {
                                 int index = 1;
-                                Collections.sort(repuesto, new ComparadorSIT());
+                                repuesto.sort(new ComparadorSIT());
                                 for (Sede sede : repuesto) {
                                     System.out.println(index + " " + sede);
                                     index++;
@@ -4216,6 +4394,7 @@ public  class  Principal {
                                                     System.out.println("Sede editada con exito");
                                                     repuesto.removeAll(repuesto);
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -4228,6 +4407,7 @@ public  class  Principal {
                                                     System.out.println("Sede eliminada con exito");
                                                     repuesto.removeAll(repuesto);
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -4235,14 +4415,16 @@ public  class  Principal {
                                     } else if (option5.equals("0")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option4.equals("2")) {
                                     repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                             } else if (option3.equals("2")) {
                                 int index = 1;
-                                Collections.sort(repuesto, new ComparadorSIT());
+                                repuesto.sort(new ComparadorSIT());
                                 for (Sede sede : repuesto) {
                                     System.out.println(index + " " + sede);
                                     index++;
@@ -4299,6 +4481,7 @@ public  class  Principal {
                                                     System.out.println("Sede editada con exito");
                                                     repuesto.removeAll(repuesto);
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -4311,6 +4494,7 @@ public  class  Principal {
                                                     System.out.println("Sede eliminada con exito");
                                                     repuesto.removeAll(repuesto);
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -4318,10 +4502,12 @@ public  class  Principal {
                                     } else if (option5.equals("0")) {
                                         repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option4.equals("2")) {
                                     repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -4336,7 +4522,9 @@ public  class  Principal {
             busqueda();
         } else {
             LinkedList<Inversionista> repuesto = new LinkedList<>();
-            repuesto.addAll(inversionistas);
+            for (Inversionista inversionista : inversionistas) {
+                repuesto.add(inversionista);
+            }
             String option2;
             while (true) {
                 System.out.println("Escoja un atributo de busqueda:");
@@ -4370,6 +4558,7 @@ public  class  Principal {
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentra el inversionista");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -4446,8 +4635,10 @@ public  class  Principal {
                                             }
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             busqueda();
+                                            return;
                                         }
                                         busqueda();
+                                        return;
                                     }
                                     break;
                                 }
@@ -4468,6 +4659,7 @@ public  class  Principal {
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentra el inversionista");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -4546,12 +4738,14 @@ public  class  Principal {
                                             }
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     break;
                                 }
                             }
                             busqueda();
+                            return;
                         }
                     }
                     case "2": {
@@ -4562,7 +4756,7 @@ public  class  Principal {
                             System.out.println("2. Descendente");
                             orden = input.next();
                             if (orden.equals("1")) {
-                                Collections.sort(repuesto, new ComparadorGIN());
+                                repuesto.sort(new ComparadorGIN());
                             }
                             else if (orden.equals("2")) {
                                 repuesto.sort(new ComparadorGIN().reversed());
@@ -4590,6 +4784,7 @@ public  class  Principal {
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentra el inversionista");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -4666,9 +4861,11 @@ public  class  Principal {
                                             }
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("2")) {
                                     System.out.print("Ingrese el valor de ganancia maximo a buscar: ");
@@ -4684,6 +4881,7 @@ public  class  Principal {
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentran inversionistas");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -4761,10 +4959,12 @@ public  class  Principal {
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("3")) {
                                     System.out.print("Ingrese el valor de ganancia minimo a buscar: ");
@@ -4780,6 +4980,7 @@ public  class  Principal {
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentran inversionistas");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -4857,10 +5058,12 @@ public  class  Principal {
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("4")) {
                                     System.out.print("Ingrese valor minimo del rango: ");
@@ -4878,6 +5081,7 @@ public  class  Principal {
                                         if (count == inversionistas.size()) {
                                             System.out.println("No se encuentran inversionistas");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     System.out.println("Desea editar o eliminar algun elemento? :");
@@ -4954,10 +5158,12 @@ public  class  Principal {
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -4970,9 +5176,9 @@ public  class  Principal {
                             System.out.println("2. Descendente");
                             orden = input.next();
                             if (orden.equals("1")) {
-                                Collections.sort(repuesto, new ComparadorINsede());
+                                repuesto.sort(new ComparadorINsede());
                             } else if (orden.equals("2")) {
-                                Collections.sort(repuesto, new ComparadorINsede().reversed());
+                                repuesto.sort(new ComparadorINsede().reversed());
                             }
                             String option3;
                             while (true) {
@@ -4997,6 +5203,7 @@ public  class  Principal {
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentra el inversionista");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -5073,9 +5280,11 @@ public  class  Principal {
                                             }
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("2")) {
                                     System.out.print("Ingrese el valor de inversion maximo a buscar: ");
@@ -5091,6 +5300,7 @@ public  class  Principal {
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentran inversionistas");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -5168,10 +5378,12 @@ public  class  Principal {
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("3")) {
                                     System.out.print("Ingrese el valor de inversion minimo a buscar: ");
@@ -5187,6 +5399,7 @@ public  class  Principal {
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentran inversionistas");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -5264,10 +5477,12 @@ public  class  Principal {
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("4")) {
                                     System.out.print("Ingrese valor minimo del rango: ");
@@ -5285,6 +5500,7 @@ public  class  Principal {
                                         if (count == inversionistas.size()) {
                                             System.out.println("No se encuentran inversionistas");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     System.out.println("Desea editar o eliminar algun elemento? :");
@@ -5361,10 +5577,12 @@ public  class  Principal {
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -5377,9 +5595,9 @@ public  class  Principal {
                             System.out.println("2. Descendente");
                             orden = input.next();
                             if (orden.equals("1")) {
-                                Collections.sort(repuesto, new ComparadorINmulti());
+                                repuesto.sort(new ComparadorINmulti());
                             } else if (orden.equals("2")) {
-                                Collections.sort(repuesto, new ComparadorINmulti().reversed());
+                                repuesto.sort(new ComparadorINmulti().reversed());
                             }
                             String option3;
                             while (true) {
@@ -5404,6 +5622,7 @@ public  class  Principal {
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentra el inversionista");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -5481,9 +5700,11 @@ public  class  Principal {
                                             }
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("2")) {
                                     System.out.print("Ingrese el valor de inversion maximo a buscar: ");
@@ -5499,6 +5720,7 @@ public  class  Principal {
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentran inversionistas");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -5576,10 +5798,12 @@ public  class  Principal {
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("3")) {
                                     System.out.print("Ingrese el valor de inversion minimo a buscar: ");
@@ -5595,6 +5819,7 @@ public  class  Principal {
                                             if (count == inversionistas.size()) {
                                                 System.out.println("No se encuentran inversionistas");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -5672,10 +5897,12 @@ public  class  Principal {
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("4")) {
                                     System.out.print("Ingrese valor minimo del rango: ");
@@ -5693,6 +5920,7 @@ public  class  Principal {
                                         if (count == inversionistas.size()) {
                                             System.out.println("No se encuentran inversionistas");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     System.out.println("Desea editar o eliminar algun elemento? :");
@@ -5769,10 +5997,12 @@ public  class  Principal {
                                         } else if (option5.equals("0") || option4.equals("2")) {
                                             repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -5787,7 +6017,7 @@ public  class  Principal {
                             option3 = input.next();
                             if (option3.equals("1")) {
                                 int index = 1;
-                                Collections.sort(repuesto, new ComparadorGIN());
+                                repuesto.sort(new ComparadorGIN());
                                 for (Inversionista inversionista : repuesto) {
                                     System.out.println(index + " " + inversionista);
                                     index++;
@@ -5862,6 +6092,7 @@ public  class  Principal {
                                     } else if (option5.equals("0") || option4.equals("2")) {
                                         repuesto.removeAll(inversionistas);
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
@@ -5939,17 +6170,18 @@ public  class  Principal {
                                                     index2++;
                                                 }
                                             }
-                                    } else if (option5.equals("0") || option4.equals("2")) {
+                                    } else if (option5.equals("0")) {
                                         repuesto.removeAll(inversionistas);
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
                             else if (option3.equals("3")) {
                                 int index = 1;
-                                Collections.sort(repuesto, new ComparadorINmulti());
+                                repuesto.sort(new ComparadorINmulti());
                                 for (Inversionista inversionista : repuesto) {
-                                    System.out.println(index + " " + repuesto);
+                                    System.out.println(index + " " + inversionista);
                                     index++;
                                 }
                                 System.out.println("Desea editar o eliminar algun elemento? :");
@@ -6019,14 +6251,16 @@ public  class  Principal {
                                                     index2++;
                                                 }
                                             }
-                                    } else if (option5.equals("0") || option4.equals("2")) {
+                                    } else if (option5.equals("0")) {
                                         repuesto.removeAll(inversionistas);
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
                             repuesto.removeAll(inversionistas);
                             busqueda();
+                            return;
                         }
                     }
                 }
@@ -6073,6 +6307,7 @@ public  class  Principal {
                                         if (count == areas.size()) {
                                             System.out.println("No se encuentra el area");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -6122,6 +6357,7 @@ public  class  Principal {
                                                     areas.set(areas.indexOf(area), areaAux);
                                                     System.out.println("Area editada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -6135,6 +6371,7 @@ public  class  Principal {
                                                     areas.remove(area);
                                                     System.out.println("Area eliminada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -6142,9 +6379,11 @@ public  class  Principal {
                                         }
                                     } else if (option5.equals("0")) {
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option4.equals("2")) {
                                     busqueda();
+                                    return;
                                 }
                             }
                             else if (option3.equals("2")) {
@@ -6164,6 +6403,7 @@ public  class  Principal {
                                         if (count == areas.size()) {
                                             System.out.println("No se encuentra el area");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -6214,6 +6454,7 @@ public  class  Principal {
                                                     areas.set(areas.indexOf(area), areaAux);
                                                     System.out.println("Area editada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -6228,6 +6469,7 @@ public  class  Principal {
                                                     areas.remove(area);
                                                     System.out.println("Area eliminada con exito");
                                                     busqueda();
+                                                    return;
                                                 } else {
                                                     index2++;
                                                 }
@@ -6235,9 +6477,11 @@ public  class  Principal {
                                         }
                                     } else if (option5.equals("0")) {
                                         busqueda();
+                                        return;
                                     }
                                 } else if (option4.equals("2")) {
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -6250,10 +6494,10 @@ public  class  Principal {
                             System.out.println("2. Descendente");
                             orden = input.next();
                             if (orden.equals("1")) {
-                                Collections.sort(repuesto, new ComparadorIarea());
+                                repuesto.sort(new ComparadorIarea());
                             }
                             else if (orden.equals("2")) {
-                                Collections.sort(repuesto, new ComparadorIarea().reversed());
+                                repuesto.sort(new ComparadorIarea().reversed());
                             }
                             String option3;
                             while (true) {
@@ -6277,8 +6521,9 @@ public  class  Principal {
                                             count++;
                                             if (count == areas.size()) {
                                                 System.out.println("No se encuentra el area");
-                                                repuesto.removeAll(areas);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -6345,11 +6590,13 @@ public  class  Principal {
                                                     }
                                                 }
                                             }
-                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                        } else if (option5.equals("0")) {
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("2")) {
                                     System.out.print("Ingrese el valor de ingresos maximo a buscar: ");
@@ -6364,8 +6611,9 @@ public  class  Principal {
                                             count++;
                                             if (count == areas.size()) {
                                                 System.out.println("No se encuentra el area");
-                                                repuesto.removeAll(areas);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -6431,12 +6679,13 @@ public  class  Principal {
                                                     }
                                                 }
                                             }
-                                        } else if (option5.equals("0") || option4.equals("2")) {
-                                            repuesto.removeAll(areas);
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
-                                    repuesto.removeAll(areas);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
                                 }
                                 if (option3.equals("3")) {
@@ -6488,9 +6737,9 @@ public  class  Principal {
                             System.out.println("2. Descendente");
                             orden = input.next();
                             if (orden.equals("1")) {
-                                Collections.sort(repuesto, new ComparadorGarea());
+                                repuesto.sort(new ComparadorGarea());
                             } else if (orden.equals("2")) {
-                                Collections.sort(repuesto, new ComparadorGarea().reversed());
+                                repuesto.sort(new ComparadorGarea().reversed());
                             }
                             String option3;
                             while (true) {
@@ -6516,6 +6765,7 @@ public  class  Principal {
                                                 System.out.println("No se encuentra el area");
                                                 repuesto.removeAll(areas);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -6581,11 +6831,13 @@ public  class  Principal {
                                                     }
                                                 }
                                             }
-                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                        } else if (option5.equals("0")) {
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("2")) {
                                     System.out.print("Ingrese el valor de gastos maximo a buscar: ");
@@ -6600,8 +6852,9 @@ public  class  Principal {
                                             count++;
                                             if (count == areas.size()) {
                                                 System.out.println("No se encuentra el area");
-                                                repuesto.removeAll(areas);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -6667,9 +6920,10 @@ public  class  Principal {
                                                     }
                                                 }
                                             }
-                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                        } else if (option5.equals("0")) {
                                             repuesto.removeAll(areas);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -6688,6 +6942,7 @@ public  class  Principal {
                                                 System.out.println("No se encuentra el area");
                                                 repuesto.removeAll(areas);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -6753,13 +7008,15 @@ public  class  Principal {
                                                     }
                                                 }
                                             }
-                                        } else if (option5.equals("0") || option4.equals("2")) {
+                                        } else if (option5.equals("0")) {
                                             repuesto.removeAll(areas);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     repuesto.removeAll(areas);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("4")) {
                                     System.out.print("Ingrese valor minimo del rango: ");
@@ -6778,6 +7035,7 @@ public  class  Principal {
                                             System.out.println("No se encuentran areas");
                                             repuesto.removeAll(areas);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     System.out.println("Desea editar o eliminar algun elemento? :");
@@ -6842,13 +7100,15 @@ public  class  Principal {
                                                     }
                                                 }
                                             }
-                                        } else if (option5.equals("0") || option4.equals("2")) {
-                                            repuesto.removeAll(areas);
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
-                                    repuesto.removeAll(areas);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -6925,9 +7185,10 @@ public  class  Principal {
                                                     index2++;
                                             }
                                         }
-                                    } else if (option5.equals("0") || option4.equals("2")) {
-                                        repuesto.removeAll(areas);
+                                    } else if (option5.equals("0")) {
+                                        repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
@@ -6996,14 +7257,16 @@ public  class  Principal {
                                                     index2++;
                                                 }
                                         }
-                                    } else if (option5.equals("0") || option4.equals("2")) {
-                                        repuesto.removeAll(areas);
+                                    } else if (option5.equals("0")) {
+                                        repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
-                            repuesto.removeAll(areas);
+                            repuesto.removeAll(repuesto);
                             busqueda();
+                            return;
                         }
                     }
                 }
@@ -7015,7 +7278,9 @@ public  class  Principal {
             System.out.println("No hay empleados registradas");
         } else {
             LinkedList<Empleado> repuesto = new LinkedList<>();
-            repuesto.addAll(empleados);
+            for (Empleado empleado:empleados) {
+                repuesto.add(empleado);
+            }
             String option2;
             while (true) {
                 System.out.println("Escoja un atributo de busqueda:");
@@ -7048,6 +7313,7 @@ public  class  Principal {
                                         if (count == empleados.size()) {
                                             System.out.println("No se encuentra el empleado");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -7122,11 +7388,13 @@ public  class  Principal {
                                                 }
                                             }
                                         }
-                                    } else if (option5.equals("0") || option4.equals("2")) {
+                                    } else if (option5.equals("0")) {
                                         busqueda();
+                                        return;
                                     }
                                 }
                                 busqueda();
+                                return;
                             }
                             else if (option3.equals("2")) {
                                 input.nextLine();
@@ -7145,6 +7413,7 @@ public  class  Principal {
                                         if (count == empleados.size()) {
                                             System.out.println("No se encuentra el empleado");
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -7221,13 +7490,15 @@ public  class  Principal {
                                                 }
                                             }
                                         }
-                                    } else if (option5.equals("0") || option4.equals("2")) {
-                                        repuesto.removeAll(empleados);
+                                    } else if (option5.equals("0")) {
+                                        repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
-                                repuesto.removeAll(empleados);
+                                repuesto.removeAll(repuesto);
                                 busqueda();
+                                return;
                             }
                         }
                     }
@@ -7266,6 +7537,7 @@ public  class  Principal {
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -7340,13 +7612,15 @@ public  class  Principal {
                                                     }
                                                 }
                                             }
-                                        } else if (option5.equals("0") || option4.equals("2")) {
-                                            repuesto.removeAll(empleados);
+                                        } else if (option5.equals("0")) {
+                                            repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
-                                    repuesto.removeAll(empleados);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("2")) {
                                     System.out.print("Ingrese la cedula maxima a buscar: ");
@@ -7361,8 +7635,9 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
-                                                repuesto.removeAll(empleados);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -7438,12 +7713,14 @@ public  class  Principal {
                                                 }
                                             }
                                         } else if (option5.equals("0")) {
-                                            repuesto.removeAll(empleados);
+                                            repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
-                                    repuesto.removeAll(empleados);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("3")) {
                                     System.out.print("Ingrese la cedula minima a buscar: ");
@@ -7458,8 +7735,9 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
-                                                repuesto.removeAll(empleados);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -7535,12 +7813,14 @@ public  class  Principal {
                                                 }
                                             }
                                         } else if (option5.equals("0")) {
-                                            repuesto.removeAll(empleados);
+                                            repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
-                                    repuesto.removeAll(empleados);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("4")) {
                                     System.out.print("Ingrese valor minimo del rango: ");
@@ -7557,8 +7837,9 @@ public  class  Principal {
                                         }
                                         if (count == empleados.size()) {
                                             System.out.println("No se encuentran empleados");
-                                            repuesto.removeAll(empleados);
+                                            repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     System.out.println("Desea editar o eliminar algun elemento? :");
@@ -7634,8 +7915,9 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(empleados);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -7648,9 +7930,9 @@ public  class  Principal {
                             System.out.println("2. Descendente");
                             orden = input.next();
                             if (orden.equals("1")) {
-                                Collections.sort(repuesto, new ComparadorEedad());
+                                repuesto.sort(new ComparadorEedad());
                             } else if (orden.equals("2")) {
-                                Collections.sort(repuesto, new ComparadorEedad().reversed());
+                                repuesto.sort(new ComparadorEedad().reversed());
                             }
                             String option3;
                             while (true) {
@@ -7674,8 +7956,9 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
-                                                repuesto.removeAll(empleados);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -7752,8 +8035,9 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(empleados);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("2")) {
                                     System.out.print("Ingrese la edad maxima a buscar: ");
@@ -7768,8 +8052,9 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
-                                                repuesto.removeAll(empleados);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -7846,8 +8131,9 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(empleados);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("3")) {
                                     System.out.print("Ingrese la edad minima a buscar: ");
@@ -7862,8 +8148,9 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
-                                                repuesto.removeAll(empleados);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -7940,8 +8227,9 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(empleados);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("4")) {
                                     System.out.print("Ingrese valor minimo del rango: ");
@@ -7959,8 +8247,9 @@ public  class  Principal {
                                         }
                                         if (count == empleados.size()) {
                                             System.out.println("No se encuentran empleados");
-                                            repuesto.removeAll(empleados);
+                                            repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     System.out.println("Desea editar o eliminar algun elemento? :");
@@ -8036,8 +8325,9 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(empleados);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -8076,8 +8366,9 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
-                                                repuesto.removeAll(empleados);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -8154,8 +8445,9 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(empleados);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("2")) {
                                     System.out.print("Ingrese el salario maximo a buscar: ");
@@ -8170,8 +8462,9 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
-                                                repuesto.removeAll(empleados);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -8248,8 +8541,9 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(empleados);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("3")) {
                                     System.out.print("Ingrese el salario minimo a buscar: ");
@@ -8264,8 +8558,9 @@ public  class  Principal {
                                             count++;
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentra el empleado");
-                                                repuesto.removeAll(empleados);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -8342,8 +8637,9 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(empleados);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("4")) {
                                     System.out.print("Ingrese valor minimo del rango: ");
@@ -8365,6 +8661,7 @@ public  class  Principal {
                                     }
                                     repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -8608,8 +8905,9 @@ public  class  Principal {
                                     }
                                 }
                             }
-                            repuesto.removeAll(empleados);
+                            repuesto.removeAll(repuesto);
                             busqueda();
+                            return;
                         }
                     }
                 }
@@ -8621,7 +8919,9 @@ public  class  Principal {
             System.out.println("No hay clientes registrados");
         } else {
             LinkedList<Cliente> repuesto = new LinkedList<>();
-            repuesto.addAll(clientes);
+            for (Cliente cliente:clientes) {
+                repuesto.add(cliente);
+            }
             String option2;
             while (true) {
                 System.out.println("Escoja un atributo de busqueda:");
@@ -8652,8 +8952,9 @@ public  class  Principal {
                                         count++;
                                         if (count == clientes.size()) {
                                             System.out.println("No se encuentra el cliente");
-                                            repuesto.removeAll(clientes);
+                                            repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -8721,8 +9022,9 @@ public  class  Principal {
                                         }
                                     }
                                 }
-                                repuesto.removeAll(clientes);
+                                repuesto.removeAll(repuesto);
                                 busqueda();
+                                return;
                             }
                             else if (option3.equals("2")) {
                                 input.nextLine();
@@ -8740,8 +9042,9 @@ public  class  Principal {
                                         count++;
                                         if (count == clientes.size()) {
                                             System.out.println("No se encuentra el cliente");
-                                            repuesto.removeAll(clientes);
+                                            repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                 }
@@ -8811,8 +9114,9 @@ public  class  Principal {
                                         }
                                     }
                                 }
-                                repuesto.removeAll(clientes);
+                                repuesto.removeAll(repuesto);
                                 busqueda();
+                                return;
                             }
                         }
                     }
@@ -8850,8 +9154,9 @@ public  class  Principal {
                                             count++;
                                             if (count == clientes.size()) {
                                                 System.out.println("No se encuentra el cliente");
-                                                repuesto.removeAll(clientes);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -8919,8 +9224,9 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(clientes);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("2")) {
                                     System.out.print("Ingrese el valor de dinero maximo a buscar: ");
@@ -8935,8 +9241,9 @@ public  class  Principal {
                                             count++;
                                             if (count == clientes.size()) {
                                                 System.out.println("No se encuentra el cliente");
-                                                repuesto.removeAll(clientes);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -9004,8 +9311,9 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(clientes);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("3")) {
                                     System.out.print("Ingrese el valor de dinero minimo a buscar: ");
@@ -9020,8 +9328,9 @@ public  class  Principal {
                                             count++;
                                             if (count == clientes.size()) {
                                                 System.out.println("No se encuentra el cliente");
-                                                repuesto.removeAll(clientes);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                     }
@@ -9089,8 +9398,9 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(clientes);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                                 if (option3.equals("4")) {
                                     System.out.print("Ingrese valor minimo del rango: ");
@@ -9108,8 +9418,9 @@ public  class  Principal {
                                         }
                                         if (count == empleados.size()) {
                                             System.out.println("No se encuentran empleados");
-                                            repuesto.removeAll(clientes);
+                                            repuesto.removeAll(repuesto);
                                             busqueda();
+                                            return;
                                         }
                                     }
                                     System.out.println("Desea editar o eliminar algun elemento? :");
@@ -9176,8 +9487,9 @@ public  class  Principal {
                                             }
                                         }
                                     }
-                                    repuesto.removeAll(clientes);
+                                    repuesto.removeAll(repuesto);
                                     busqueda();
+                                    return;
                                 }
                             }
                         }
@@ -9215,8 +9527,9 @@ public  class  Principal {
                                                 count++;
                                                 if (count == clientes.size()) {
                                                     System.out.println("No se encuentra el cliente");
-                                                    repuesto.removeAll(clientes);
+                                                    repuesto.removeAll(repuesto);
                                                     busqueda();
+                                                    return;
                                                 }
                                             }
                                         }
@@ -9284,8 +9597,9 @@ public  class  Principal {
                                                 }
                                             }
                                         }
-                                        repuesto.removeAll(clientes);
+                                        repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                     if (option3.equals("2")) {
                                         System.out.print("Ingrese la cedula maxima a buscar: ");
@@ -9300,8 +9614,9 @@ public  class  Principal {
                                                 count++;
                                                 if (count == clientes.size()) {
                                                     System.out.println("No se encuentra el cliente");
-                                                    repuesto.removeAll(clientes);
+                                                    repuesto.removeAll(repuesto);
                                                     busqueda();
+                                                    return;
                                                 }
                                             }
                                         }
@@ -9369,8 +9684,9 @@ public  class  Principal {
                                                 }
                                             }
                                         }
-                                        repuesto.removeAll(clientes);
+                                        repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                     if (option3.equals("3")) {
                                         System.out.print("Ingrese la cedula minima a buscar: ");
@@ -9385,8 +9701,9 @@ public  class  Principal {
                                                 count++;
                                                 if (count == clientes.size()) {
                                                     System.out.println("No se encuentra el cliente");
-                                                    repuesto.removeAll(clientes);
+                                                    repuesto.removeAll(repuesto);
                                                     busqueda();
+                                                    return;
                                                 }
                                             }
                                         }
@@ -9454,8 +9771,9 @@ public  class  Principal {
                                                 }
                                             }
                                         }
-                                        repuesto.removeAll(clientes);
+                                        repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                     if (option3.equals("4")) {
                                         System.out.print("Ingrese valor minimo del rango: ");
@@ -9473,8 +9791,9 @@ public  class  Principal {
                                             }
                                             if (count == empleados.size()) {
                                                 System.out.println("No se encuentran empleados");
-                                                repuesto.removeAll(clientes);
+                                                repuesto.removeAll(repuesto);
                                                 busqueda();
+                                                return;
                                             }
                                         }
                                         System.out.println("Desea editar o eliminar algun elemento? :");
@@ -9541,8 +9860,9 @@ public  class  Principal {
                                                 }
                                             }
                                         }
-                                        repuesto.removeAll(clientes);
+                                        repuesto.removeAll(repuesto);
                                         busqueda();
+                                        return;
                                     }
                                 }
                             }
@@ -9625,7 +9945,7 @@ public  class  Principal {
                             }
                             else if (option3.equals("2")) {
                                 int index = 1;
-                                Collections.sort(repuesto, new ComparadorCcedula());
+                                repuesto.sort(new ComparadorCcedula());
                                 for (Cliente cliente : repuesto) {
                                     System.out.println(index + " " + cliente);
                                     index++;
@@ -9691,8 +10011,9 @@ public  class  Principal {
                                         }
                                     }
                                 }
-                            repuesto.removeAll(clientes);
+                            repuesto.removeAll(repuesto);
                             busqueda();
+                            return;
                         }
                     }
                 }
@@ -9741,12 +10062,12 @@ public  class  Principal {
         System.out.println("Inconsistencias de los inversionistas");
         for (Inversionista inversionista: inversionistas
         ) {
-            if(inversionista.multinacional.isEmpty()){
-                System.out.println(inversionista.firma + " no tiene multinacionales asignadas");
+            if(inversionista.multinacional==null){
+                System.out.println(inversionista.firma + " no tiene multinacional asignada");
 
             }
-            if(inversionista.sedes.isEmpty()){
-                System.out.println(inversionista.firma + " no tiene sedes asignadas");
+            if(inversionista.sedes==null){
+                System.out.println(inversionista.firma + " no tiene sede asignada");
             }
 
         }
@@ -9972,7 +10293,7 @@ public  class  Principal {
                                         multinacionalAux.inversores.add(inversionista1);
                                         inversionistaAux=inversionista1;
                                         inversionistaAux.multinacional= inversionista1.multinacional;
-                                        inversionistaAux.multinacional.add(multinacional);
+                                        inversionistaAux.multinacional=multinacional;
                                         System.out.println("¿Desea guardar los cambios?");
                                         System.out.println("Si(Y)/No(N)");
                                         String optionGuardado = input.next();
@@ -10075,7 +10396,7 @@ public  class  Principal {
                                         multinacionalAux.inversores.add(inversionista1);
                                         inversionistaAux=inversionista1;
                                         inversionistaAux.multinacional= inversionista1.multinacional;
-                                        inversionistaAux.multinacional.add(multinacional);
+                                        inversionistaAux.multinacional=multinacional;
                                         System.out.println("¿Desea guardar los cambios?");
                                         System.out.println("Si(Y)/No(N)");
                                         String optionGuardado = input.next();
@@ -10385,7 +10706,7 @@ public  class  Principal {
                                 sedeAux.inversionistas.add(inversionista1);
                                 inversionistaAux=inversionista1;
                                 inversionistaAux.sedes= inversionista1.sedes;
-                                inversionistaAux.sedes.add(sede);
+                                inversionistaAux.sedes=sede;
                                 System.out.println("¿Desea guardar los cambios?");
                                 System.out.println("Si(Y)/No(N)");
                                 String optionGuardado = input.next();
