@@ -121,6 +121,7 @@ public  class  Principal {
             System.out.println("Documento invalido ,ingreselo de nuevo ");
             System.out.print("Documento : ");
             Documento = input.nextInt();
+            documentoString = String.valueOf(Documento);
         }
         System.out.print("Nombre : ");
         String Nombre = input.nextLine();
@@ -155,11 +156,6 @@ public  class  Principal {
         usuarios.add(nuevoUsuario);
         EscribirJSON.guardarUsuario(usuarios);
         System.out.println("USUARIO REGISTRADO EXITOSAMENTE");
-
-        for (Usuario otroUsuario: usuarios) {
-            System.out.println(otroUsuario.toString());
-        }
-
 
         ingresarUsuario();
     }
@@ -10197,6 +10193,7 @@ public  class  Principal {
         //guardar todo lo que el usuario hizo en Escribir.... Si relacionó alguna clase, el identificador debe quedar
         //guardado en ella para que al iniciar al programa, en el inicio de Principal, lea y relacione las clases
         if (opcion == 1  ){
+            //vaciar json y reescribirlo
             EscribirMultinacionalJSON.guardarMultinacional(multinacionales);
             EscribirInversionistaJSON.guardarInversionista(inversionistas);
             EscribirPaisJSON.guardarPais(paises);
@@ -10385,8 +10382,7 @@ public  class  Principal {
                                         multinacionalAux.inversores= multinacional.inversores;
                                         multinacionalAux.inversores.add(inversionista1);
                                         inversionistaAux=inversionista1;
-                                        inversionistaAux.multinacional= inversionista1.multinacional;
-                                        inversionistaAux.multinacional=multinacional;
+                                        inversionistaAux.multinacional= multinacional;
                                         System.out.println("¿Desea guardar los cambios?");
                                         System.out.println("Si(Y)/No(N)");
                                         String optionGuardado = input.next();
@@ -10489,7 +10485,6 @@ public  class  Principal {
                                         multinacionalAux.inversores= multinacional.inversores;
                                         multinacionalAux.inversores.add(inversionista1);
                                         inversionistaAux=inversionista1;
-                                        inversionistaAux.multinacional= inversionista1.multinacional;
                                         inversionistaAux.multinacional=multinacional;
                                         System.out.println("¿Desea guardar los cambios?");
                                         System.out.println("Si(Y)/No(N)");
@@ -10799,7 +10794,6 @@ public  class  Principal {
                                 sedeAux.inversionistas= sede.inversionistas;
                                 sedeAux.inversionistas.add(inversionista1);
                                 inversionistaAux=inversionista1;
-                                inversionistaAux.sedes= inversionista1.sedes;
                                 inversionistaAux.sedes=sede;
                                 System.out.println("¿Desea guardar los cambios?");
                                 System.out.println("Si(Y)/No(N)");
